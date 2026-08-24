@@ -5,20 +5,21 @@ console.log("WELCOME MY FIRST WEBSITE");
 // PROJECT COUNTER
 // ==========================
 
-let project = document.getElementById("project");
+const project = document.getElementById("project");
 
 if (project) {
 
-    let count1 = 0;
+    let count = 0;
+    const target = 15;
 
-    let interval1 = setInterval(function () {
+    const interval = setInterval(() => {
 
-        count1++;
+        count++;
 
-        project.innerHTML = count1 + "+";
+        project.textContent = count + "+";
 
-        if (count1 == 15) {
-            clearInterval(interval1);
+        if (count >= target) {
+            clearInterval(interval);
         }
 
     }, 100);
@@ -30,20 +31,21 @@ if (project) {
 // CLIENT COUNTER
 // ==========================
 
-let client = document.getElementById("client");
+const client = document.getElementById("client");
 
 if (client) {
 
-    let count2 = 0;
+    let count = 0;
+    const target = 30;
 
-    let interval2 = setInterval(function () {
+    const interval = setInterval(() => {
 
-        count2++;
+        count++;
 
-        client.innerHTML = count2 + "+";
+        client.textContent = count + "+";
 
-        if (count2 == 30) {
-            clearInterval(interval2);
+        if (count >= target) {
+            clearInterval(interval);
         }
 
     }, 70);
@@ -55,20 +57,21 @@ if (client) {
 // LEARNING COUNTER
 // ==========================
 
-let learning = document.getElementById("learning");
+const learning = document.getElementById("learning");
 
 if (learning) {
 
-    let count3 = 0;
+    let count = 0;
+    const target = 100;
 
-    let interval3 = setInterval(function () {
+    const interval = setInterval(() => {
 
-        count3++;
+        count++;
 
-        learning.innerHTML = count3 + "+";
+        learning.textContent = count + "+";
 
-        if (count3 == 100) {
-            clearInterval(interval3);
+        if (count >= target) {
+            clearInterval(interval);
         }
 
     }, 20);
@@ -80,20 +83,21 @@ if (learning) {
 // PASSION COUNTER
 // ==========================
 
-let passion = document.getElementById("passion");
+const passion = document.getElementById("passion");
 
 if (passion) {
 
-    let count4 = 0;
+    let count = 0;
+    const target = 100;
 
-    let interval4 = setInterval(function () {
+    const interval = setInterval(() => {
 
-        count4++;
+        count++;
 
-        passion.innerHTML = count4 + "%";
+        passion.textContent = count + "%";
 
-        if (count4 == 100) {
-            clearInterval(interval4);
+        if (count >= target) {
+            clearInterval(interval);
         }
 
     }, 20);
@@ -109,21 +113,18 @@ const themeBtn = document.getElementById("themeBtn");
 
 if (themeBtn) {
 
-    themeBtn.onclick = function () {
+    themeBtn.addEventListener("click", () => {
 
         document.body.classList.toggle("light-mode");
 
-        if (document.body.classList.contains("light-mode")) {
+        const isLightMode =
+            document.body.classList.contains("light-mode");
 
-            themeBtn.innerHTML = "🌙 Dark Mode";
+        themeBtn.textContent = isLightMode
+            ? "🌙 Dark Mode"
+            : "☀️ Light Mode";
 
-        } else {
-
-            themeBtn.innerHTML = "☀️ Light Mode";
-
-        }
-
-    };
+    });
 
 }
 
@@ -139,15 +140,15 @@ const words = [
     "B2B Sales Expert"
 ];
 
-let wordIndex = 0;
-
 const typing = document.getElementById("typing");
 
 if (typing) {
 
-    typing.textContent = words[0];
+    let wordIndex = 0;
 
-    setInterval(function () {
+    typing.textContent = words[wordIndex];
+
+    setInterval(() => {
 
         wordIndex++;
 
@@ -155,7 +156,15 @@ if (typing) {
             wordIndex = 0;
         }
 
-        typing.textContent = words[wordIndex];
+        typing.style.opacity = "0";
+
+        setTimeout(() => {
+
+            typing.textContent = words[wordIndex];
+
+            typing.style.opacity = "1";
+
+        }, 250);
 
     }, 2000);
 
@@ -167,33 +176,37 @@ if (typing) {
 // ==========================
 
 const contactForm = document.getElementById("contactForm");
-
 const formMessage = document.getElementById("formMessage");
 
-if (contactForm) {
+if (contactForm && formMessage) {
 
-    contactForm.addEventListener("submit", function (event) {
+    contactForm.addEventListener("submit", (event) => {
 
         event.preventDefault();
 
-        const name = document.getElementById("name").value;
+        const name =
+            document.getElementById("name").value.trim();
 
-        const email = document.getElementById("email").value;
+        const email =
+            document.getElementById("email").value.trim();
 
-        const message = document.getElementById("message").value;
+        const message =
+            document.getElementById("message").value.trim();
 
 
-        if (name === "" || email === "" || message === "") {
+        if (!name || !email || !message) {
 
-            formMessage.textContent = "Please fill all fields.";
+            formMessage.textContent =
+                "Please fill all fields.";
 
-        } else {
-
-            formMessage.textContent = "Message sent successfully!";
-
-            contactForm.reset();
-
+            return;
         }
+
+
+        formMessage.textContent =
+            "Message sent successfully!";
+
+        contactForm.reset();
 
     });
 
@@ -205,18 +218,34 @@ if (contactForm) {
 // ==========================
 
 const menuBtn = document.getElementById("menuBtn");
-
 const navLinks = document.getElementById("navLinks");
 
 if (menuBtn && navLinks) {
 
-    menuBtn.addEventListener("click", function () {
+    menuBtn.addEventListener("click", () => {
 
         navLinks.classList.toggle("active");
 
     });
 
+
+    // Close menu after clicking a navigation link
+
+    const links = navLinks.querySelectorAll("a");
+
+    links.forEach((link) => {
+
+        link.addEventListener("click", () => {
+
+            navLinks.classList.remove("active");
+
+        });
+
+    });
+
 }
+
+
 // ==========================
 // SCROLL ANIMATION
 // ==========================
@@ -225,13 +254,17 @@ const sections = document.querySelectorAll(
     ".about, .skills, .services, .projects, #contact"
 );
 
+
 function showSections() {
 
-    sections.forEach(function(section) {
+    sections.forEach((section) => {
 
-        const sectionTop = section.getBoundingClientRect().top;
+        const sectionTop =
+            section.getBoundingClientRect().top;
 
-        const screenHeight = window.innerHeight;
+        const screenHeight =
+            window.innerHeight;
+
 
         if (sectionTop < screenHeight - 100) {
 
@@ -243,6 +276,18 @@ function showSections() {
 
 }
 
+
 window.addEventListener("scroll", showSections);
 
 showSections();
+
+
+// ==========================
+// BACK TO TOP ON PAGE LOAD
+// ==========================
+
+window.addEventListener("load", () => {
+
+    window.scrollTo(0, 0);
+
+});
