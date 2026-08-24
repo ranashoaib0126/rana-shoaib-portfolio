@@ -1,172 +1,304 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <title>MR SHOAIB</title>
 
-<title>MR SHOAIB</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<nav class="navbar">
 
-    <div class="logo">
-        RANA SHOAIB
-    </div>
+    <!-- =========================
+         NAVBAR
+    ========================== -->
 
-    <button id="menuBtn" class="menu-btn">☰</button>
+    <nav class="navbar">
 
-    <div id="navLinks" class="nav-links">
+        <div class="logo">
+            RANA SHOAIB
+        </div>
 
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#services">Services</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <button id="menuBtn" class="menu-btn">☰</button>
 
-        <button id="themeBtn">☀️ Light Mode</button>
+        <div id="navLinks" class="nav-links">
 
-    </div>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#services">Services</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
 
-</nav>
-<header id="home">
+            <button id="themeBtn">☀️ Light Mode</button>
 
-    <img src="./images/profile2.jpg" alt="Profile Picture" style="width:200px; height:200px; object-fit:cover;">
-    <h1>RANA SHOAIB</h1>
+        </div>
 
-  <p>I am <span id="typing"></span></p>
-    <div class="hero-buttons">
+    </nav>
 
-        <a href="#contact" class="btn">Contact Me</a>
 
-        <a href="#projects" class="btn">My Projects</a>
+    <!-- =========================
+         HOME / HERO
+    ========================== -->
 
-    </div>
+    <header id="home">
 
-</header>
-<section id="projects">
-<section id="services" class="services">
-
-    <h2>My Services</h2>
-<div class="counter-container">
-
-    <div class="counter-card">
-        <h1 id="project">0+</h1>
-        <p>Projects</p>
-    </div>
-
-    <div class="counter-card">
-        <h1 id="client">0+</h1>
-        <p>Clients</p>
-    </div>
-
-    <div class="counter-card">
-        <h1 id="learning">0+</h1>
-        <p>Learning</p>
-    </div>
-
-    <div class="counter-card">
-        <h1 id="passion">0%</h1>
-        <p>Passion</p>
-    </div>
-
-</div>
-
-</section>
-</section>
-
-</section>
-<section id="skills">
-
-</section>
-<section id="contact">
-
-    <h2>Contact Me</h2>
-
-    <p>Have a project in mind? Let's work together.</p>
-
-    <form id="contactForm">
-
-        <input 
-            type="text" 
-            id="name" 
-            placeholder="Your Name"
+        <img
+            src="./images/profile2.jpg"
+            class="profile"
+            alt="Rana Shoaib Profile Picture"
         >
 
-        <input 
-            type="email" 
-            id="email" 
-            placeholder="Your Email"
-        >
+        <h1>RANA SHOAIB</h1>
 
-        <textarea 
-            id="message" 
-            placeholder="Your Message"
-        ></textarea>
+        <p>
+            I am <span id="typing"></span>
+        </p>
 
-        <button type="submit">Send Message</button>
+        <div class="hero-buttons">
+
+            <a href="#contact" class="btn">
+                Contact Me
+            </a>
+
+            <a href="#projects" class="btn">
+                My Projects
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section id="about" class="about">
+
+        <h2>About Me</h2>
+
+        <p>
+            I am passionate about Web Development and B2B Sales.
+            I enjoy building professional websites and helping
+            businesses find effective digital solutions.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         SKILLS
+    ========================== -->
+
+    <section id="skills" class="skills">
+
+        <h2>My Skills</h2>
+
+        <div class="skill-box">
+
+            <div class="skill">HTML</div>
+            <div class="skill">CSS</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">Web Development</div>
+            <div class="skill">B2B Sales</div>
+            <div class="skill">LinkedIn Outreach</div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SERVICES
+    ========================== -->
+
+    <section id="services" class="services">
+
+        <h2>My Services</h2>
+
+        <div class="counter-container">
+
+            <div class="counter-card">
+
+                <h1 id="project">0+</h1>
+
+                <p>Projects</p>
+
+            </div>
+
+
+            <div class="counter-card">
+
+                <h1 id="client">0+</h1>
+
+                <p>Clients</p>
+
+            </div>
+
+
+            <div class="counter-card">
+
+                <h1 id="learning">0+</h1>
+
+                <p>Learning</p>
+
+            </div>
+
+
+            <div class="counter-card">
+
+                <h1 id="passion">0%</h1>
+
+                <p>Passion</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PROJECTS
+    ========================== -->
+
+    <section id="projects" class="projects">
+
+        <h2>My Projects</h2>
+
+        <div class="project-container">
+
+            <div class="project-card">
+
+                <h3>Portfolio Website</h3>
+
+                <p>
+                    A professional personal portfolio website
+                    built using HTML, CSS and JavaScript.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section id="contact" class="contact">
+
+        <h2>Contact Me</h2>
+
+        <p>
+            Feel free to contact me for Web Development
+            and B2B Sales projects.
+        </p>
+
+
+        <form id="contactForm">
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Your Name"
+            >
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Your Email"
+            >
+
+            <textarea
+                id="message"
+                placeholder="Your Message"
+            ></textarea>
+
+            <button type="submit">
+                Send Message
+            </button>
+
+        </form>
 
         <p id="formMessage"></p>
 
-    </form>
 
-</section>
-    </form>
+        <!-- CONTACT CARDS -->
 
-    <p id="formMessage"></p>
+        <div class="contact-box">
 
-</section>
+            <div class="contact-card">
 
-    <p>Feel free to contact me for Web Development and B2B Sales projects.</p>
+                <h3>📞 Phone</h3>
 
-    <div class="contact-box">
+                <p>
+                    +92 315 6109300
+                </p>
 
-        <div class="contact-card">
-            <h3>📞 Phone</h3>
-            <p>+92 315 6109300</p>
+            </div>
+
+
+            <div class="contact-card">
+
+                <h3>📧 Email</h3>
+
+                <p>
+                    r.shoaib0126@gmail.com
+                </p>
+
+            </div>
+
+
+            <div class="contact-card">
+
+                <h3>Country</h3>
+
+                <p>
+                    Pakistan
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="contact-card">
-            <h3>📧 Email</h3>
-            <p>r.shoaib0126@gmail.com</p>
-        </div>
+    </section>
 
-        <div class="contact-card">
-            <h3>Country</h3>
-            <p>Pakistan</p>
-        </div>
 
-    </div>
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
-</section>
-</section>
+    <footer class="footer">
+
+        <h3>RANA SHOAIB</h3>
+
+        <p>
+            Sales Executive | Front-End Developer
+        </p>
+
+        <div class="footer-line"></div>
+
+        <p class="copyright">
+            © 2026 Rana Shoaib. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
 
 </body>
 
 </html>
-<footer>
+```
 
-<p>© 2026 Shoaib | All Rights Reserved.</p>
-
-<footer class="footer">
-
-    <h3>RANA SHOAIB</h3>
-
-    <p>Sales Executive | Front-End Developer</p>
-
-    <div class="footer-line"></div>
-
-    <p class="copyright">
-        © 2026 Rana Shoaib. All Rights Reserved.
-    </p>
-
-</footer>
-<script src="script.js"></script>
-</body>
-</html>
