@@ -1,108 +1,48 @@
-console.log("WELCOME MY FIRST WEBSITE");
+// ==========================
+// WELCOME MESSAGE
+// ==========================
+
+console.log("WELCOME TO RANA SHOAIB PORTFOLIO");
 
 
 // ==========================
 // PROJECT COUNTER
 // ==========================
 
-const project = document.getElementById("project");
+function startCounter(id, target, speed, symbol) {
 
-if (project) {
+    const element = document.getElementById(id);
+
+    if (!element) {
+        return;
+    }
 
     let count = 0;
-    const target = 15;
 
-    const interval = setInterval(() => {
+    const interval = setInterval(function () {
 
         count++;
 
-        project.textContent = count + "+";
+        element.textContent = count + symbol;
 
         if (count >= target) {
+
             clearInterval(interval);
+
         }
 
-    }, 100);
+    }, speed);
 
 }
 
 
-// ==========================
-// CLIENT COUNTER
-// ==========================
+startCounter("project", 15, 100, "+");
 
-const client = document.getElementById("client");
+startCounter("client", 30, 70, "+");
 
-if (client) {
+startCounter("learning", 100, 20, "+");
 
-    let count = 0;
-    const target = 30;
-
-    const interval = setInterval(() => {
-
-        count++;
-
-        client.textContent = count + "+";
-
-        if (count >= target) {
-            clearInterval(interval);
-        }
-
-    }, 70);
-
-}
-
-
-// ==========================
-// LEARNING COUNTER
-// ==========================
-
-const learning = document.getElementById("learning");
-
-if (learning) {
-
-    let count = 0;
-    const target = 100;
-
-    const interval = setInterval(() => {
-
-        count++;
-
-        learning.textContent = count + "+";
-
-        if (count >= target) {
-            clearInterval(interval);
-        }
-
-    }, 20);
-
-}
-
-
-// ==========================
-// PASSION COUNTER
-// ==========================
-
-const passion = document.getElementById("passion");
-
-if (passion) {
-
-    let count = 0;
-    const target = 100;
-
-    const interval = setInterval(() => {
-
-        count++;
-
-        passion.textContent = count + "%";
-
-        if (count >= target) {
-            clearInterval(interval);
-        }
-
-    }, 20);
-
-}
+startCounter("passion", 100, 20, "%");
 
 
 // ==========================
@@ -113,16 +53,19 @@ const themeBtn = document.getElementById("themeBtn");
 
 if (themeBtn) {
 
-    themeBtn.addEventListener("click", () => {
+    themeBtn.addEventListener("click", function () {
 
         document.body.classList.toggle("light-mode");
 
-        const isLightMode =
-            document.body.classList.contains("light-mode");
+        if (document.body.classList.contains("light-mode")) {
 
-        themeBtn.textContent = isLightMode
-            ? "🌙 Dark Mode"
-            : "☀️ Light Mode";
+            themeBtn.textContent = "🌙 Dark Mode";
+
+        } else {
+
+            themeBtn.textContent = "☀️ Light Mode";
+
+        }
 
     });
 
@@ -142,31 +85,25 @@ const words = [
 
 const typing = document.getElementById("typing");
 
+let wordIndex = 0;
+
 if (typing) {
 
-    let wordIndex = 0;
+    typing.textContent = words[0];
 
-    typing.textContent = words[wordIndex];
-
-    setInterval(() => {
+    setInterval(function () {
 
         wordIndex++;
 
         if (wordIndex >= words.length) {
+
             wordIndex = 0;
+
         }
 
-        typing.style.opacity = "0";
+        typing.textContent = words[wordIndex];
 
-        setTimeout(() => {
-
-            typing.textContent = words[wordIndex];
-
-            typing.style.opacity = "1";
-
-        }, 250);
-
-    }, 2000);
+    }, 2200);
 
 }
 
@@ -176,30 +113,29 @@ if (typing) {
 // ==========================
 
 const contactForm = document.getElementById("contactForm");
+
 const formMessage = document.getElementById("formMessage");
 
-if (contactForm && formMessage) {
+if (contactForm) {
 
-    contactForm.addEventListener("submit", (event) => {
+    contactForm.addEventListener("submit", function (event) {
 
         event.preventDefault();
 
-        const name =
-            document.getElementById("name").value.trim();
+        const name = document.getElementById("name").value.trim();
 
-        const email =
-            document.getElementById("email").value.trim();
+        const email = document.getElementById("email").value.trim();
 
-        const message =
-            document.getElementById("message").value.trim();
+        const message = document.getElementById("message").value.trim();
 
 
-        if (!name || !email || !message) {
+        if (name === "" || email === "" || message === "") {
 
             formMessage.textContent =
-                "Please fill all fields.";
+                "Please fill in all fields.";
 
             return;
+
         }
 
 
@@ -214,28 +150,29 @@ if (contactForm && formMessage) {
 
 
 // ==========================
-// MOBILE HAMBURGER MENU
+// MOBILE MENU
 // ==========================
 
 const menuBtn = document.getElementById("menuBtn");
+
 const navLinks = document.getElementById("navLinks");
 
 if (menuBtn && navLinks) {
 
-    menuBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click", function () {
 
         navLinks.classList.toggle("active");
 
     });
 
 
-    // Close menu after clicking a navigation link
+    // Close menu after clicking a link
 
     const links = navLinks.querySelectorAll("a");
 
-    links.forEach((link) => {
+    links.forEach(function (link) {
 
-        link.addEventListener("click", () => {
+        link.addEventListener("click", function () {
 
             navLinks.classList.remove("active");
 
@@ -250,23 +187,18 @@ if (menuBtn && navLinks) {
 // SCROLL ANIMATION
 // ==========================
 
-const sections = document.querySelectorAll(
-    ".about, .skills, .services, .projects, #contact"
+const animatedSections = document.querySelectorAll(
+    ".about, .skills, .services, .projects, .contact"
 );
-
 
 function showSections() {
 
-    sections.forEach((section) => {
+    animatedSections.forEach(function (section) {
 
         const sectionTop =
             section.getBoundingClientRect().top;
 
-        const screenHeight =
-            window.innerHeight;
-
-
-        if (sectionTop < screenHeight - 100) {
+        if (sectionTop < window.innerHeight - 80) {
 
             section.classList.add("show");
 
@@ -276,18 +208,6 @@ function showSections() {
 
 }
 
-
 window.addEventListener("scroll", showSections);
 
 showSections();
-
-
-// ==========================
-// BACK TO TOP ON PAGE LOAD
-// ==========================
-
-window.addEventListener("load", () => {
-
-    window.scrollTo(0, 0);
-
-});
