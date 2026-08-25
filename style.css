@@ -14,8 +14,8 @@ html {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #111827;
-    color: #f9fafb;
+    background: #0B1220;
+    color: #F8FAFC;
     line-height: 1.6;
     transition: 0.3s ease;
 }
@@ -49,7 +49,7 @@ textarea {
 
 .section-heading span {
     display: block;
-    color: #2dd4bf;
+    color: #60A5FA;
     font-size: 13px;
     font-weight: bold;
     letter-spacing: 2px;
@@ -57,7 +57,7 @@ textarea {
 }
 
 .section-heading h2 {
-    color: #99f6e4;
+    color: #EAF2FF;
     font-size: 42px;
     margin: 0;
 }
@@ -75,8 +75,8 @@ textarea {
     align-items: center;
     justify-content: space-between;
 
-    background: #0f172a;
-    border-bottom: 1px solid #334155;
+    background: #0A1630;
+    border-bottom: 1px solid #1E3A5F;
 
     position: sticky;
     top: 0;
@@ -84,7 +84,7 @@ textarea {
 }
 
 .logo {
-    color: #f9fafb;
+    color: #FFFFFF;
     font-size: 21px;
     font-weight: bold;
     letter-spacing: 1px;
@@ -97,19 +97,19 @@ textarea {
 }
 
 .nav-links a {
-    color: #cbd5e1;
+    color: #CBD5E1;
     font-size: 14px;
     transition: 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: #2dd4bf;
+    color: #60A5FA;
 }
 
 #themeBtn {
-    border: 1px solid #14b8a6;
+    border: 1px solid #2563EB;
     background: transparent;
-    color: #99f6e4;
+    color: #93C5FD;
     padding: 9px 14px;
     border-radius: 8px;
     cursor: pointer;
@@ -117,15 +117,15 @@ textarea {
 }
 
 #themeBtn:hover {
-    background: #14b8a6;
-    color: #ffffff;
+    background: #2563EB;
+    color: #FFFFFF;
 }
 
 .menu-btn {
     display: none;
-    border: 1px solid #14b8a6;
-    background: #1f2937;
-    color: #2dd4bf;
+    border: 1px solid #2563EB;
+    background: #111C2E;
+    color: #60A5FA;
     font-size: 23px;
     padding: 6px 12px;
     border-radius: 8px;
@@ -156,14 +156,14 @@ textarea {
     height: 170px;
     object-fit: cover;
     border-radius: 50%;
-    border: 4px solid #2dd4bf;
+    border: 4px solid #3B82F6;
     display: block;
     margin: 0 auto 25px;
-    box-shadow: 0 0 30px rgba(45, 212, 191, 0.15);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.18);
 }
 
 .hero-intro {
-    color: #2dd4bf;
+    color: #60A5FA;
     font-size: 13px;
     font-weight: bold;
     letter-spacing: 2px;
@@ -174,23 +174,24 @@ textarea {
     font-size: clamp(42px, 7vw, 70px);
     line-height: 1.1;
     margin-bottom: 15px;
+    color: #F8FAFC;
 }
 
 .hero-role {
     font-size: 22px;
-    color: #e5e7eb;
+    color: #E2E8F0;
     margin-bottom: 15px;
 }
 
 #typing {
-    color: #2dd4bf;
+    color: #60A5FA;
     font-weight: bold;
 }
 
 .hero-description {
     max-width: 650px;
     margin: 0 auto 30px;
-    color: #9ca3af;
+    color: #A8B4C7;
     font-size: 16px;
 }
 
@@ -205,26 +206,26 @@ textarea {
     display: inline-block;
     padding: 12px 24px;
     border-radius: 8px;
-    background: #14b8a6;
-    color: #ffffff;
+    background: #2563EB;
+    color: #FFFFFF;
     font-weight: bold;
     transition: 0.3s ease;
 }
 
 .btn:hover {
     transform: translateY(-3px);
-    background: #0d9488;
+    background: #1D4ED8;
 }
 
 .btn-outline {
     background: transparent;
-    border: 1px solid #14b8a6;
-    color: #2dd4bf;
+    border: 1px solid #2563EB;
+    color: #60A5FA;
 }
 
 .btn-outline:hover {
-    background: #14b8a6;
-    color: #ffffff;
+    background: #2563EB;
+    color: #FFFFFF;
 }
 
 
@@ -242,11 +243,11 @@ textarea {
 .about-text h3 {
     font-size: 25px;
     margin-bottom: 20px;
-    color: #f9fafb;
+    color: #F8FAFC;
 }
 
 .about-text p {
-    color: #cbd5e1;
+    color: #CBD5E1;
     margin-bottom: 18px;
     font-size: 15px;
     line-height: 1.8;
@@ -263,15 +264,15 @@ textarea {
     align-items: center;
     gap: 16px;
     padding: 20px;
-    background: #1f2937;
-    border: 1px solid #334155;
+    background: #111C2E;
+    border: 1px solid #243B5A;
     border-radius: 12px;
     transition: 0.3s ease;
 }
 
 .info-card:hover {
     transform: translateY(-4px);
-    border-color: #14b8a6;
+    border-color: #2563EB;
 }
 
 .info-icon {
@@ -279,12 +280,12 @@ textarea {
 }
 
 .info-card h4 {
-    color: #99f6e4;
+    color: #93C5FD;
     margin-bottom: 3px;
 }
 
 .info-card p {
-    color: #cbd5e1;
+    color: #CBD5E1;
     font-size: 14px;
 }
 
@@ -300,8 +301,8 @@ textarea {
 }
 
 .skill-card {
-    background: #1f2937;
-    border: 1px solid #334155;
+    background: #111C2E;
+    border: 1px solid #243B5A;
     border-radius: 12px;
     padding: 25px 20px;
     text-align: center;
@@ -310,8 +311,8 @@ textarea {
 
 .skill-card:hover {
     transform: translateY(-6px);
-    border-color: #14b8a6;
-    box-shadow: 0 10px 25px rgba(20, 184, 166, 0.12);
+    border-color: #2563EB;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.12);
 }
 
 .skill-icon {
@@ -323,21 +324,21 @@ textarea {
     margin: 0 auto 15px;
 
     border-radius: 10px;
-    background: #134e4a;
-    color: #5eead4;
+    background: #172554;
+    color: #60A5FA;
 
     font-size: 12px;
     font-weight: bold;
 }
 
 .skill-card h3 {
-    color: #f9fafb;
+    color: #F8FAFC;
     font-size: 19px;
     margin-bottom: 8px;
 }
 
 .skill-card p {
-    color: #9ca3af;
+    color: #A8B4C7;
     font-size: 14px;
 }
 
@@ -354,8 +355,8 @@ textarea {
 }
 
 .service-card {
-    background: #1f2937;
-    border: 1px solid #334155;
+    background: #111C2E;
+    border: 1px solid #243B5A;
     border-radius: 12px;
     padding: 25px;
     transition: 0.3s ease;
@@ -363,7 +364,7 @@ textarea {
 
 .service-card:hover {
     transform: translateY(-5px);
-    border-color: #14b8a6;
+    border-color: #2563EB;
 }
 
 .service-icon {
@@ -372,13 +373,13 @@ textarea {
 }
 
 .service-card h3 {
-    color: #99f6e4;
+    color: #93C5FD;
     font-size: 20px;
     margin-bottom: 8px;
 }
 
 .service-card p {
-    color: #9ca3af;
+    color: #A8B4C7;
     font-size: 14px;
     line-height: 1.6;
 }
@@ -397,19 +398,19 @@ textarea {
 .counter-card {
     text-align: center;
     padding: 22px 15px;
-    background: #1f2937;
-    border: 1px solid #334155;
+    background: #111C2E;
+    border: 1px solid #243B5A;
     border-radius: 12px;
 }
 
 .counter-card h3 {
-    color: #2dd4bf;
+    color: #60A5FA;
     font-size: 32px;
     margin-bottom: 3px;
 }
 
 .counter-card p {
-    color: #9ca3af;
+    color: #A8B4C7;
     font-size: 13px;
 }
 
@@ -426,8 +427,8 @@ textarea {
 
 .project-card {
     position: relative;
-    background: #1f2937;
-    border: 1px solid #334155;
+    background: #111C2E;
+    border: 1px solid #243B5A;
     border-radius: 12px;
     padding: 28px 22px;
     display: flex;
@@ -437,44 +438,44 @@ textarea {
 
 .project-card:hover {
     transform: translateY(-6px);
-    border-color: #14b8a6;
+    border-color: #2563EB;
 }
 
 .project-number {
-    color: #14b8a6;
+    color: #3B82F6;
     font-size: 13px;
     font-weight: bold;
     margin-bottom: 15px;
 }
 
 .project-card h3 {
-    color: #f9fafb;
+    color: #F8FAFC;
     font-size: 20px;
     margin-bottom: 12px;
 }
 
 .project-card p {
-    color: #9ca3af;
+    color: #A8B4C7;
     font-size: 14px;
     line-height: 1.7;
     margin-bottom: 18px;
 }
 
 .project-tech {
-    color: #2dd4bf;
+    color: #60A5FA;
     font-size: 12px;
     margin-bottom: 20px;
 }
 
 .project-btn {
-    color: #99f6e4;
+    color: #93C5FD;
     font-weight: bold;
     font-size: 14px;
     margin-top: auto;
 }
 
 .project-btn:hover {
-    color: #2dd4bf;
+    color: #60A5FA;
 }
 
 
@@ -486,7 +487,7 @@ textarea {
     max-width: 600px;
     margin: -25px auto 45px;
     text-align: center;
-    color: #9ca3af;
+    color: #A8B4C7;
 }
 
 .contact-wrapper {
@@ -498,15 +499,15 @@ textarea {
 
 .contact-form-box,
 .contact-information {
-    background: #1f2937;
-    border: 1px solid #334155;
+    background: #111C2E;
+    border: 1px solid #243B5A;
     border-radius: 12px;
     padding: 28px;
 }
 
 .contact-form-box h3,
 .contact-information h3 {
-    color: #99f6e4;
+    color: #93C5FD;
     font-size: 21px;
     margin-bottom: 20px;
 }
@@ -520,9 +521,9 @@ textarea {
 #contactForm input,
 #contactForm textarea {
     width: 100%;
-    border: 1px solid #475569;
-    background: #111827;
-    color: #ffffff;
+    border: 1px solid #3B4D66;
+    background: #0B1220;
+    color: #FFFFFF;
     padding: 13px 14px;
     border-radius: 8px;
     outline: none;
@@ -531,7 +532,7 @@ textarea {
 
 #contactForm input:focus,
 #contactForm textarea:focus {
-    border-color: #14b8a6;
+    border-color: #2563EB;
 }
 
 #contactForm textarea {
@@ -541,8 +542,8 @@ textarea {
 
 #contactForm button {
     border: none;
-    background: #14b8a6;
-    color: #ffffff;
+    background: #2563EB;
+    color: #FFFFFF;
     padding: 13px;
     border-radius: 8px;
     font-weight: bold;
@@ -551,17 +552,17 @@ textarea {
 }
 
 #contactForm button:hover {
-    background: #0d9488;
+    background: #1D4ED8;
 }
 
 #formMessage {
     margin-top: 12px;
-    color: #2dd4bf;
+    color: #60A5FA;
     font-size: 14px;
 }
 
 .contact-information > p {
-    color: #9ca3af;
+    color: #A8B4C7;
     font-size: 14px;
     margin-bottom: 25px;
 }
@@ -578,8 +579,8 @@ textarea {
     gap: 15px;
     padding: 15px;
     border-radius: 10px;
-    background: #111827;
-    border: 1px solid #334155;
+    background: #0B1220;
+    border: 1px solid #243B5A;
 }
 
 .contact-icon {
@@ -587,12 +588,12 @@ textarea {
 }
 
 .contact-card h4 {
-    color: #99f6e4;
+    color: #93C5FD;
     font-size: 14px;
 }
 
 .contact-card p {
-    color: #cbd5e1;
+    color: #CBD5E1;
     font-size: 13px;
 }
 
@@ -604,24 +605,24 @@ textarea {
 .footer {
     text-align: center;
     padding: 40px 20px;
-    background: #0b1120;
-    border-top: 1px solid #334155;
+    background: #080F1D;
+    border-top: 1px solid #243B5A;
 }
 
 .footer h3 {
-    color: #f9fafb;
+    color: #F8FAFC;
     margin-bottom: 5px;
 }
 
 .footer p {
-    color: #9ca3af;
+    color: #A8B4C7;
     font-size: 14px;
 }
 
 .footer-line {
     width: 60px;
     height: 2px;
-    background: #14b8a6;
+    background: #2563EB;
     margin: 18px auto;
 }
 
@@ -635,17 +636,17 @@ textarea {
 ========================== */
 
 body.light-mode {
-    background: #f8fafc;
-    color: #0f172a;
+    background: #F8FAFC;
+    color: #0F172A;
 }
 
 body.light-mode .navbar {
-    background: #ffffff;
-    border-color: #ccfbf1;
+    background: #FFFFFF;
+    border-color: #D6E4F5;
 }
 
 body.light-mode .logo {
-    color: #0f172a;
+    color: #0F172A;
 }
 
 body.light-mode .nav-links a {
@@ -653,7 +654,7 @@ body.light-mode .nav-links a {
 }
 
 body.light-mode .nav-links a:hover {
-    color: #0d9488;
+    color: #1D4ED8;
 }
 
 body.light-mode .hero-role {
@@ -673,7 +674,11 @@ body.light-mode .contact-information > p {
 body.light-mode .about-text h3,
 body.light-mode .skill-card h3,
 body.light-mode .project-card h3 {
-    color: #0f172a;
+    color: #0F172A;
+}
+
+body.light-mode .section-heading h2 {
+    color: #0F2A4A;
 }
 
 body.light-mode .info-card,
@@ -683,34 +688,34 @@ body.light-mode .counter-card,
 body.light-mode .project-card,
 body.light-mode .contact-form-box,
 body.light-mode .contact-information {
-    background: #ffffff;
-    border-color: #ccfbf1;
+    background: #FFFFFF;
+    border-color: #D6E4F5;
 }
 
 body.light-mode .contact-card {
-    background: #f8fafc;
-    border-color: #ccfbf1;
+    background: #F8FAFC;
+    border-color: #D6E4F5;
 }
 
 body.light-mode #contactForm input,
 body.light-mode #contactForm textarea {
-    background: #ffffff;
-    color: #0f172a;
-    border-color: #cbd5e1;
+    background: #FFFFFF;
+    color: #0F172A;
+    border-color: #CBD5E1;
 }
 
 body.light-mode .footer {
-    background: #e2e8f0;
-    border-color: #cbd5e1;
+    background: #EAF0F8;
+    border-color: #CBD5E1;
 }
 
 body.light-mode .footer h3 {
-    color: #0f172a;
+    color: #0F172A;
 }
 
 body.light-mode .menu-btn {
-    background: #ffffff;
-    color: #0d9488;
+    background: #FFFFFF;
+    color: #2563EB;
 }
 
 
@@ -761,8 +766,8 @@ body.light-mode .menu-btn {
         width: 100%;
         padding: 20px;
 
-        background: #1f2937;
-        border-bottom: 1px solid #334155;
+        background: #111C2E;
+        border-bottom: 1px solid #243B5A;
 
         flex-direction: column;
         align-items: stretch;
