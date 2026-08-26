@@ -637,36 +637,8 @@ textarea {
 }
 
 /* ==========================
-   LIGHT MODE - GREY + BLUE CARDS
+   LIGHT THEME TEXT FIX
 ========================== */
-
-body.light-mode {
-    background: #C8C8C8;
-    color: #111111;
-}
-
-
-/* NAVBAR */
-
-body.light-mode .navbar {
-    background: #303030;
-    border-color: #555555;
-}
-
-body.light-mode .logo {
-    color: #FFFFFF;
-}
-
-body.light-mode .nav-links a {
-    color: #E5E5E5;
-}
-
-body.light-mode .nav-links a:hover {
-    color: #6EA2FF;
-}
-
-
-/* MAIN TEXT */
 
 body.light-mode .hero h1 {
     color: #111111;
@@ -680,60 +652,35 @@ body.light-mode .hero-description {
     color: #333333;
 }
 
-body.light-mode .hero-intro,
+body.light-mode .hero-intro {
+    color: #174EA6;
+}
+
 body.light-mode #typing {
     color: #174EA6;
 }
 
 
-/* SECTION HEADINGS */
+/* ABOUT TEXT */
 
-body.light-mode .section-heading span {
-    color: #174EA6;
+body.light-mode .about-text h3 {
+    color: #111111;
 }
+
+body.light-mode .about-text p {
+    color: #333333;
+}
+
+
+/* SECTION HEADINGS */
 
 body.light-mode .section-heading h2 {
     color: #111111;
 }
 
-
-/* ==========================
-   BLUE CARDS / BOXES
-========================== */
-
-body.light-mode .info-card,
-body.light-mode .skill-card,
-body.light-mode .service-card,
-body.light-mode .counter-card,
-body.light-mode .project-card,
-body.light-mode .contact-form-box,
-body.light-mode .contact-information {
-
-    background: #2457A6;
-    border-color: #3975C9;
+body.light-mode .section-heading span {
+    color: #174EA6;
 }
-
-
-/* BOX HEADINGS */
-
-body.light-mode .info-card h4,
-body.light-mode .service-card h3,
-body.light-mode .contact-form-box h3,
-body.light-mode .contact-information h3 {
-    color: #FFFFFF;
-}
-
-
-/* BOX NORMAL TEXT */
-
-body.light-mode .info-card p,
-body.light-mode .skill-card p,
-body.light-mode .service-card p,
-body.light-mode .project-card p,
-body.light-mode .contact-information > p {
-    color: #E6EEFF;
-}
-
 
 /* SKILL BOX */
 
