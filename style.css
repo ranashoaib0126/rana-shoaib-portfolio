@@ -107,9 +107,9 @@ textarea {
 }
 
 #themeBtn {
-    border: 1px solid #3978E8;
+    border: 1px solid #3975C9;
     background: transparent;
-    color: #76A7FF;
+    color: #6EA2FF;
     padding: 9px 14px;
     border-radius: 8px;
     cursor: pointer;
@@ -117,8 +117,9 @@ textarea {
 }
 
 #themeBtn:hover {
-    background: #2864C7;
+    background: #2457A6;
     color: #FFFFFF;
+    border-color: #4F8CFF;
 }
 
 .menu-btn {
@@ -206,28 +207,30 @@ textarea {
     display: inline-block;
     padding: 12px 24px;
     border-radius: 8px;
-    background: #2864C7;
+    background: #2457A6;
     color: #FFFFFF;
     font-weight: bold;
     transition: 0.3s ease;
+    border: 1px solid #3975C9;
 }
 
 .btn:hover {
     transform: translateY(-3px);
-    background: #1F55AE;
+    background: #174A91;
+    box-shadow: 0 8px 20px rgba(36, 87, 166, 0.25);
 }
-
 .btn-outline {
     background: transparent;
-    border: 1px solid #3978E8;
-    color: #72A3FF;
+    border: 1px solid #3975C9;
+    color: #6EA2FF;
 }
 
 .btn-outline:hover {
-    background: #2864C7;
+    background: #2457A6;
     color: #FFFFFF;
+    border-color: #4F8CFF;
+    box-shadow: 0 8px 20px rgba(36, 87, 166, 0.20);
 }
-
 
 /* ==========================
    ABOUT
@@ -468,14 +471,15 @@ textarea {
 }
 
 .project-btn {
-    color: #76A7FF;
+    color: #5B95FF;
     font-weight: bold;
     font-size: 14px;
     margin-top: auto;
+    transition: 0.3s ease;
 }
 
 .project-btn:hover {
-    color: #5B95FF;
+    color: #AFCBFF;
 }
 
 
@@ -542,7 +546,7 @@ textarea {
 
 #contactForm button {
     border: none;
-    background: #2864C7;
+    background: #2457A6;
     color: #FFFFFF;
     padding: 13px;
     border-radius: 8px;
@@ -552,7 +556,9 @@ textarea {
 }
 
 #contactForm button:hover {
-    background: #1F55AE;
+    background: #174A91;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(36, 87, 166, 0.25);
 }
 
 #formMessage {
