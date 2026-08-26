@@ -632,17 +632,17 @@ textarea {
 
 
 /* ==========================
-   LIGHT MODE
+   LIGHT MODE - DARK GREY
 ========================== */
 
 body.light-mode {
-    background: #18243A;
-    color: #F1F5F9;
+    background: #252525;
+    color: #F5F5F5;
 }
 
 body.light-mode .navbar {
-    background: #202F48;
-    border-color: #3A4D69;
+    background: #303030;
+    border-color: #4A4A4A;
 }
 
 body.light-mode .logo {
@@ -650,15 +650,15 @@ body.light-mode .logo {
 }
 
 body.light-mode .nav-links a {
-    color: #D5DDEA;
+    color: #D6D6D6;
 }
 
 body.light-mode .nav-links a:hover {
-    color: #6EA2FF;
+    color: #5B95FF;
 }
 
 body.light-mode .hero-role {
-    color: #D5DDEA;
+    color: #D8D8D8;
 }
 
 body.light-mode .hero-description,
@@ -668,17 +668,17 @@ body.light-mode .service-card p,
 body.light-mode .project-card p,
 body.light-mode .contact-intro,
 body.light-mode .contact-information > p {
-    color: #B8C4D4;
+    color: #C4C4C4;
 }
 
 body.light-mode .about-text h3,
 body.light-mode .skill-card h3,
 body.light-mode .project-card h3 {
-    color: #F1F5F9;
+    color: #FFFFFF;
 }
 
 body.light-mode .section-heading h2 {
-    color: #F1F5F9;
+    color: #FFFFFF;
 }
 
 body.light-mode .info-card,
@@ -688,36 +688,45 @@ body.light-mode .counter-card,
 body.light-mode .project-card,
 body.light-mode .contact-form-box,
 body.light-mode .contact-information {
-    background: #202F48;
-    border-color: #3A4D69;
+    background: #333333;
+    border-color: #4A4A4A;
 }
 
 body.light-mode .contact-card {
-    background: #18243A;
-    border-color: #3A4D69;
+    background: #292929;
+    border-color: #4A4A4A;
 }
 
 body.light-mode #contactForm input,
 body.light-mode #contactForm textarea {
-    background: #18243A;
-    color: #F1F5F9;
-    border-color: #465A76;
+    background: #292929;
+    color: #FFFFFF;
+    border-color: #555555;
+}
+
+body.light-mode #contactForm input:focus,
+body.light-mode #contactForm textarea:focus {
+    border-color: #3978E8;
 }
 
 body.light-mode .footer {
-    background: #121C2D;
-    border-color: #3A4D69;
+    background: #1E1E1E;
+    border-color: #444444;
 }
 
 body.light-mode .footer h3 {
-    color: #F1F5F9;
+    color: #FFFFFF;
+}
+
+body.light-mode .footer p {
+    color: #BDBDBD;
 }
 
 body.light-mode .menu-btn {
-    background: #202F48;
+    background: #333333;
     color: #6EA2FF;
+    border-color: #555555;
 }
-
 
 /* ==========================
    MOBILE
