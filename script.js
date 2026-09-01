@@ -13,35 +13,26 @@ function startCounter(id, target, speed, symbol) {
 
     const element = document.getElementById(id);
 
-    if (!element) {
-        return;
-    }
+    if (!element) return;
 
     let count = 0;
 
-    const interval = setInterval(function () {
+    const interval = setInterval(() => {
 
         count++;
 
         element.textContent = count + symbol;
 
         if (count >= target) {
-
             clearInterval(interval);
-
         }
 
     }, speed);
-
 }
 
-
 startCounter("project", 15, 100, "+");
-
 startCounter("client", 30, 70, "+");
-
 startCounter("learning", 100, 20, "+");
-
 startCounter("passion", 100, 20, "%");
 
 
@@ -51,6 +42,27 @@ startCounter("passion", 100, 20, "%");
 
 const themeBtn = document.getElementById("themeBtn");
 
+
+// Load saved theme
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+
+    document.body.classList.add("light-mode");
+
+    if (themeBtn) {
+        themeBtn.textContent = "🌙 Dark Mode";
+    }
+
+} else {
+
+    if (themeBtn) {
+        themeBtn.textContent = "☀️ Light Mode";
+    }
+}
+
+
+// Change theme
 if (themeBtn) {
 
     themeBtn.addEventListener("click", function () {
@@ -61,10 +73,13 @@ if (themeBtn) {
 
             themeBtn.textContent = "🌙 Dark Mode";
 
+            localStorage.setItem("theme", "light");
+
         } else {
 
             themeBtn.textContent = "☀️ Light Mode";
 
+            localStorage.setItem("theme", "dark");
         }
 
     });
@@ -86,25 +101,65 @@ const words = [
 const typing = document.getElementById("typing");
 
 let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
 
-if (typing) {
 
-    typing.textContent = words[0];
+function typeEffect() {
 
-    setInterval(function () {
+    if (!typing) return;
+
+    const currentWord = words[wordIndex];
+
+    if (isDeleting) {
+
+        typing.textContent =
+            currentWord.substring(0, charIndex - 1);
+
+        charIndex--;
+
+    } else {
+
+        typing.textContent =
+            currentWord.substring(0, charIndex + 1);
+
+        charIndex++;
+    }
+
+
+    let speed = isDeleting ? 50 : 90;
+
+
+    // Word completed
+    if (!isDeleting && charIndex === currentWord.length) {
+
+        speed = 1500;
+
+        isDeleting = true;
+    }
+
+
+    // Word deleted
+    if (isDeleting && charIndex === 0) {
+
+        isDeleting = false;
 
         wordIndex++;
 
         if (wordIndex >= words.length) {
-
             wordIndex = 0;
-
         }
 
-        typing.textContent = words[wordIndex];
+        speed = 400;
+    }
 
-    }, 2200);
 
+    setTimeout(typeEffect, speed);
+}
+
+
+if (typing) {
+    typeEffect();
 }
 
 
@@ -116,17 +171,22 @@ const contactForm = document.getElementById("contactForm");
 
 const formMessage = document.getElementById("formMessage");
 
+
 if (contactForm) {
 
     contactForm.addEventListener("submit", function (event) {
 
         event.preventDefault();
 
-        const name = document.getElementById("name").value.trim();
 
-        const email = document.getElementById("email").value.trim();
+        const name =
+            document.getElementById("name").value.trim();
 
-        const message = document.getElementById("message").value.trim();
+        const email =
+            document.getElementById("email").value.trim();
+
+        const message =
+            document.getElementById("message").value.trim();
 
 
         if (name === "" || email === "" || message === "") {
@@ -135,7 +195,6 @@ if (contactForm) {
                 "Please fill in all fields.";
 
             return;
-
         }
 
 
@@ -157,6 +216,7 @@ const menuBtn = document.getElementById("menuBtn");
 
 const navLinks = document.getElementById("navLinks");
 
+
 if (menuBtn && navLinks) {
 
     menuBtn.addEventListener("click", function () {
@@ -166,9 +226,9 @@ if (menuBtn && navLinks) {
     });
 
 
-    // Close menu after clicking a link
+    const links =
+        navLinks.querySelectorAll("a");
 
-    const links = navLinks.querySelectorAll("a");
 
     links.forEach(function (link) {
 
@@ -184,12 +244,13 @@ if (menuBtn && navLinks) {
 
 
 // ==========================
-// SCROLL ANIMATION
+// SCROLL REVEAL
 // ==========================
 
 const animatedSections = document.querySelectorAll(
     ".about, .skills, .services, .projects, .contact"
 );
+
 
 function showSections() {
 
@@ -197,6 +258,7 @@ function showSections() {
 
         const sectionTop =
             section.getBoundingClientRect().top;
+
 
         if (sectionTop < window.innerHeight - 80) {
 
@@ -208,6 +270,22 @@ function showSections() {
 
 }
 
+
 window.addEventListener("scroll", showSections);
 
 showSections();
+
+
+// ==========================
+// NAVBAR AUTO CLOSE
+// ==========================
+
+window.addEventListener("resize", function () {
+
+    if (window.innerWidth > 700 && navLinks) {
+
+        navLinks.classList.remove("active");
+
+    }
+
+});
