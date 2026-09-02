@@ -1,460 +1,355 @@
-/* =========================
-   WELCOME MESSAGE
-========================= */
+// ==========================
+// WELCOME MESSAGE
+// ==========================
 
-console.log("Welcome to Rana Shoaib Portfolio 🚀");
+console.log("WELCOME TO RANA SHOAIB PORTFOLIO");
 
 
-/* =========================
-   COUNTER ANIMATION
-========================= */
+// ==========================
+// PROJECT COUNTER
+// ==========================
 
-const counters = document.querySelectorAll(".counter");
+function startCounter(id, target, speed, symbol) {
 
-function startCounters() {
+    const element = document.getElementById(id);
 
-    counters.forEach(counter => {
+    if (!element) return;
 
-        const target = parseInt(counter.getAttribute("data-target"));
-        let count = 0;
+    let count = 0;
 
-        const speed = Math.max(10, 1500 / target);
+    const interval = setInterval(() => {
 
-        function updateCounter() {
+        count++;
 
-            if (count < target) {
+        element.textContent = count + symbol;
 
-                count++;
-                counter.textContent = count + "+";
-
-                setTimeout(updateCounter, speed);
-
-            } else {
-
-                counter.textContent = target + "+";
-
-            }
+        if (count >= target) {
+            clearInterval(interval);
         }
 
-        updateCounter();
-    });
+    }, speed);
 }
 
-const counterSection = document.querySelector(".stats");
-
-if (counterSection) {
-
-    const observer = new IntersectionObserver(
-        entries => {
-
-            if (entries[0].isIntersecting) {
-
-                startCounters();
-
-                observer.disconnect();
-            }
-        },
-        {
-            threshold: 0.4
-        }
-    );
-
-    observer.observe(counterSection);
-}
+startCounter("project", 15, 100, "+");
+startCounter("client", 30, 70, "+");
+startCounter("learning", 100, 20, "+");
+startCounter("passion", 100, 20, "%");
 
 
-/* =========================
-   DARK / LIGHT MODE
-========================= */
+// ==========================
+// DARK / LIGHT MODE
+// ==========================
 
-const themeToggle = document.getElementById("theme-toggle");
+const themeBtn = document.getElementById("themeBtn");
 
-if (themeToggle) {
+const savedTheme = localStorage.getItem("theme");
 
-    const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "light") {
 
-    if (savedTheme === "light") {
+    document.body.classList.add("light-mode");
 
-        document.body.classList.add("light-mode");
-
-        themeToggle.textContent = "🌙";
-
-    } else {
-
-        themeToggle.textContent = "☀️";
+    if (themeBtn) {
+        themeBtn.textContent = "🌙 Dark Mode";
     }
 
+} else {
 
-    themeToggle.addEventListener("click", () => {
+    if (themeBtn) {
+        themeBtn.textContent = "☀️ Light Mode";
+    }
+}
+
+
+if (themeBtn) {
+
+    themeBtn.addEventListener("click", function () {
 
         document.body.classList.toggle("light-mode");
 
-        const isLight =
-            document.body.classList.contains("light-mode");
+        if (document.body.classList.contains("light-mode")) {
 
-        localStorage.setItem(
-            "theme",
-            isLight ? "light" : "dark"
-        );
+            themeBtn.textContent = "🌙 Dark Mode";
 
-        themeToggle.textContent =
-            isLight ? "🌙" : "☀️";
+            localStorage.setItem("theme", "light");
+
+        } else {
+
+            themeBtn.textContent = "☀️ Light Mode";
+
+            localStorage.setItem("theme", "dark");
+        }
+
     });
+
 }
 
 
-/* =========================
-   PREMIUM TYPING ANIMATION
-========================= */
+// ==========================
+// TYPING ANIMATION
+// ==========================
 
-const typingElement =
-    document.getElementById("typing");
-
-const roles = [
+const words = [
     "Sales Executive | TXEND",
     "Front-End Developer",
     "HTML | CSS | JavaScript",
     "B2B Sales Expert"
 ];
 
-let roleIndex = 0;
+const typing = document.getElementById("typing");
+
+let wordIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
 
+
 function typeEffect() {
 
-    if (!typingElement) return;
+    if (!typing) return;
 
-    const currentRole =
-        roles[roleIndex];
+    const currentWord = words[wordIndex];
 
+    if (isDeleting) {
 
-    /* TYPING */
+        typing.textContent =
+            currentWord.substring(0, charIndex - 1);
 
-    if (!isDeleting) {
+        charIndex--;
 
-        typingElement.textContent =
-            currentRole.substring(
-                0,
-                charIndex + 1
-            );
+    } else {
+
+        typing.textContent =
+            currentWord.substring(0, charIndex + 1);
 
         charIndex++;
+    }
 
 
-        /* FINISHED TYPING */
+    let speed = isDeleting ? 50 : 90;
 
-        if (
-            charIndex ===
-            currentRole.length
-        ) {
 
-            isDeleting = true;
+    if (!isDeleting && charIndex === currentWord.length) {
 
-            setTimeout(
-                typeEffect,
-                1800
-            );
+        speed = 1500;
+
+        isDeleting = true;
+    }
+
+
+    if (isDeleting && charIndex === 0) {
+
+        isDeleting = false;
+
+        wordIndex++;
+
+        if (wordIndex >= words.length) {
+            wordIndex = 0;
+        }
+
+        speed = 400;
+    }
+
+
+    setTimeout(typeEffect, speed);
+}
+
+
+if (typing) {
+    typeEffect();
+}
+
+
+// ==========================
+// CONTACT FORM
+// ==========================
+
+const contactForm = document.getElementById("contactForm");
+
+const formMessage = document.getElementById("formMessage");
+
+
+if (contactForm) {
+
+    contactForm.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const message =
+            document.getElementById("message").value.trim();
+
+
+        if (name === "" || email === "" || message === "") {
+
+            formMessage.textContent =
+                "Please fill in all fields.";
 
             return;
         }
 
 
-    /* DELETING */
+        formMessage.textContent =
+            "Message sent successfully!";
 
-    } else {
+        contactForm.reset();
 
-        typingElement.textContent =
-            currentRole.substring(
-                0,
-                charIndex - 1
-            );
+    });
 
-        charIndex--;
-
-
-        /* FINISHED DELETING */
-
-        if (charIndex === 0) {
-
-            isDeleting = false;
-
-            roleIndex++;
-
-            if (
-                roleIndex ===
-                roles.length
-            ) {
-
-                roleIndex = 0;
-            }
-        }
-    }
-
-
-    setTimeout(
-        typeEffect,
-        isDeleting ? 50 : 90
-    );
-}
-
-typeEffect();
-
-
-/* =========================
-   CONTACT FORM
-========================= */
-
-const contactForm =
-    document.getElementById("contact-form");
-
-if (contactForm) {
-
-    contactForm.addEventListener(
-        "submit",
-        function (e) {
-
-            e.preventDefault();
-
-            const name =
-                document.getElementById("name");
-
-            const email =
-                document.getElementById("email");
-
-            const message =
-                document.getElementById("message");
-
-
-            if (
-                !name.value.trim() ||
-                !email.value.trim() ||
-                !message.value.trim()
-            ) {
-
-                alert(
-                    "Please fill in all fields."
-                );
-
-                return;
-            }
-
-
-            alert(
-                "Thank you! Your message has been received."
-            );
-
-            contactForm.reset();
-        }
-    );
 }
 
 
-/* =========================
-   MOBILE MENU
-========================= */
+// ==========================
+// MOBILE MENU
+// ==========================
 
-const menuToggle =
-    document.querySelector(".menu-toggle");
+const menuBtn = document.getElementById("menuBtn");
 
-const navLinks =
-    document.querySelector(".nav-links");
-
-if (menuToggle && navLinks) {
-
-    menuToggle.addEventListener(
-        "click",
-        () => {
-
-            navLinks.classList.toggle(
-                "active"
-            );
-
-            menuToggle.classList.toggle(
-                "active"
-            );
-        }
-    );
+const navLinks = document.getElementById("navLinks");
 
 
-    /* CLOSE MENU AFTER CLICK */
+if (menuBtn && navLinks) {
 
-    navLinks
-        .querySelectorAll("a")
-        .forEach(link => {
+    menuBtn.addEventListener("click", function () {
 
-            link.addEventListener(
-                "click",
-                () => {
+        navLinks.classList.toggle("active");
 
-                    navLinks.classList.remove(
-                        "active"
-                    );
+    });
 
-                    menuToggle.classList.remove(
-                        "active"
-                    );
-                }
-            );
+
+    const links =
+        navLinks.querySelectorAll("a");
+
+
+    links.forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            navLinks.classList.remove("active");
+
         });
+
+    });
+
 }
 
 
-/* =========================
-   SCROLL REVEAL
-========================= */
+// ==========================
+// SCROLL REVEAL
+// ==========================
 
-const revealElements =
-    document.querySelectorAll(
-        ".about, .skills, .services, .projects, .contact, .why-me"
-    );
+const animatedSections = document.querySelectorAll(
+    ".about, .skills, .services, .projects, .contact, .why-me"
+);
 
-const revealObserver =
-    new IntersectionObserver(
-        entries => {
 
-            entries.forEach(entry => {
+function showSections() {
 
-                if (
-                    entry.isIntersecting
-                ) {
+    animatedSections.forEach(function (section) {
 
-                    entry.target.classList.add(
-                        "show"
-                    );
-                }
-            });
-        },
-        {
-            threshold: 0.15
+        const sectionTop =
+            section.getBoundingClientRect().top;
+
+
+        if (sectionTop < window.innerHeight - 80) {
+
+            section.classList.add("show");
+
         }
-    );
+
+    });
+
+}
 
 
-revealElements.forEach(element => {
+window.addEventListener("scroll", showSections);
 
-    revealObserver.observe(element);
+showSections();
+
+
+// ==========================
+// NAVBAR AUTO CLOSE
+// ==========================
+
+window.addEventListener("resize", function () {
+
+    if (window.innerWidth > 700 && navLinks) {
+
+        navLinks.classList.remove("active");
+
+    }
 
 });
 
 
-/* =========================
-   NAVBAR RESIZE FIX
-========================= */
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (
-            window.innerWidth > 700 &&
-            navLinks
-        ) {
-
-            navLinks.classList.remove(
-                "active"
-            );
-
-            if (menuToggle) {
-
-                menuToggle.classList.remove(
-                    "active"
-                );
-            }
-        }
-    }
-);
+// ==================================================
+// INTERACTIVE PROJECT PREVIEW
+// ==================================================
 
 
-/* =========================
-   PROJECT DATA
-========================= */
+// Project information
 
 const projectData = {
 
     1: {
-
-        title: "Business Portfolio Website",
-
+        title: "Personal Portfolio Website",
         description:
-            "A modern and responsive business portfolio website designed to create a professional online presence and showcase services effectively.",
-
-        tech:
-            "HTML, CSS, JavaScript",
-
+            "A modern responsive personal portfolio website created to showcase my skills, experience, services and projects.",
+        technologies:
+            "HTML • CSS • JavaScript",
         status:
-            "Completed",
-
-        icon:
-            "💼"
+            "Completed"
     },
-
 
     2: {
-
-        title: "Sales Landing Page",
-
+        title: "Business Web Development",
         description:
-            "A conversion-focused landing page designed to present a business service clearly and encourage visitors to take action.",
-
-        tech:
-            "HTML, CSS, JavaScript",
-
+            "Professional business website solutions focused on clean design, responsive layouts and better online presence.",
+        technologies:
+            "HTML • CSS • JavaScript • Responsive Design",
         status:
-            "Completed",
-
-        icon:
-            "🚀"
+            "In Progress"
     },
 
-
     3: {
-
-        title: "Interactive Web Interface",
-
+        title: "B2B Sales & Outreach",
         description:
-            "An interactive front-end interface focused on clean design, smooth animations and a better user experience.",
-
-        tech:
-            "HTML, CSS, JavaScript",
-
+            "B2B lead generation and LinkedIn outreach workflow focused on finding prospects, connecting with decision makers and generating business opportunities.",
+        technologies:
+            "LinkedIn • Lead Generation • B2B Sales",
         status:
-            "In Progress",
-
-        icon:
-            "⚡"
+            "Active"
     }
+
 };
 
 
-/* =========================
-   PROJECT MODAL
-========================= */
+// Find project buttons
 
 const projectButtons =
-    document.querySelectorAll(
-        ".project-card .project-btn"
-    );
+    document.querySelectorAll(".project-card .btn");
 
 
-/* CREATE MODAL */
+// Create popup
 
-const modal =
-    document.createElement("div");
+const modal = document.createElement("div");
 
-modal.className =
-    "project-modal";
+modal.className = "project-modal";
 
 modal.innerHTML = `
 
     <div class="project-modal-box">
 
-        <button class="modal-close">
+        <button class="modal-close" id="modalClose">
             ×
         </button>
 
-        <div class="modal-icon" id="modalIcon">
-            💼
+        <div class="modal-icon">
+            💻
         </div>
 
         <h2 id="modalTitle">
@@ -462,44 +357,29 @@ modal.innerHTML = `
         </h2>
 
         <p id="modalDescription">
-            Project description
+            Project Description
         </p>
 
         <div class="modal-info">
 
             <div>
-
-                <strong>
-                    TECHNOLOGY
-                </strong>
-
+                <strong>Technologies</strong>
                 <span id="modalTech">
-                    HTML, CSS, JavaScript
+                    HTML • CSS • JavaScript
                 </span>
-
             </div>
 
-
             <div>
-
-                <strong>
-                    STATUS
-                </strong>
-
+                <strong>Status</strong>
                 <span id="modalStatus">
                     Completed
                 </span>
-
             </div>
 
         </div>
 
-
-        <button
-            class="modal-action"
-            id="modalAction"
-        >
-            View Project
+        <button class="modal-action" id="modalAction">
+            Close Preview
         </button>
 
     </div>
@@ -509,102 +389,58 @@ modal.innerHTML = `
 document.body.appendChild(modal);
 
 
-/* MODAL ELEMENTS */
+// Open project popup
 
-const modalTitle =
-    document.getElementById(
-        "modalTitle"
-    );
+projectButtons.forEach(function (button, index) {
 
-const modalDescription =
-    document.getElementById(
-        "modalDescription"
-    );
+    button.addEventListener("click", function (event) {
 
-const modalTech =
-    document.getElementById(
-        "modalTech"
-    );
+        event.preventDefault();
 
-const modalStatus =
-    document.getElementById(
-        "modalStatus"
-    );
+        const projectNumber = index + 1;
 
-const modalIcon =
-    document.getElementById(
-        "modalIcon"
-    );
+        const project = projectData[projectNumber];
 
-const modalAction =
-    document.getElementById(
-        "modalAction"
-    );
-
-const modalClose =
-    modal.querySelector(
-        ".modal-close"
-    );
+        if (!project) return;
 
 
-/* OPEN MODAL */
+        document.getElementById("modalTitle").textContent =
+            project.title;
 
-projectButtons.forEach(
-    (button, index) => {
+        document.getElementById("modalDescription").textContent =
+            project.description;
 
-        button.addEventListener(
-            "click",
-            function (e) {
+        document.getElementById("modalTech").textContent =
+            project.technologies;
 
-                e.preventDefault();
-
-                const project =
-                    projectData[index + 1];
-
-                if (!project) return;
+        document.getElementById("modalStatus").textContent =
+            project.status;
 
 
-                modalTitle.textContent =
-                    project.title;
+        modal.classList.add("active");
 
-                modalDescription.textContent =
-                    project.description;
+        document.body.classList.add("modal-open");
 
-                modalTech.textContent =
-                    project.tech;
+    });
 
-                modalStatus.textContent =
-                    project.status;
-
-                modalIcon.textContent =
-                    project.icon;
+});
 
 
-                modal.classList.add(
-                    "active"
-                );
-
-                document.body.classList.add(
-                    "modal-open"
-                );
-            }
-        );
-    }
-);
-
-
-/* CLOSE MODAL */
+// Close popup function
 
 function closeProjectModal() {
 
-    modal.classList.remove(
-        "active"
-    );
+    modal.classList.remove("active");
 
-    document.body.classList.remove(
-        "modal-open"
-    );
+    document.body.classList.remove("modal-open");
+
 }
+
+
+// Close button
+
+const modalClose =
+    document.getElementById("modalClose");
 
 
 if (modalClose) {
@@ -613,201 +449,72 @@ if (modalClose) {
         "click",
         closeProjectModal
     );
+
 }
 
 
-/* CLOSE WHEN CLICKING OUTSIDE */
+// Close action button
 
-modal.addEventListener(
-    "click",
-    function (e) {
+const modalAction =
+    document.getElementById("modalAction");
 
-        if (
-            e.target === modal
-        ) {
 
-            closeProjectModal();
-        }
+if (modalAction) {
+
+    modalAction.addEventListener(
+        "click",
+        closeProjectModal
+    );
+
+}
+
+
+// Close when clicking outside popup
+
+modal.addEventListener("click", function (event) {
+
+    if (event.target === modal) {
+
+        closeProjectModal();
+
     }
-);
 
-
-/* CLOSE WITH ESC KEY */
-
-document.addEventListener(
-    "keydown",
-    function (e) {
-
-        if (
-            e.key === "Escape" &&
-            modal.classList.contains(
-                "active"
-            )
-        ) {
-
-            closeProjectModal();
-        }
-    }
-);
-
-
-/* =========================
-   PROJECT HOVER EFFECT
-========================= */
-
-const projectCards =
-    document.querySelectorAll(
-        ".project-card"
-    );
-
-projectCards.forEach(card => {
-
-    card.addEventListener(
-        "mouseenter",
-        () => {
-
-            card.style.transform =
-                "translateY(-8px)";
-        }
-    );
-
-
-    card.addEventListener(
-        "mouseleave",
-        () => {
-
-            card.style.transform =
-                "";
-        }
-    );
 });
 
 
-/* =========================
+// Close with ESC key
+
+document.addEventListener("keydown", function (event) {
+
+    if (event.key === "Escape") {
+
+        closeProjectModal();
+
+    }
+
+});
 
 
-/* =========================
-   SMOOTH NAVIGATION
-========================= */
+// ==========================
+// PROJECT HOVER MESSAGE
+// ==========================
 
-document
-    .querySelectorAll(
-        'a[href^="#"]'
-    )
-    .forEach(link => {
+projectButtons.forEach(function (button) {
 
-        link.addEventListener(
-            "click",
-            function (e) {
+    button.addEventListener("mouseenter", function () {
 
-                const targetId =
-                    this.getAttribute(
-                        "href"
-                    );
+        button.style.transform = "translateY(-3px)";
 
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) return;
-
-
-                const target =
-                    document.querySelector(
-                        targetId
-                    );
-
-                if (target) {
-
-                    e.preventDefault();
-
-                    target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-                }
-            }
-        );
     });
 
 
-/* =========================
-   ACTIVE NAV LINK
-========================= */
+    button.addEventListener("mouseleave", function () {
 
-const sections =
-    document.querySelectorAll(
-        "section"
-    );
+        button.style.transform = "translateY(0)";
 
-const navigationLinks =
-    document.querySelectorAll(
-        ".nav-links a"
-    );
+    });
 
-window.addEventListener(
-    "scroll",
-    () => {
-
-        let currentSection = "";
-
-        sections.forEach(section => {
-
-            const sectionTop =
-                section.offsetTop - 150;
-
-            const sectionHeight =
-                section.offsetHeight;
-
-            if (
-                window.scrollY >=
-                    sectionTop &&
-                window.scrollY <
-                    sectionTop +
-                    sectionHeight
-            ) {
-
-                currentSection =
-                    section.getAttribute(
-                        "id"
-                    );
-            }
-        });
+});
 
 
-        navigationLinks.forEach(link => {
-
-            link.classList.remove(
-                "active"
-            );
-
-            if (
-                link.getAttribute(
-                    "href"
-                ) ===
-                "#" + currentSection
-            ) {
-
-                link.classList.add(
-                    "active"
-                );
-            }
-        });
-
-    }
-);
-
-
-/* =========================
-   PAGE LOAD
-========================= */
-
-window.addEventListener(
-    "load",
-    () => {
-
-        document.body.classList.add(
-            "page-loaded"
-        );
-
-    }
-);
+console.log("Interactive Project Preview Loaded 🚀");
