@@ -59,7 +59,6 @@ textarea {
 .section-heading h2 {
     color: #FFFFFF;
     font-size: 42px;
-    margin: 0;
 }
 
 
@@ -93,12 +92,12 @@ textarea {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
 }
 
 .nav-links a {
     color: #D6D6D6;
-    font-size: 14px;
+    font-size: 13px;
     transition: 0.3s ease;
 }
 
@@ -113,13 +112,6 @@ textarea {
     padding: 9px 14px;
     border-radius: 8px;
     cursor: pointer;
-    transition: 0.3s ease;
-}
-
-#themeBtn:hover {
-    background: #B71C1C;
-    color: #FFFFFF;
-    border-color: #E53935;
 }
 
 .menu-btn {
@@ -130,7 +122,6 @@ textarea {
     font-size: 23px;
     padding: 6px 12px;
     border-radius: 8px;
-    cursor: pointer;
 }
 
 
@@ -150,6 +141,29 @@ textarea {
 .hero-content {
     max-width: 850px;
     width: 100%;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    margin-bottom: 22px;
+
+    background: #171717;
+    border: 1px solid #333333;
+    border-radius: 30px;
+
+    color: #D6D6D6;
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #E53935;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(229, 57, 53, 0.7);
 }
 
 .profile {
@@ -229,8 +243,33 @@ textarea {
 .btn-outline:hover {
     background: #C62828;
     color: #FFFFFF;
-    border-color: #E53935;
-    box-shadow: 0 8px 20px rgba(198, 40, 40, 0.20);
+}
+
+.hero-mini-stats {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-top: 45px;
+}
+
+.hero-mini-stats div {
+    padding: 0 30px;
+    border-right: 1px solid #303030;
+}
+
+.hero-mini-stats div:last-child {
+    border-right: none;
+}
+
+.hero-mini-stats strong {
+    display: block;
+    color: #FFFFFF;
+    font-size: 17px;
+}
+
+.hero-mini-stats span {
+    color: #888888;
+    font-size: 12px;
 }
 
 
@@ -386,7 +425,6 @@ textarea {
 .service-card p {
     color: #BDBDBD;
     font-size: 14px;
-    line-height: 1.6;
 }
 
 
@@ -411,12 +449,119 @@ textarea {
 .counter-card h3 {
     color: #FF5C5C;
     font-size: 32px;
-    margin-bottom: 3px;
 }
 
 .counter-card p {
     color: #BDBDBD;
     font-size: 13px;
+}
+
+
+/* ==========================
+   WHY WORK WITH ME
+========================== */
+
+.why-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.why-card {
+    position: relative;
+    overflow: hidden;
+
+    background: #121212;
+    border: 1px solid #303030;
+    border-radius: 14px;
+
+    padding: 28px 22px;
+
+    transition: 0.3s ease;
+}
+
+.why-card:hover {
+    transform: translateY(-8px);
+    border-color: #C62828;
+    box-shadow: 0 15px 35px rgba(198, 40, 40, 0.12);
+}
+
+.why-number {
+    position: absolute;
+    right: 18px;
+    top: 15px;
+
+    color: #292929;
+    font-size: 38px;
+    font-weight: bold;
+}
+
+.why-icon {
+    font-size: 30px;
+    margin-bottom: 18px;
+}
+
+.why-card h3 {
+    color: #FFFFFF;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.why-card p {
+    color: #AFAFAF;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* ==========================
+   FEATURE STRIP
+========================== */
+
+.feature-strip {
+    width: 90%;
+    max-width: 1100px;
+    margin: 10px auto 30px;
+
+    background: linear-gradient(
+        135deg,
+        #171717,
+        #241010
+    );
+
+    border: 1px solid #4A2222;
+    border-radius: 18px;
+
+    padding: 45px;
+}
+
+.feature-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.feature-content span {
+    color: #E53935;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.feature-content h2 {
+    color: #FFFFFF;
+    font-size: 30px;
+    margin: 8px 0;
+}
+
+.feature-content p {
+    color: #AFAFAF;
+    font-size: 14px;
+}
+
+.feature-btn {
+    white-space: nowrap;
 }
 
 
@@ -477,11 +622,6 @@ textarea {
     font-weight: bold;
     font-size: 14px;
     margin-top: auto;
-    transition: 0.3s ease;
-}
-
-.project-btn:hover {
-    color: #FF9999;
 }
 
 
@@ -500,7 +640,6 @@ textarea {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: 40px;
-    align-items: start;
 }
 
 .contact-form-box,
@@ -554,13 +693,6 @@ textarea {
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s ease;
-}
-
-#contactForm button:hover {
-    background: #B71C1C;
-    transform: translateY(-2px);
-    box-shadow: 0 7px 18px rgba(198, 40, 40, 0.25);
 }
 
 #formMessage {
@@ -640,16 +772,13 @@ textarea {
 
 
 /* ==========================
-   LIGHT THEME
+   LIGHT MODE
 ========================== */
 
 body.light-mode {
     background: #F4F4F4;
     color: #171717;
 }
-
-
-/* NAVBAR */
 
 body.light-mode .navbar {
     background: #FFFFFF;
@@ -668,21 +797,10 @@ body.light-mode .nav-links a:hover {
     color: #C62828;
 }
 
-
-/* THEME BUTTON */
-
 body.light-mode #themeBtn {
     border-color: #C62828;
     color: #B71C1C;
 }
-
-body.light-mode #themeBtn:hover {
-    background: #C62828;
-    color: #FFFFFF;
-}
-
-
-/* HERO */
 
 body.light-mode .hero h1 {
     color: #171717;
@@ -704,48 +822,27 @@ body.light-mode #typing {
     color: #C62828;
 }
 
-body.light-mode .profile {
-    border-color: #C62828;
-    box-shadow: 0 0 25px rgba(198, 40, 40, 0.15);
+body.light-mode .status-badge {
+    background: #FFFFFF;
+    border-color: #D6D6D6;
+    color: #444444;
 }
 
+body.light-mode .hero-mini-stats div {
+    border-color: #D6D6D6;
+}
 
-/* SECTION HEADINGS */
+body.light-mode .hero-mini-stats strong {
+    color: #171717;
+}
+
+body.light-mode .hero-mini-stats span {
+    color: #666666;
+}
 
 body.light-mode .section-heading h2 {
     color: #171717;
 }
-
-body.light-mode .section-heading span {
-    color: #B71C1C;
-}
-
-
-/* BUTTONS */
-
-body.light-mode .btn {
-    background: #C62828;
-    border-color: #C62828;
-    color: #FFFFFF;
-}
-
-body.light-mode .btn:hover {
-    background: #B71C1C;
-}
-
-body.light-mode .btn-outline {
-    background: transparent;
-    border-color: #C62828;
-    color: #B71C1C;
-}
-
-body.light-mode .btn-outline:hover {
-    background: #C62828;
-    color: #FFFFFF;
-}
-
-
-/* ABOUT */
 
 body.light-mode .about-text h3 {
     color: #171717;
@@ -755,22 +852,17 @@ body.light-mode .about-text p {
     color: #3F3F3F;
 }
 
-
-/* LIGHT MODE BOXES */
-
 body.light-mode .info-card,
 body.light-mode .skill-card,
 body.light-mode .service-card,
 body.light-mode .counter-card,
 body.light-mode .project-card,
 body.light-mode .contact-form-box,
-body.light-mode .contact-information {
+body.light-mode .contact-information,
+body.light-mode .why-card {
     background: #FFFFFF;
     border-color: #D4D4D4;
 }
-
-
-/* BOX HEADINGS */
 
 body.light-mode .info-card h4,
 body.light-mode .service-card h3,
@@ -778,9 +870,6 @@ body.light-mode .contact-form-box h3,
 body.light-mode .contact-information h3 {
     color: #B71C1C;
 }
-
-
-/* BOX TEXT */
 
 body.light-mode .info-card p,
 body.light-mode .skill-card p,
@@ -790,10 +879,9 @@ body.light-mode .contact-information > p {
     color: #444444;
 }
 
-
-/* SKILLS */
-
-body.light-mode .skill-card h3 {
+body.light-mode .skill-card h3,
+body.light-mode .project-card h3,
+body.light-mode .why-card h3 {
     color: #171717;
 }
 
@@ -801,9 +889,6 @@ body.light-mode .skill-icon {
     background: #FDE8E7;
     color: #B71C1C;
 }
-
-
-/* COUNTERS */
 
 body.light-mode .counter-card h3 {
     color: #C62828;
@@ -813,31 +898,14 @@ body.light-mode .counter-card p {
     color: #555555;
 }
 
-
-/* PROJECTS */
-
 body.light-mode .project-number {
     color: #B71C1C;
 }
 
-body.light-mode .project-card h3 {
-    color: #171717;
-}
-
-body.light-mode .project-tech {
-    color: #C62828;
-}
-
+body.light-mode .project-tech,
 body.light-mode .project-btn {
     color: #B71C1C;
 }
-
-body.light-mode .project-btn:hover {
-    color: #E53935;
-}
-
-
-/* CONTACT */
 
 body.light-mode .contact-card {
     background: #FAFAFA;
@@ -852,9 +920,6 @@ body.light-mode .contact-card p {
     color: #444444;
 }
 
-
-/* FORM */
-
 body.light-mode #contactForm input,
 body.light-mode #contactForm textarea {
     background: #F7F7F7;
@@ -867,32 +932,26 @@ body.light-mode #contactForm textarea::placeholder {
     color: #666666;
 }
 
-body.light-mode #contactForm input:focus,
-body.light-mode #contactForm textarea:focus {
-    border-color: #C62828;
+body.light-mode .feature-strip {
+    background: #FFFFFF;
+    border-color: #E0C4C4;
 }
 
-
-/* FORM BUTTON */
-
-body.light-mode #contactForm button {
-    background: #C62828;
-    color: #FFFFFF;
+body.light-mode .feature-content h2 {
+    color: #171717;
 }
 
-body.light-mode #contactForm button:hover {
-    background: #B71C1C;
+body.light-mode .feature-content p {
+    color: #555555;
 }
 
-
-/* FORM MESSAGE */
-
-body.light-mode #formMessage {
-    color: #B71C1C;
+body.light-mode .why-card p {
+    color: #555555;
 }
 
-
-/* FOOTER */
+body.light-mode .why-number {
+    color: #E5E5E5;
+}
 
 body.light-mode .footer {
     background: #242424;
@@ -911,9 +970,6 @@ body.light-mode .footer-line {
     background: #E53935;
 }
 
-
-/* MOBILE MENU */
-
 body.light-mode .nav-links {
     background: #FFFFFF;
     border-color: #D4D4D4;
@@ -930,16 +986,22 @@ body.light-mode .menu-btn {
    MOBILE
 ========================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
 
     .nav-links {
-        gap: 14px;
+        gap: 12px;
     }
 
-    .skills-container {
+    .why-container {
         grid-template-columns: repeat(2, 1fr);
     }
 
+}
+
+
+@media (max-width: 900px) {
+
+    .skills-container,
     .project-container {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -950,6 +1012,11 @@ body.light-mode .menu-btn {
 
     .contact-wrapper {
         grid-template-columns: 1fr;
+    }
+
+    .feature-content {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
 }
@@ -967,9 +1034,11 @@ body.light-mode .menu-btn {
 
     .nav-links {
         display: none;
+
         position: absolute;
         top: 65px;
         left: 0;
+
         width: 100%;
         padding: 20px;
 
@@ -978,7 +1047,7 @@ body.light-mode .menu-btn {
 
         flex-direction: column;
         align-items: stretch;
-        gap: 12px;
+        gap: 10px;
     }
 
     .nav-links.active {
@@ -996,7 +1065,7 @@ body.light-mode .menu-btn {
 
     .hero {
         min-height: auto;
-        padding: 80px 15px;
+        padding: 70px 15px;
     }
 
     .profile {
@@ -1010,6 +1079,22 @@ body.light-mode .menu-btn {
 
     .hero-role {
         font-size: 18px;
+    }
+
+    .hero-mini-stats {
+        margin-top: 35px;
+    }
+
+    .hero-mini-stats div {
+        padding: 0 12px;
+    }
+
+    .hero-mini-stats strong {
+        font-size: 14px;
+    }
+
+    .hero-mini-stats span {
+        font-size: 10px;
     }
 
     .section {
@@ -1034,15 +1119,10 @@ body.light-mode .menu-btn {
         text-align: center;
     }
 
-    .skills-container {
-        grid-template-columns: 1fr;
-    }
-
-    .service-container {
-        grid-template-columns: 1fr;
-    }
-
-    .project-container {
+    .skills-container,
+    .service-container,
+    .project-container,
+    .why-container {
         grid-template-columns: 1fr;
     }
 
@@ -1050,8 +1130,18 @@ body.light-mode .menu-btn {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .contact-wrapper {
-        grid-template-columns: 1fr;
+    .feature-strip {
+        width: 94%;
+        padding: 30px 22px;
+    }
+
+    .feature-content h2 {
+        font-size: 24px;
+    }
+
+    .feature-btn {
+        width: 100%;
+        text-align: center;
     }
 
 }
@@ -1069,6 +1159,10 @@ body.light-mode .menu-btn {
 
     .hero-role {
         font-size: 16px;
+    }
+
+    .status-badge {
+        font-size: 10px;
     }
 
     .counter-container {
