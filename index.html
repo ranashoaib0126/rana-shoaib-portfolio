@@ -32,6 +32,7 @@
             <a href="#services">Services</a>
             <a href="#why-me">Why Me</a>
             <a href="#projects">Projects</a>
+            <a href="#career-quest">Career Quest</a>
             <a href="#contact">Contact</a>
 
             <button id="themeBtn">☀️ Light Mode</button>
@@ -601,6 +602,271 @@
 
 
     <!-- =========================
+         CAREER QUEST GAME
+    ========================== -->
+
+    <section id="career-quest" class="career-quest section">
+
+        <div class="section-heading">
+
+            <span>INTERACTIVE EXPERIENCE</span>
+
+            <h2>
+                Shoaib Career Quest 🎮
+            </h2>
+
+        </div>
+
+
+        <div class="game-card">
+
+            <div class="game-top">
+
+                <div>
+
+                    <span class="game-label">
+                        PORTFOLIO MINI GAME
+                    </span>
+
+                    <h3>
+                        Can You Complete Shoaib's Career Quest?
+                    </h3>
+
+                    <p>
+                        Choose a mission, answer the challenges
+                        and earn XP.
+                    </p>
+
+                </div>
+
+
+                <div class="game-xp">
+
+                    <strong id="gameXP">
+                        0
+                    </strong>
+
+                    <span>
+                        XP
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- GAME START -->
+
+            <div id="gameStart" class="game-screen">
+
+                <div class="game-emoji">
+                    🎮
+                </div>
+
+                <h3>
+                    Ready for the Challenge?
+                </h3>
+
+                <p>
+                    Test your knowledge about Web Development,
+                    B2B Sales and Lead Generation.
+                </p>
+
+                <button
+                    id="startGameBtn"
+                    class="btn game-start-btn"
+                >
+                    🎮 Start Career Quest
+                </button>
+
+            </div>
+
+
+            <!-- MISSION SELECTION -->
+
+            <div
+                id="missionSelection"
+                class="game-screen"
+                style="display: none;"
+            >
+
+                <h3>
+                    Choose Your Mission
+                </h3>
+
+                <p>
+                    Select one mission to begin your challenge.
+                </p>
+
+
+                <div class="mission-grid">
+
+                    <button
+                        class="mission-card"
+                        data-mission="website"
+                    >
+
+                        <span class="mission-icon">
+                            💻
+                        </span>
+
+                        <strong>
+                            Build a Website
+                        </strong>
+
+                        <small>
+                            Web Development
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="mission-card"
+                        data-mission="client"
+                    >
+
+                        <span class="mission-icon">
+                            📈
+                        </span>
+
+                        <strong>
+                            Find a Client
+                        </strong>
+
+                        <small>
+                            B2B Sales
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="mission-card"
+                        data-mission="leads"
+                    >
+
+                        <span class="mission-icon">
+                            🔎
+                        </span>
+
+                        <strong>
+                            Generate Leads
+                        </strong>
+
+                        <small>
+                            Lead Generation
+                        </small>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHALLENGE -->
+
+            <div
+                id="challengeArea"
+                class="game-screen"
+                style="display: none;"
+            >
+
+                <div class="game-progress">
+
+                    <span id="gameQuestionNumber">
+                        Question 1 / 3
+                    </span>
+
+                    <span id="gameMissionName">
+                        Mission
+                    </span>
+
+                </div>
+
+
+                <h3 id="gameQuestion">
+                    Question goes here
+                </h3>
+
+
+                <div id="gameOptions" class="game-options">
+                </div>
+
+
+                <p
+                    id="gameFeedback"
+                    class="game-feedback"
+                ></p>
+
+            </div>
+
+
+            <!-- GAME RESULT -->
+
+            <div
+                id="gameResult"
+                class="game-screen"
+                style="display: none;"
+            >
+
+                <div class="result-emoji">
+                    🏆
+                </div>
+
+                <span class="game-label">
+                    MISSION COMPLETE
+                </span>
+
+                <h3>
+                    Great Job!
+                </h3>
+
+                <p>
+                    You completed the Shoaib Career Quest.
+                </p>
+
+
+                <div class="final-score">
+
+                    <strong id="finalXP">
+                        0 XP
+                    </strong>
+
+                    <span id="finalRank">
+                        Beginner 🌱
+                    </span>
+
+                </div>
+
+
+                <div class="game-result-buttons">
+
+                    <button
+                        id="restartGameBtn"
+                        class="btn"
+                    >
+                        🔄 Play Again
+                    </button>
+
+                    <a
+                        href="#contact"
+                        class="btn btn-outline"
+                    >
+                        Work With Shoaib →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
          PROJECTS
     ========================== -->
 
@@ -834,6 +1100,144 @@
         </div>
 
     </section>
+
+
+    <!-- =========================
+         ASK SHOAIB ASSISTANT
+    ========================== -->
+
+    <button
+        id="assistantBtn"
+        class="assistant-btn"
+    >
+        🤖
+        <span>Ask Shoaib</span>
+    </button>
+
+
+    <div
+        id="assistantPanel"
+        class="assistant-panel"
+    >
+
+        <div class="assistant-header">
+
+            <div class="assistant-title">
+
+                <div class="assistant-avatar">
+                    🤖
+                </div>
+
+                <div>
+                    <h3>
+                        Shoaib Assistant
+                    </h3>
+
+                    <span>
+                        ● Online
+                    </span>
+                </div>
+
+            </div>
+
+            <button
+                id="assistantClose"
+                class="assistant-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="assistantMessages"
+            class="assistant-messages"
+        >
+
+            <div class="assistant-message bot-message">
+
+                <div class="message-icon">
+                    🤖
+                </div>
+
+                <div class="message-content">
+                    Hi! I'm Shoaib's portfolio assistant. 👋
+                    <br><br>
+                    What would you like to know?
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="assistant-questions">
+
+            <button
+                class="assistant-question"
+                data-question="skills"
+            >
+                👨‍💻 Skills
+            </button>
+
+            <button
+                class="assistant-question"
+                data-question="services"
+            >
+                💼 Services
+            </button>
+
+            <button
+                class="assistant-question"
+                data-question="sales"
+            >
+                📈 B2B Sales
+            </button>
+
+            <button
+                class="assistant-question"
+                data-question="technology"
+            >
+                🌐 Technologies
+            </button>
+
+            <button
+                class="assistant-question"
+                data-question="contact"
+            >
+                📞 Contact
+            </button>
+
+            <button
+                class="assistant-question"
+                data-question="about"
+            >
+                👤 About Shoaib
+            </button>
+
+        </div>
+
+
+        <div class="assistant-input-area">
+
+            <input
+                type="text"
+                id="assistantInput"
+                placeholder="Ask something..."
+                autocomplete="off"
+            >
+
+            <button
+                id="assistantSend"
+                class="assistant-send"
+            >
+                ➤
+            </button>
+
+        </div>
+
+    </div>
 
 
     <!-- =========================
