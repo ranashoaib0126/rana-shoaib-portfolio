@@ -57,6 +57,7 @@ if (savedTheme === "light") {
     if (themeBtn) {
         themeBtn.textContent = "☀️ Light Mode";
     }
+
 }
 
 
@@ -125,7 +126,6 @@ function typeEffect() {
 
     }
 
-
     let speed = isDeleting ? 50 : 90;
 
 
@@ -179,7 +179,6 @@ if (contactForm) {
     contactForm.addEventListener("submit", function (event) {
 
         event.preventDefault();
-
 
         const name =
             document.getElementById("name").value.trim();
@@ -262,7 +261,7 @@ if (menuBtn && navLinks) {
 
 const animatedSections =
     document.querySelectorAll(
-        ".about, .skills, .services, .projects, .contact, .why-me"
+        ".about, .skills, .services, .projects, .contact, .why-me, .career-quest"
     );
 
 
@@ -311,7 +310,6 @@ window.addEventListener("resize", function () {
 // ==================================================
 // INTERACTIVE PROJECT PREVIEW
 // ==================================================
-
 
 const projectData = {
 
@@ -1008,6 +1006,669 @@ assistantQuestions.forEach(
 
 
 // ==================================================
+// SHOAIB CAREER QUEST 🎮
+// ==================================================
+
+const startGameBtn =
+    document.getElementById("startGameBtn");
+
+const gameStart =
+    document.getElementById("gameStart");
+
+const missionSelection =
+    document.getElementById("missionSelection");
+
+const challengeArea =
+    document.getElementById("challengeArea");
+
+const gameResult =
+    document.getElementById("gameResult");
+
+const gameXP =
+    document.getElementById("gameXP");
+
+const gameQuestionNumber =
+    document.getElementById("gameQuestionNumber");
+
+const gameMissionName =
+    document.getElementById("gameMissionName");
+
+const gameQuestion =
+    document.getElementById("gameQuestion");
+
+const gameOptions =
+    document.getElementById("gameOptions");
+
+const gameFeedback =
+    document.getElementById("gameFeedback");
+
+const finalXP =
+    document.getElementById("finalXP");
+
+const finalRank =
+    document.getElementById("finalRank");
+
+const restartGameBtn =
+    document.getElementById("restartGameBtn");
+
+const missionButtons =
+    document.querySelectorAll(".mission-card");
+
+
+// ==========================
+// GAME DATA
+// ==========================
+
+const careerMissions = {
+
+    website: {
+
+        name: "💻 Build a Website",
+
+        questions: [
+
+            {
+                question:
+                    "Which language is used to structure a web page?",
+
+                options: [
+                    "HTML",
+                    "CSS",
+                    "JavaScript",
+                    "Python"
+                ],
+
+                answer: "HTML"
+
+            },
+
+            {
+                question:
+                    "Which CSS feature is commonly used to make layouts responsive?",
+
+                options: [
+                    "Media Queries",
+                    "Variables",
+                    "Comments",
+                    "Selectors"
+                ],
+
+                answer: "Media Queries"
+
+            },
+
+            {
+                question:
+                    "Which language adds interactivity to a website?",
+
+                options: [
+                    "HTML",
+                    "CSS",
+                    "JavaScript",
+                    "SQL"
+                ],
+
+                answer: "JavaScript"
+
+            }
+
+        ]
+
+    },
+
+
+    client: {
+
+        name: "📈 Find a Client",
+
+        questions: [
+
+            {
+                question:
+                    "Before sending B2B outreach, what should you identify?",
+
+                options: [
+                    "Decision Maker",
+                    "Random Employee",
+                    "Competitor",
+                    "Designer"
+                ],
+
+                answer: "Decision Maker"
+
+            },
+
+            {
+                question:
+                    "What makes a B2B cold message stronger?",
+
+                options: [
+                    "A long paragraph",
+                    "A personalized relevant message",
+                    "Sending the same message to everyone",
+                    "Using many emojis"
+                ],
+
+                answer: "A personalized relevant message"
+
+            },
+
+            {
+                question:
+                    "What is the main goal of qualifying a prospect?",
+
+                options: [
+                    "Check fit and need",
+                    "Send more messages",
+                    "Increase followers",
+                    "Change their website"
+                ],
+
+                answer: "Check fit and need"
+
+            }
+
+        ]
+
+    },
+
+
+    leads: {
+
+        name: "🔎 Generate Leads",
+
+        questions: [
+
+            {
+                question:
+                    "What does ICP stand for?",
+
+                options: [
+                    "Ideal Customer Profile",
+                    "International Client Program",
+                    "Internet Customer Platform",
+                    "Ideal Company Process"
+                ],
+
+                answer: "Ideal Customer Profile"
+
+            },
+
+            {
+                question:
+                    "Which platform is commonly used for B2B professional outreach?",
+
+                options: [
+                    "LinkedIn",
+                    "Netflix",
+                    "Spotify",
+                    "TikTok"
+                ],
+
+                answer: "LinkedIn"
+
+            },
+
+            {
+                question:
+                    "After finding a relevant prospect, what should you do?",
+
+                options: [
+                    "Ignore them",
+                    "Send relevant outreach",
+                    "Send random messages",
+                    "Wait forever"
+                ],
+
+                answer: "Send relevant outreach"
+
+            }
+
+        ]
+
+    }
+
+};
+
+
+// ==========================
+// GAME VARIABLES
+// ==========================
+
+let currentMission = null;
+
+let currentQuestionIndex = 0;
+
+let currentXP = 0;
+
+let answerLocked = false;
+
+
+// ==========================
+// START GAME
+// ==========================
+
+if (startGameBtn) {
+
+    startGameBtn.addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        currentXP = 0;
+
+        currentQuestionIndex = 0;
+
+        currentMission = null;
+
+        answerLocked = false;
+
+
+        if (gameXP) {
+            gameXP.textContent = "0";
+        }
+
+
+        if (gameStart) {
+            gameStart.style.display = "none";
+        }
+
+
+        if (missionSelection) {
+            missionSelection.style.display = "block";
+        }
+
+
+        if (challengeArea) {
+            challengeArea.style.display = "none";
+        }
+
+
+        if (gameResult) {
+            gameResult.style.display = "none";
+        }
+
+    });
+
+}
+
+
+// ==========================
+// SELECT MISSION
+// ==========================
+
+missionButtons.forEach(function (button) {
+
+    button.addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        const missionName =
+            button.dataset.mission;
+
+
+        if (!careerMissions[missionName]) {
+            return;
+        }
+
+
+        currentMission =
+            careerMissions[missionName];
+
+        currentQuestionIndex = 0;
+
+        currentXP = 0;
+
+        answerLocked = false;
+
+
+        if (gameXP) {
+            gameXP.textContent = "0";
+        }
+
+
+        if (missionSelection) {
+            missionSelection.style.display = "none";
+        }
+
+
+        if (challengeArea) {
+            challengeArea.style.display = "block";
+        }
+
+
+        if (gameResult) {
+            gameResult.style.display = "none";
+        }
+
+
+        showGameQuestion();
+
+    });
+
+});
+
+
+// ==========================
+// SHOW QUESTION
+// ==========================
+
+function showGameQuestion() {
+
+    if (!currentMission) return;
+
+
+    const question =
+        currentMission.questions[
+            currentQuestionIndex
+        ];
+
+
+    if (!question) return;
+
+
+    answerLocked = false;
+
+
+    if (gameQuestionNumber) {
+
+        gameQuestionNumber.textContent =
+            "Question " +
+            (currentQuestionIndex + 1) +
+            " / " +
+            currentMission.questions.length;
+
+    }
+
+
+    if (gameMissionName) {
+
+        gameMissionName.textContent =
+            currentMission.name;
+
+    }
+
+
+    if (gameQuestion) {
+
+        gameQuestion.textContent =
+            question.question;
+
+    }
+
+
+    if (gameFeedback) {
+
+        gameFeedback.textContent = "";
+
+    }
+
+
+    if (!gameOptions) return;
+
+
+    gameOptions.innerHTML = "";
+
+
+    question.options.forEach(function (option) {
+
+        const optionButton =
+            document.createElement("button");
+
+
+        optionButton.className =
+            "game-option";
+
+        optionButton.textContent =
+            option;
+
+
+        optionButton.type =
+            "button";
+
+
+        optionButton.addEventListener(
+            "click",
+            function () {
+
+                checkGameAnswer(
+                    option,
+                    optionButton
+                );
+
+            }
+        );
+
+
+        gameOptions.appendChild(
+            optionButton
+        );
+
+    });
+
+}
+
+
+// ==========================
+// CHECK ANSWER
+// ==========================
+
+function checkGameAnswer(
+    selectedAnswer,
+    selectedButton
+) {
+
+    if (answerLocked) return;
+
+    answerLocked = true;
+
+
+    const question =
+        currentMission.questions[
+            currentQuestionIndex
+        ];
+
+
+    const allOptions =
+        gameOptions.querySelectorAll(
+            ".game-option"
+        );
+
+
+    allOptions.forEach(function (button) {
+
+        button.disabled = true;
+
+    });
+
+
+    if (
+        selectedAnswer ===
+        question.answer
+    ) {
+
+        currentXP += 10;
+
+
+        selectedButton.classList.add(
+            "correct"
+        );
+
+
+        if (gameFeedback) {
+
+            gameFeedback.textContent =
+                "✅ Correct! +10 XP";
+
+        }
+
+    } else {
+
+        selectedButton.classList.add(
+            "wrong"
+        );
+
+
+        allOptions.forEach(function (button) {
+
+            if (
+                button.textContent ===
+                question.answer
+            ) {
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+        });
+
+
+        if (gameFeedback) {
+
+            gameFeedback.textContent =
+                "❌ Wrong! Correct answer: " +
+                question.answer;
+
+        }
+
+    }
+
+
+    if (gameXP) {
+
+        gameXP.textContent =
+            currentXP;
+
+    }
+
+
+    setTimeout(function () {
+
+        currentQuestionIndex++;
+
+
+        if (
+            currentQuestionIndex <
+            currentMission.questions.length
+        ) {
+
+            showGameQuestion();
+
+        } else {
+
+            finishCareerQuest();
+
+        }
+
+    }, 1000);
+
+}
+
+
+// ==========================
+// FINISH GAME
+// ==========================
+
+function finishCareerQuest() {
+
+    if (challengeArea) {
+        challengeArea.style.display = "none";
+    }
+
+
+    if (gameResult) {
+        gameResult.style.display = "block";
+    }
+
+
+    if (finalXP) {
+
+        finalXP.textContent =
+            currentXP + " XP";
+
+    }
+
+
+    let rank = "Beginner 🌱";
+
+
+    if (currentXP === 30) {
+
+        rank =
+            "Career Master 🏆";
+
+    } else if (currentXP === 20) {
+
+        rank =
+            "Pro Explorer 🚀";
+
+    } else if (currentXP === 10) {
+
+        rank =
+            "Rising Star ⭐";
+
+    }
+
+
+    if (finalRank) {
+
+        finalRank.textContent =
+            rank;
+
+    }
+
+}
+
+
+// ==========================
+// RESTART GAME
+// ==========================
+
+if (restartGameBtn) {
+
+    restartGameBtn.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+
+            currentMission = null;
+
+            currentQuestionIndex = 0;
+
+            currentXP = 0;
+
+            answerLocked = false;
+
+
+            if (gameXP) {
+                gameXP.textContent = "0";
+            }
+
+
+            if (gameResult) {
+                gameResult.style.display = "none";
+            }
+
+
+            if (challengeArea) {
+                challengeArea.style.display = "none";
+            }
+
+
+            if (missionSelection) {
+                missionSelection.style.display = "block";
+            }
+
+        }
+    );
+
+}
+
+
+// ==================================================
 // SCROLL PROGRESS BAR
 // ==================================================
 
@@ -1126,4 +1787,8 @@ backToTop.addEventListener(
 
 console.log(
     "RANA SHOAIB PORTFOLIO FULLY LOADED 🚀"
+);
+
+console.log(
+    "SHOAIB CAREER QUEST READY 🎮"
 );
