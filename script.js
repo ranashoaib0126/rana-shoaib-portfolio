@@ -1,355 +1,460 @@
-// ==========================
-// WELCOME MESSAGE
-// ==========================
+/* =========================
+   WELCOME MESSAGE
+========================= */
 
-console.log("WELCOME TO RANA SHOAIB PORTFOLIO");
+console.log("Welcome to Rana Shoaib Portfolio 🚀");
 
 
-// ==========================
-// PROJECT COUNTER
-// ==========================
+/* =========================
+   COUNTER ANIMATION
+========================= */
 
-function startCounter(id, target, speed, symbol) {
+const counters = document.querySelectorAll(".counter");
 
-    const element = document.getElementById(id);
+function startCounters() {
 
-    if (!element) return;
+    counters.forEach(counter => {
 
-    let count = 0;
+        const target = parseInt(counter.getAttribute("data-target"));
+        let count = 0;
 
-    const interval = setInterval(() => {
+        const speed = Math.max(10, 1500 / target);
 
-        count++;
+        function updateCounter() {
 
-        element.textContent = count + symbol;
+            if (count < target) {
 
-        if (count >= target) {
-            clearInterval(interval);
+                count++;
+                counter.textContent = count + "+";
+
+                setTimeout(updateCounter, speed);
+
+            } else {
+
+                counter.textContent = target + "+";
+
+            }
         }
 
-    }, speed);
+        updateCounter();
+    });
 }
 
-startCounter("project", 15, 100, "+");
-startCounter("client", 30, 70, "+");
-startCounter("learning", 100, 20, "+");
-startCounter("passion", 100, 20, "%");
+const counterSection = document.querySelector(".stats");
 
+if (counterSection) {
 
-// ==========================
-// DARK / LIGHT MODE
-// ==========================
+    const observer = new IntersectionObserver(
+        entries => {
 
-const themeBtn = document.getElementById("themeBtn");
+            if (entries[0].isIntersecting) {
 
-const savedTheme = localStorage.getItem("theme");
+                startCounters();
 
-if (savedTheme === "light") {
+                observer.disconnect();
+            }
+        },
+        {
+            threshold: 0.4
+        }
+    );
 
-    document.body.classList.add("light-mode");
-
-    if (themeBtn) {
-        themeBtn.textContent = "🌙 Dark Mode";
-    }
-
-} else {
-
-    if (themeBtn) {
-        themeBtn.textContent = "☀️ Light Mode";
-    }
+    observer.observe(counterSection);
 }
 
 
-if (themeBtn) {
+/* =========================
+   DARK / LIGHT MODE
+========================= */
 
-    themeBtn.addEventListener("click", function () {
+const themeToggle = document.getElementById("theme-toggle");
+
+if (themeToggle) {
+
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+
+        document.body.classList.add("light-mode");
+
+        themeToggle.textContent = "🌙";
+
+    } else {
+
+        themeToggle.textContent = "☀️";
+    }
+
+
+    themeToggle.addEventListener("click", () => {
 
         document.body.classList.toggle("light-mode");
 
-        if (document.body.classList.contains("light-mode")) {
+        const isLight =
+            document.body.classList.contains("light-mode");
 
-            themeBtn.textContent = "🌙 Dark Mode";
+        localStorage.setItem(
+            "theme",
+            isLight ? "light" : "dark"
+        );
 
-            localStorage.setItem("theme", "light");
-
-        } else {
-
-            themeBtn.textContent = "☀️ Light Mode";
-
-            localStorage.setItem("theme", "dark");
-        }
-
+        themeToggle.textContent =
+            isLight ? "🌙" : "☀️";
     });
-
 }
 
 
-// ==========================
-// TYPING ANIMATION
-// ==========================
+/* =========================
+   PREMIUM TYPING ANIMATION
+========================= */
 
-const words = [
+const typingElement =
+    document.getElementById("typing");
+
+const roles = [
     "Sales Executive | TXEND",
     "Front-End Developer",
     "HTML | CSS | JavaScript",
     "B2B Sales Expert"
 ];
 
-const typing = document.getElementById("typing");
-
-let wordIndex = 0;
+let roleIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
 
-
 function typeEffect() {
 
-    if (!typing) return;
+    if (!typingElement) return;
 
-    const currentWord = words[wordIndex];
+    const currentRole =
+        roles[roleIndex];
 
-    if (isDeleting) {
 
-        typing.textContent =
-            currentWord.substring(0, charIndex - 1);
+    /* TYPING */
 
-        charIndex--;
+    if (!isDeleting) {
 
-    } else {
-
-        typing.textContent =
-            currentWord.substring(0, charIndex + 1);
+        typingElement.textContent =
+            currentRole.substring(
+                0,
+                charIndex + 1
+            );
 
         charIndex++;
-    }
 
 
-    let speed = isDeleting ? 50 : 90;
+        /* FINISHED TYPING */
 
+        if (
+            charIndex ===
+            currentRole.length
+        ) {
 
-    if (!isDeleting && charIndex === currentWord.length) {
+            isDeleting = true;
 
-        speed = 1500;
-
-        isDeleting = true;
-    }
-
-
-    if (isDeleting && charIndex === 0) {
-
-        isDeleting = false;
-
-        wordIndex++;
-
-        if (wordIndex >= words.length) {
-            wordIndex = 0;
-        }
-
-        speed = 400;
-    }
-
-
-    setTimeout(typeEffect, speed);
-}
-
-
-if (typing) {
-    typeEffect();
-}
-
-
-// ==========================
-// CONTACT FORM
-// ==========================
-
-const contactForm = document.getElementById("contactForm");
-
-const formMessage = document.getElementById("formMessage");
-
-
-if (contactForm) {
-
-    contactForm.addEventListener("submit", function (event) {
-
-        event.preventDefault();
-
-
-        const name =
-            document.getElementById("name").value.trim();
-
-        const email =
-            document.getElementById("email").value.trim();
-
-        const message =
-            document.getElementById("message").value.trim();
-
-
-        if (name === "" || email === "" || message === "") {
-
-            formMessage.textContent =
-                "Please fill in all fields.";
+            setTimeout(
+                typeEffect,
+                1800
+            );
 
             return;
         }
 
 
-        formMessage.textContent =
-            "Message sent successfully!";
+    /* DELETING */
 
-        contactForm.reset();
+    } else {
 
-    });
+        typingElement.textContent =
+            currentRole.substring(
+                0,
+                charIndex - 1
+            );
 
-}
-
-
-// ==========================
-// MOBILE MENU
-// ==========================
-
-const menuBtn = document.getElementById("menuBtn");
-
-const navLinks = document.getElementById("navLinks");
+        charIndex--;
 
 
-if (menuBtn && navLinks) {
+        /* FINISHED DELETING */
 
-    menuBtn.addEventListener("click", function () {
+        if (charIndex === 0) {
 
-        navLinks.classList.toggle("active");
+            isDeleting = false;
 
-    });
+            roleIndex++;
 
+            if (
+                roleIndex ===
+                roles.length
+            ) {
 
-    const links =
-        navLinks.querySelectorAll("a");
-
-
-    links.forEach(function (link) {
-
-        link.addEventListener("click", function () {
-
-            navLinks.classList.remove("active");
-
-        });
-
-    });
-
-}
-
-
-// ==========================
-// SCROLL REVEAL
-// ==========================
-
-const animatedSections = document.querySelectorAll(
-    ".about, .skills, .services, .projects, .contact, .why-me"
-);
-
-
-function showSections() {
-
-    animatedSections.forEach(function (section) {
-
-        const sectionTop =
-            section.getBoundingClientRect().top;
-
-
-        if (sectionTop < window.innerHeight - 80) {
-
-            section.classList.add("show");
-
+                roleIndex = 0;
+            }
         }
+    }
 
-    });
 
+    setTimeout(
+        typeEffect,
+        isDeleting ? 50 : 90
+    );
+}
+
+typeEffect();
+
+
+/* =========================
+   CONTACT FORM
+========================= */
+
+const contactForm =
+    document.getElementById("contact-form");
+
+if (contactForm) {
+
+    contactForm.addEventListener(
+        "submit",
+        function (e) {
+
+            e.preventDefault();
+
+            const name =
+                document.getElementById("name");
+
+            const email =
+                document.getElementById("email");
+
+            const message =
+                document.getElementById("message");
+
+
+            if (
+                !name.value.trim() ||
+                !email.value.trim() ||
+                !message.value.trim()
+            ) {
+
+                alert(
+                    "Please fill in all fields."
+                );
+
+                return;
+            }
+
+
+            alert(
+                "Thank you! Your message has been received."
+            );
+
+            contactForm.reset();
+        }
+    );
 }
 
 
-window.addEventListener("scroll", showSections);
+/* =========================
+   MOBILE MENU
+========================= */
 
-showSections();
+const menuToggle =
+    document.querySelector(".menu-toggle");
+
+const navLinks =
+    document.querySelector(".nav-links");
+
+if (menuToggle && navLinks) {
+
+    menuToggle.addEventListener(
+        "click",
+        () => {
+
+            navLinks.classList.toggle(
+                "active"
+            );
+
+            menuToggle.classList.toggle(
+                "active"
+            );
+        }
+    );
 
 
-// ==========================
-// NAVBAR AUTO CLOSE
-// ==========================
+    /* CLOSE MENU AFTER CLICK */
 
-window.addEventListener("resize", function () {
+    navLinks
+        .querySelectorAll("a")
+        .forEach(link => {
 
-    if (window.innerWidth > 700 && navLinks) {
+            link.addEventListener(
+                "click",
+                () => {
 
-        navLinks.classList.remove("active");
+                    navLinks.classList.remove(
+                        "active"
+                    );
 
-    }
+                    menuToggle.classList.remove(
+                        "active"
+                    );
+                }
+            );
+        });
+}
+
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+const revealElements =
+    document.querySelectorAll(
+        ".about, .skills, .services, .projects, .contact, .why-me"
+    );
+
+const revealObserver =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (
+                    entry.isIntersecting
+                ) {
+
+                    entry.target.classList.add(
+                        "show"
+                    );
+                }
+            });
+        },
+        {
+            threshold: 0.15
+        }
+    );
+
+
+revealElements.forEach(element => {
+
+    revealObserver.observe(element);
 
 });
 
 
-// ==================================================
-// INTERACTIVE PROJECT PREVIEW
-// ==================================================
+/* =========================
+   NAVBAR RESIZE FIX
+========================= */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            window.innerWidth > 700 &&
+            navLinks
+        ) {
+
+            navLinks.classList.remove(
+                "active"
+            );
+
+            if (menuToggle) {
+
+                menuToggle.classList.remove(
+                    "active"
+                );
+            }
+        }
+    }
+);
 
 
-// Project information
+/* =========================
+   PROJECT DATA
+========================= */
 
 const projectData = {
 
     1: {
-        title: "Personal Portfolio Website",
+
+        title: "Business Portfolio Website",
+
         description:
-            "A modern responsive personal portfolio website created to showcase my skills, experience, services and projects.",
-        technologies:
-            "HTML • CSS • JavaScript",
+            "A modern and responsive business portfolio website designed to create a professional online presence and showcase services effectively.",
+
+        tech:
+            "HTML, CSS, JavaScript",
+
         status:
-            "Completed"
+            "Completed",
+
+        icon:
+            "💼"
     },
+
 
     2: {
-        title: "Business Web Development",
+
+        title: "Sales Landing Page",
+
         description:
-            "Professional business website solutions focused on clean design, responsive layouts and better online presence.",
-        technologies:
-            "HTML • CSS • JavaScript • Responsive Design",
+            "A conversion-focused landing page designed to present a business service clearly and encourage visitors to take action.",
+
+        tech:
+            "HTML, CSS, JavaScript",
+
         status:
-            "In Progress"
+            "Completed",
+
+        icon:
+            "🚀"
     },
 
-    3: {
-        title: "B2B Sales & Outreach",
-        description:
-            "B2B lead generation and LinkedIn outreach workflow focused on finding prospects, connecting with decision makers and generating business opportunities.",
-        technologies:
-            "LinkedIn • Lead Generation • B2B Sales",
-        status:
-            "Active"
-    }
 
+    3: {
+
+        title: "Interactive Web Interface",
+
+        description:
+            "An interactive front-end interface focused on clean design, smooth animations and a better user experience.",
+
+        tech:
+            "HTML, CSS, JavaScript",
+
+        status:
+            "In Progress",
+
+        icon:
+            "⚡"
+    }
 };
 
 
-// Find project buttons
+/* =========================
+   PROJECT MODAL
+========================= */
 
 const projectButtons =
-    document.querySelectorAll(".project-card .btn");
+    document.querySelectorAll(
+        ".project-card .project-btn"
+    );
 
 
-// Create popup
+/* CREATE MODAL */
 
-const modal = document.createElement("div");
+const modal =
+    document.createElement("div");
 
-modal.className = "project-modal";
+modal.className =
+    "project-modal";
 
 modal.innerHTML = `
 
     <div class="project-modal-box">
 
-        <button class="modal-close" id="modalClose">
+        <button class="modal-close">
             ×
         </button>
 
-        <div class="modal-icon">
-            💻
+        <div class="modal-icon" id="modalIcon">
+            💼
         </div>
 
         <h2 id="modalTitle">
@@ -357,29 +462,44 @@ modal.innerHTML = `
         </h2>
 
         <p id="modalDescription">
-            Project Description
+            Project description
         </p>
 
         <div class="modal-info">
 
             <div>
-                <strong>Technologies</strong>
+
+                <strong>
+                    TECHNOLOGY
+                </strong>
+
                 <span id="modalTech">
-                    HTML • CSS • JavaScript
+                    HTML, CSS, JavaScript
                 </span>
+
             </div>
 
+
             <div>
-                <strong>Status</strong>
+
+                <strong>
+                    STATUS
+                </strong>
+
                 <span id="modalStatus">
                     Completed
                 </span>
+
             </div>
 
         </div>
 
-        <button class="modal-action" id="modalAction">
-            Close Preview
+
+        <button
+            class="modal-action"
+            id="modalAction"
+        >
+            View Project
         </button>
 
     </div>
@@ -389,58 +509,102 @@ modal.innerHTML = `
 document.body.appendChild(modal);
 
 
-// Open project popup
+/* MODAL ELEMENTS */
 
-projectButtons.forEach(function (button, index) {
+const modalTitle =
+    document.getElementById(
+        "modalTitle"
+    );
 
-    button.addEventListener("click", function (event) {
+const modalDescription =
+    document.getElementById(
+        "modalDescription"
+    );
 
-        event.preventDefault();
+const modalTech =
+    document.getElementById(
+        "modalTech"
+    );
 
-        const projectNumber = index + 1;
+const modalStatus =
+    document.getElementById(
+        "modalStatus"
+    );
 
-        const project = projectData[projectNumber];
+const modalIcon =
+    document.getElementById(
+        "modalIcon"
+    );
 
-        if (!project) return;
+const modalAction =
+    document.getElementById(
+        "modalAction"
+    );
 
-
-        document.getElementById("modalTitle").textContent =
-            project.title;
-
-        document.getElementById("modalDescription").textContent =
-            project.description;
-
-        document.getElementById("modalTech").textContent =
-            project.technologies;
-
-        document.getElementById("modalStatus").textContent =
-            project.status;
-
-
-        modal.classList.add("active");
-
-        document.body.classList.add("modal-open");
-
-    });
-
-});
+const modalClose =
+    modal.querySelector(
+        ".modal-close"
+    );
 
 
-// Close popup function
+/* OPEN MODAL */
+
+projectButtons.forEach(
+    (button, index) => {
+
+        button.addEventListener(
+            "click",
+            function (e) {
+
+                e.preventDefault();
+
+                const project =
+                    projectData[index + 1];
+
+                if (!project) return;
+
+
+                modalTitle.textContent =
+                    project.title;
+
+                modalDescription.textContent =
+                    project.description;
+
+                modalTech.textContent =
+                    project.tech;
+
+                modalStatus.textContent =
+                    project.status;
+
+                modalIcon.textContent =
+                    project.icon;
+
+
+                modal.classList.add(
+                    "active"
+                );
+
+                document.body.classList.add(
+                    "modal-open"
+                );
+            }
+        );
+    }
+);
+
+
+/* CLOSE MODAL */
 
 function closeProjectModal() {
 
-    modal.classList.remove("active");
+    modal.classList.remove(
+        "active"
+    );
 
-    document.body.classList.remove("modal-open");
-
+    document.body.classList.remove(
+        "modal-open"
+    );
 }
-
-
-// Close button
-
-const modalClose =
-    document.getElementById("modalClose");
 
 
 if (modalClose) {
@@ -449,72 +613,201 @@ if (modalClose) {
         "click",
         closeProjectModal
     );
-
 }
 
 
-// Close action button
+/* CLOSE WHEN CLICKING OUTSIDE */
 
-const modalAction =
-    document.getElementById("modalAction");
+modal.addEventListener(
+    "click",
+    function (e) {
+
+        if (
+            e.target === modal
+        ) {
+
+            closeProjectModal();
+        }
+    }
+);
 
 
-if (modalAction) {
+/* CLOSE WITH ESC KEY */
 
-    modalAction.addEventListener(
-        "click",
-        closeProjectModal
+document.addEventListener(
+    "keydown",
+    function (e) {
+
+        if (
+            e.key === "Escape" &&
+            modal.classList.contains(
+                "active"
+            )
+        ) {
+
+            closeProjectModal();
+        }
+    }
+);
+
+
+/* =========================
+   PROJECT HOVER EFFECT
+========================= */
+
+const projectCards =
+    document.querySelectorAll(
+        ".project-card"
     );
 
-}
+projectCards.forEach(card => {
+
+    card.addEventListener(
+        "mouseenter",
+        () => {
+
+            card.style.transform =
+                "translateY(-8px)";
+        }
+    );
 
 
-// Close when clicking outside popup
+    card.addEventListener(
+        "mouseleave",
+        () => {
 
-modal.addEventListener("click", function (event) {
-
-    if (event.target === modal) {
-
-        closeProjectModal();
-
-    }
-
+            card.style.transform =
+                "";
+        }
+    );
 });
 
 
-// Close with ESC key
-
-document.addEventListener("keydown", function (event) {
-
-    if (event.key === "Escape") {
-
-        closeProjectModal();
-
-    }
-
-});
+/* =========================
 
 
-// ==========================
-// PROJECT HOVER MESSAGE
-// ==========================
+/* =========================
+   SMOOTH NAVIGATION
+========================= */
 
-projectButtons.forEach(function (button) {
+document
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach(link => {
 
-    button.addEventListener("mouseenter", function () {
+        link.addEventListener(
+            "click",
+            function (e) {
 
-        button.style.transform = "translateY(-3px)";
+                const targetId =
+                    this.getAttribute(
+                        "href"
+                    );
 
+                if (
+                    !targetId ||
+                    targetId === "#"
+                ) return;
+
+
+                const target =
+                    document.querySelector(
+                        targetId
+                    );
+
+                if (target) {
+
+                    e.preventDefault();
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+            }
+        );
     });
 
 
-    button.addEventListener("mouseleave", function () {
+/* =========================
+   ACTIVE NAV LINK
+========================= */
 
-        button.style.transform = "translateY(0)";
+const sections =
+    document.querySelectorAll(
+        "section"
+    );
 
-    });
+const navigationLinks =
+    document.querySelectorAll(
+        ".nav-links a"
+    );
 
-});
+window.addEventListener(
+    "scroll",
+    () => {
+
+        let currentSection = "";
+
+        sections.forEach(section => {
+
+            const sectionTop =
+                section.offsetTop - 150;
+
+            const sectionHeight =
+                section.offsetHeight;
+
+            if (
+                window.scrollY >=
+                    sectionTop &&
+                window.scrollY <
+                    sectionTop +
+                    sectionHeight
+            ) {
+
+                currentSection =
+                    section.getAttribute(
+                        "id"
+                    );
+            }
+        });
 
 
-console.log("Interactive Project Preview Loaded 🚀");
+        navigationLinks.forEach(link => {
+
+            link.classList.remove(
+                "active"
+            );
+
+            if (
+                link.getAttribute(
+                    "href"
+                ) ===
+                "#" + currentSection
+            ) {
+
+                link.classList.add(
+                    "active"
+                );
+            }
+        });
+
+    }
+);
+
+
+/* =========================
+   PAGE LOAD
+========================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        document.body.classList.add(
+            "page-loaded"
+        );
+
+    }
+);
