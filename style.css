@@ -1304,39 +1304,3 @@ body.light-mode .menu-btn {
     }
 
 }
-/* =========================
-   PREMIUM CURSOR GLOW
-========================= */
-
-body::before {
-    content: "";
-    position: fixed;
-
-    width: 260px;
-    height: 260px;
-
-    border-radius: 50%;
-
-    background: radial-gradient(
-        circle,
-        rgba(229, 57, 53, 0.20) 0%,
-        rgba(198, 40, 40, 0.10) 35%,
-        transparent 70%
-    );
-
-    pointer-events: none;
-
-    z-index: 999;
-
-    left: var(--mouse-x, -300px);
-    top: var(--mouse-y, -300px);
-
-    transform: translate(-50%, -50%);
-
-    filter: blur(15px);
-
-    transition:
-        left 0.08s ease,
-        top 0.08s ease;
-}
-
