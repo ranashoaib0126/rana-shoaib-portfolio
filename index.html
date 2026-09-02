@@ -12,102 +12,159 @@
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
+    <!-- ==========================
+         SCROLL PROGRESS
+    =========================== -->
+    <div class="scroll-progress" id="scrollProgress"></div>
 
+
+    <!-- ==========================
+         NAVBAR
+    =========================== -->
     <nav class="navbar">
 
-        <div class="logo">
-            MR SHOAIB
-        </div>
+        <a href="#home" class="logo">
+            SHOAIB<span>.</span>
+        </a>
 
-        <button id="menuBtn" class="menu-btn">☰</button>
+        <button class="menu-btn" id="menuBtn">
+            ☰
+        </button>
 
-        <div id="navLinks" class="nav-links">
+        <div class="nav-links" id="navLinks">
 
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
             <a href="#services">Services</a>
-            <a href="#why-me">Why Me</a>
             <a href="#projects">Projects</a>
-            <a href="#career-quest">Career Quest</a>
+            <a href="#career-quest">Quest</a>
             <a href="#contact">Contact</a>
 
-            <button id="themeBtn">☀️ Light Mode</button>
+            <button id="themeBtn">
+                ☀ Light
+            </button>
 
         </div>
 
     </nav>
 
 
-    <!-- =========================
-         HOME
-    ========================== -->
-
+    <!-- ==========================
+         HERO / 3D WORLD
+    =========================== -->
     <header id="home" class="hero">
+
+        <div class="hero-grid"></div>
+
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
 
         <div class="hero-content">
 
-            <img
-                src="./profile2.jpg"
-                class="profile"
-                alt="Rana Shoaib Profile Picture"
-            >
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                Available for new opportunities
+            </div>
+
+            <!-- 3D PROFILE WORLD -->
+            <div class="portfolio-world">
+
+                <div class="world-ring ring-one"></div>
+                <div class="world-ring ring-two"></div>
+                <div class="world-ring ring-three"></div>
+
+                <div class="world-core">
+
+                    <img
+                        src="profile2.jpg"
+                        class="profile"
+                        alt="Rana Shoaib Profile Picture"
+                    >
+
+                    <div class="core-label">
+                        <span>SHOAIB</span>
+                    </div>
+
+                </div>
+
+                <div class="floating-node node-one">
+                    <strong>HTML</strong>
+                    <small>Structure</small>
+                </div>
+
+                <div class="floating-node node-two">
+                    <strong>CSS</strong>
+                    <small>Design</small>
+                </div>
+
+                <div class="floating-node node-three">
+                    <strong>JS</strong>
+                    <small>Logic</small>
+                </div>
+
+                <div class="floating-node node-four">
+                    <strong>SALES</strong>
+                    <small>B2B</small>
+                </div>
+
+            </div>
+
 
             <p class="hero-intro">
-                WELCOME TO MY PORTFOLIO
+                HELLO, I'M
             </p>
 
             <h1>
                 RANA SHOAIB
             </h1>
 
-            <p class="hero-role">
-                I am <span id="typing"></span>
-            </p>
+            <div class="hero-role">
+                I am
+                <span id="typing"></span>
+            </div>
 
             <p class="hero-description">
-                I build modern websites and help businesses
-                create professional B2B opportunities.
+                I combine front-end development and B2B sales to build
+                digital experiences that look professional, communicate
+                clearly, and help businesses grow.
             </p>
+
 
             <div class="hero-buttons">
 
-                <a href="#contact" class="btn">
-                    Let's Work Together
+                <a href="#projects" class="btn">
+                    Explore My Work →
                 </a>
 
-                <a href="#projects" class="btn btn-outline">
-                    Explore My Work
-                </a>
-
-                <a
-                    href="./Rana_Shoaib_CV.pdf"
-                    class="btn btn-outline"
-                    download
-                >
-                    📄 Download CV
+                <a href="#contact" class="btn btn-outline">
+                    Let's Connect
                 </a>
 
             </div>
 
+
+            <!-- HERO STATS -->
             <div class="hero-mini-stats">
 
                 <div>
-                    <strong>Web</strong>
-                    <span>Development</span>
+                    <strong>15+</strong>
+                    <span>Projects</span>
                 </div>
 
                 <div>
-                    <strong>B2B</strong>
-                    <span>Sales</span>
+                    <strong>30+</strong>
+                    <span>Clients</span>
                 </div>
 
                 <div>
-                    <strong>LinkedIn</strong>
-                    <span>Outreach</span>
+                    <strong>2+</strong>
+                    <span>Core Skills</span>
+                </div>
+
+                <div>
+                    <strong>100%</strong>
+                    <span>Learning</span>
                 </div>
 
             </div>
@@ -117,46 +174,98 @@
     </header>
 
 
-    <!-- =========================
-         ABOUT
-    ========================== -->
+    <!-- ==========================
+         EXPERIENCE HUD
+    =========================== -->
+    <section class="experience-hud">
 
-    <section id="about" class="about section">
+        <div class="hud-item">
+            <span class="hud-dot"></span>
+            <div>
+                <small>STATUS</small>
+                <strong>ONLINE</strong>
+            </div>
+        </div>
+
+        <div class="hud-item">
+            <span>01</span>
+            <div>
+                <small>ROLE</small>
+                <strong>DEVELOPER</strong>
+            </div>
+        </div>
+
+        <div class="hud-item">
+            <span>02</span>
+            <div>
+                <small>FOCUS</small>
+                <strong>B2B SALES</strong>
+            </div>
+        </div>
+
+        <div class="hud-item">
+            <span>03</span>
+            <div>
+                <small>MISSION</small>
+                <strong>BUILD & GROW</strong>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ==========================
+         ABOUT
+    =========================== -->
+    <section id="about" class="section about">
 
         <div class="section-heading">
 
-            <span>WHO I AM</span>
+            <span>01 — ABOUT ME</span>
 
-            <h2>About Me</h2>
+            <h2>
+                More Than Just A Portfolio
+            </h2>
 
         </div>
+
 
         <div class="about-content">
 
             <div class="about-text">
 
                 <h3>
-                    Hi, I'm Rana Shoaib 👋
+                    Developer Mindset × Sales Mindset
                 </h3>
 
                 <p>
-                    I am a Sales Executive and Front-End Developer
-                    with an interest in building professional websites
-                    and creating B2B business opportunities.
+                    I'm Rana Shoaib, a Sales Executive and Front-End
+                    Developer who enjoys working at the intersection of
+                    technology, business, and communication.
                 </p>
 
                 <p>
-                    I work with HTML, CSS and JavaScript to create
-                    clean and responsive web experiences. I also focus
-                    on B2B sales, LinkedIn outreach and finding potential
-                    business opportunities.
+                    My work combines website development with B2B sales,
+                    allowing me to understand both sides of a digital
+                    project — how it is built and how it creates value
+                    for a business.
                 </p>
 
                 <p>
-                    My goal is to combine technology and sales to help
-                    businesses grow their online presence and connect
-                    with the right customers.
+                    I continuously improve my technical, communication,
+                    sales, and problem-solving skills while building
+                    practical digital projects.
                 </p>
+
+
+                <div class="about-tags">
+
+                    <span>Problem Solver</span>
+                    <span>Fast Learner</span>
+                    <span>Business Mindset</span>
+                    <span>Creative Thinker</span>
+
+                </div>
 
             </div>
 
@@ -166,11 +275,25 @@
                 <div class="info-card">
 
                     <div class="info-icon">
+                        💼
+                    </div>
+
+                    <div>
+                        <h4>Current Role</h4>
+                        <p>Sales Executive</p>
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
                         💻
                     </div>
 
                     <div>
-                        <h4>Role</h4>
+                        <h4>Development</h4>
                         <p>Front-End Developer</p>
                     </div>
 
@@ -180,12 +303,12 @@
                 <div class="info-card">
 
                     <div class="info-icon">
-                        📈
+                        🌎
                     </div>
 
                     <div>
-                        <h4>Sales</h4>
-                        <p>B2B Sales Executive</p>
+                        <h4>Location</h4>
+                        <p>Pakistan</p>
                     </div>
 
                 </div>
@@ -194,12 +317,12 @@
                 <div class="info-card">
 
                     <div class="info-icon">
-                        🌐
+                        🚀
                     </div>
 
                     <div>
-                        <h4>Focus</h4>
-                        <p>Web Development & Outreach</p>
+                        <h4>Mindset</h4>
+                        <p>Always Learning</p>
                     </div>
 
                 </div>
@@ -211,121 +334,134 @@
     </section>
 
 
-    <!-- =========================
+    <!-- ==========================
          SKILLS
-    ========================== -->
-
-    <section id="skills" class="skills section">
+    =========================== -->
+    <section id="skills" class="section skills">
 
         <div class="section-heading">
 
-            <span>WHAT I KNOW</span>
+            <span>02 — SKILLS</span>
 
-            <h2>My Skills</h2>
+            <h2>
+                My Skill System
+            </h2>
 
         </div>
 
 
         <div class="skills-container">
 
-            <div class="skill-card" data-skill="HTML">
+            <div class="skill-card">
 
                 <div class="skill-icon">
                     HTML
                 </div>
 
-                <h3>
-                    HTML
-                </h3>
+                <h3>HTML5</h3>
 
                 <p>
-                    Building clean and structured web pages.
+                    Semantic structure and clean website architecture.
                 </p>
+
+                <div class="skill-bar">
+                    <span style="width: 90%"></span>
+                </div>
 
             </div>
 
 
-            <div class="skill-card" data-skill="CSS">
+            <div class="skill-card">
 
                 <div class="skill-icon">
                     CSS
                 </div>
 
-                <h3>
-                    CSS
-                </h3>
+                <h3>CSS3</h3>
 
                 <p>
-                    Creating responsive and professional designs.
+                    Responsive layouts, animations and modern UI design.
                 </p>
+
+                <div class="skill-bar">
+                    <span style="width: 85%"></span>
+                </div>
 
             </div>
 
 
-            <div class="skill-card" data-skill="JavaScript">
+            <div class="skill-card">
 
                 <div class="skill-icon">
                     JS
                 </div>
 
-                <h3>
-                    JavaScript
-                </h3>
+                <h3>JavaScript</h3>
 
                 <p>
-                    Adding interactive features and functionality.
+                    Interactive experiences and dynamic website logic.
                 </p>
 
-            </div>
-
-
-            <div class="skill-card" data-skill="Web Development">
-
-                <div class="skill-icon">
-                    WEB
+                <div class="skill-bar">
+                    <span style="width: 75%"></span>
                 </div>
 
-                <h3>
-                    Web Development
-                </h3>
+            </div>
+
+
+            <div class="skill-card">
+
+                <div class="skill-icon">
+                    UI
+                </div>
+
+                <h3>UI Design</h3>
 
                 <p>
-                    Developing modern and responsive websites.
+                    Clean, professional and user-focused interfaces.
                 </p>
+
+                <div class="skill-bar">
+                    <span style="width: 80%"></span>
+                </div>
 
             </div>
 
 
-            <div class="skill-card" data-skill="B2B Sales">
+            <div class="skill-card">
 
                 <div class="skill-icon">
                     B2B
                 </div>
 
-                <h3>
-                    B2B Sales
-                </h3>
+                <h3>B2B Sales</h3>
 
                 <p>
-                    Finding prospects and creating business opportunities.
+                    Prospecting, qualification and business outreach.
                 </p>
+
+                <div class="skill-bar">
+                    <span style="width: 90%"></span>
+                </div>
 
             </div>
 
 
-            <div class="skill-card" data-skill="LinkedIn Outreach">
+            <div class="skill-card">
 
                 <div class="skill-icon">
                     LI
                 </div>
 
-                <h3>
-                    LinkedIn Outreach
-                </h3>
+                <h3>LinkedIn Outreach</h3>
 
                 <p>
-                    Professional prospecting and client outreach.
+                    ICP research and personalized prospect communication.
                 </p>
+
+                <div class="skill-bar">
+                    <span style="width: 88%"></span>
+                </div>
 
             </div>
 
@@ -334,17 +470,18 @@
     </section>
 
 
-    <!-- =========================
+    <!-- ==========================
          SERVICES
-    ========================== -->
-
-    <section id="services" class="services section">
+    =========================== -->
+    <section id="services" class="section services">
 
         <div class="section-heading">
 
-            <span>WHAT I OFFER</span>
+            <span>03 — SERVICES</span>
 
-            <h2>My Services</h2>
+            <h2>
+                What I Can Do
+            </h2>
 
         </div>
 
@@ -354,17 +491,20 @@
             <div class="service-card">
 
                 <div class="service-icon">
-                    💻
+                    🌐
                 </div>
 
-                <h3>
-                    Web Development
-                </h3>
+                <h3>Website Development</h3>
 
                 <p>
-                    Responsive and professional websites designed
-                    for businesses, portfolios and personal brands.
+                    Responsive and modern websites using HTML, CSS and
+                    JavaScript.
                 </p>
+
+                <div class="service-footer">
+                    <span>01</span>
+                    <b>BUILD</b>
+                </div>
 
             </div>
 
@@ -375,14 +515,17 @@
                     🎨
                 </div>
 
-                <h3>
-                    Front-End Development
-                </h3>
+                <h3>Landing Pages</h3>
 
                 <p>
-                    Clean and modern user interfaces using HTML,
-                    CSS and JavaScript.
+                    Professional landing pages designed to communicate
+                    value and generate action.
                 </p>
+
+                <div class="service-footer">
+                    <span>02</span>
+                    <b>CONVERT</b>
+                </div>
 
             </div>
 
@@ -390,17 +533,20 @@
             <div class="service-card">
 
                 <div class="service-icon">
-                    📈
+                    🎯
                 </div>
 
-                <h3>
-                    B2B Sales
-                </h3>
+                <h3>B2B Sales</h3>
 
                 <p>
-                    B2B prospecting and sales strategies focused
-                    on finding potential business opportunities.
+                    Prospect research, ICP identification and personalized
+                    business outreach.
                 </p>
+
+                <div class="service-footer">
+                    <span>03</span>
+                    <b>GROW</b>
+                </div>
 
             </div>
 
@@ -408,17 +554,20 @@
             <div class="service-card">
 
                 <div class="service-icon">
-                    🔎
+                    🔗
                 </div>
 
-                <h3>
-                    LinkedIn Outreach
-                </h3>
+                <h3>LinkedIn Outreach</h3>
 
                 <p>
-                    Professional LinkedIn outreach to connect with
-                    relevant decision makers and potential clients.
+                    Connecting businesses with relevant decision makers
+                    through targeted outreach.
                 </p>
+
+                <div class="service-footer">
+                    <span>04</span>
+                    <b>CONNECT</b>
+                </div>
 
             </div>
 
@@ -426,26 +575,25 @@
 
 
         <!-- COUNTERS -->
-
         <div class="counter-container">
 
             <div class="counter-card">
-                <h3 id="project">0+</h3>
+                <h3 data-target="15">0+</h3>
                 <p>Projects</p>
             </div>
 
             <div class="counter-card">
-                <h3 id="client">0+</h3>
+                <h3 data-target="30">0+</h3>
                 <p>Clients</p>
             </div>
 
             <div class="counter-card">
-                <h3 id="learning">0+</h3>
+                <h3 data-target="100">0%</h3>
                 <p>Learning</p>
             </div>
 
             <div class="counter-card">
-                <h3 id="passion">0%</h3>
+                <h3 data-target="100">0%</h3>
                 <p>Passion</p>
             </div>
 
@@ -454,17 +602,51 @@
     </section>
 
 
-    <!-- =========================
-         WHY WORK WITH ME
-    ========================== -->
+    <!-- ==========================
+         CINEMATIC FEATURE
+    =========================== -->
+    <section class="cinematic-section">
 
-    <section id="why-me" class="why-me section">
+        <div class="cinematic-grid"></div>
+
+        <div class="cinematic-content">
+
+            <span>THE SHOAIB SYSTEM</span>
+
+            <h2>
+                Think.
+                <br>
+                Build.
+                <br>
+                Connect.
+                <br>
+                Grow.
+            </h2>
+
+            <p>
+                A portfolio built around the combination of technology,
+                creativity, communication and business.
+            </p>
+
+            <div class="cinematic-line"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================
+         WHY ME
+    =========================== -->
+    <section class="section why-me">
 
         <div class="section-heading">
 
-            <span>MY APPROACH</span>
+            <span>04 — WHY ME</span>
 
-            <h2>Why Work With Me?</h2>
+            <h2>
+                Why Work With Me?
+            </h2>
 
         </div>
 
@@ -473,22 +655,39 @@
 
             <div class="why-card">
 
-                <div class="why-number">
+                <span class="why-number">
                     01
+                </span>
+
+                <div class="why-icon">
+                    ⚡
                 </div>
+
+                <h3>Fast Learning</h3>
+
+                <p>
+                    I continuously learn new technologies and improve
+                    through practical projects.
+                </p>
+
+            </div>
+
+
+            <div class="why-card">
+
+                <span class="why-number">
+                    02
+                </span>
 
                 <div class="why-icon">
                     🎯
                 </div>
 
-                <h3>
-                    Business Focused
-                </h3>
+                <h3>Business Focus</h3>
 
                 <p>
-                    I don't just focus on making things look good.
-                    I aim to understand the business goal behind
-                    every website or sales project.
+                    I don't only focus on design — I think about the
+                    business objective behind the project.
                 </p>
 
             </div>
@@ -496,43 +695,19 @@
 
             <div class="why-card">
 
-                <div class="why-number">
-                    02
-                </div>
-
-                <div class="why-icon">
-                    💻
-                </div>
-
-                <h3>
-                    Modern Web Solutions
-                </h3>
-
-                <p>
-                    I create clean, responsive and user-friendly
-                    web experiences using modern front-end technologies.
-                </p>
-
-            </div>
-
-
-            <div class="why-card">
-
-                <div class="why-number">
+                <span class="why-number">
                     03
-                </div>
+                </span>
 
                 <div class="why-icon">
-                    📈
+                    💬
                 </div>
 
-                <h3>
-                    Sales Mindset
-                </h3>
+                <h3>Communication</h3>
 
                 <p>
-                    My B2B sales experience helps me understand
-                    prospects, business needs and professional communication.
+                    Clear communication is important for both development
+                    and sales.
                 </p>
 
             </div>
@@ -540,21 +715,19 @@
 
             <div class="why-card">
 
-                <div class="why-number">
+                <span class="why-number">
                     04
-                </div>
+                </span>
 
                 <div class="why-icon">
-                    🤝
+                    🚀
                 </div>
 
-                <h3>
-                    Professional Approach
-                </h3>
+                <h3>Growth Mindset</h3>
 
                 <p>
-                    Clear communication, reliable work and a focus
-                    on creating long-term professional relationships.
+                    Every project is an opportunity to improve, experiment
+                    and create something better.
                 </p>
 
             </div>
@@ -564,10 +737,9 @@
     </section>
 
 
-    <!-- =========================
+    <!-- ==========================
          FEATURE STRIP
-    ========================== -->
-
+    =========================== -->
     <section class="feature-strip">
 
         <div class="feature-content">
@@ -575,25 +747,22 @@
             <div>
 
                 <span>
-                    HAVE AN IDEA?
+                    HAVE A PROJECT?
                 </span>
 
                 <h2>
-                    Let's Turn Your Idea Into Reality.
+                    Let's Build Something Different.
                 </h2>
 
                 <p>
-                    Whether you need a website or want to explore
-                    a B2B opportunity, let's start a conversation.
+                    Let's turn your idea into a professional digital
+                    experience.
                 </p>
 
             </div>
 
-            <a
-                href="#contact"
-                class="btn feature-btn"
-            >
-                Start a Conversation →
+            <a href="#contact" class="btn feature-btn">
+                Start A Conversation →
             </a>
 
         </div>
@@ -601,161 +770,201 @@
     </section>
 
 
-    <!-- =========================
-         CAREER QUEST GAME
-    ========================== -->
-
-    <section id="career-quest" class="career-quest section">
+    <!-- ==========================
+         PROJECTS
+    =========================== -->
+    <section id="projects" class="section projects">
 
         <div class="section-heading">
 
-            <span>INTERACTIVE EXPERIENCE</span>
+            <span>05 — PROJECTS</span>
 
             <h2>
-                Shoaib Career Quest 🎮
+                Selected Work
             </h2>
 
         </div>
 
 
-        <div class="game-card">
+        <div class="project-container">
 
-            <div class="game-top">
+            <div class="project-card">
 
-                <div>
+                <span class="project-number">
+                    PROJECT 01
+                </span>
 
-                    <span class="game-label">
-                        PORTFOLIO MINI GAME
-                    </span>
-
-                    <h3>
-                        Can You Complete Shoaib's Career Quest?
-                    </h3>
-
-                    <p>
-                        Choose a mission, answer the challenges
-                        and earn XP.
-                    </p>
-
+                <div class="project-visual">
+                    <span>WEB</span>
                 </div>
 
-
-                <div class="game-xp">
-
-                    <strong id="gameXP">
-                        0
-                    </strong>
-
-                    <span>
-                        XP
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- GAME START -->
-
-            <div id="gameStart" class="game-screen">
-
-                <div class="game-emoji">
-                    🎮
-                </div>
-
-                <h3>
-                    Ready for the Challenge?
-                </h3>
+                <h3>Portfolio Website</h3>
 
                 <p>
-                    Test your knowledge about Web Development,
-                    B2B Sales and Lead Generation.
+                    A modern responsive portfolio website with animations,
+                    interactive components and a professional interface.
                 </p>
 
-                <button
-                    id="startGameBtn"
-                    class="btn game-start-btn"
-                >
-                    🎮 Start Career Quest
+                <div class="project-tech">
+                    HTML · CSS · JavaScript
+                </div>
+
+                <button class="project-btn">
+                    View Project →
                 </button>
 
             </div>
 
 
-            <!-- MISSION SELECTION -->
+            <div class="project-card">
 
-            <div
-                id="missionSelection"
-                class="game-screen"
-                style="display: none;"
-            >
+                <span class="project-number">
+                    PROJECT 02
+                </span>
+
+                <div class="project-visual">
+                    <span>BUSINESS</span>
+                </div>
+
+                <h3>B2B Outreach System</h3>
+
+                <p>
+                    A structured prospecting workflow for identifying
+                    companies, decision makers and qualified leads.
+                </p>
+
+                <div class="project-tech">
+                    ICP · LinkedIn · Sales
+                </div>
+
+                <button class="project-btn">
+                    View Project →
+                </button>
+
+            </div>
+
+
+            <div class="project-card">
+
+                <span class="project-number">
+                    PROJECT 03
+                </span>
+
+                <div class="project-visual">
+                    <span>UI</span>
+                </div>
+
+                <h3>Interactive Web Experience</h3>
+
+                <p>
+                    A creative front-end concept focused on interaction,
+                    animation and modern user experience.
+                </p>
+
+                <div class="project-tech">
+                    HTML · CSS · JavaScript
+                </div>
+
+                <button class="project-btn">
+                    View Project →
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================
+         CAREER QUEST
+    =========================== -->
+    <section id="career-quest" class="section career-quest">
+
+        <div class="section-heading">
+
+            <span>06 — INTERACTIVE EXPERIENCE</span>
+
+            <h2>
+                Career Quest
+            </h2>
+
+            <p>
+                Test your knowledge and see how far you can go.
+            </p>
+
+        </div>
+
+
+        <div class="quest-container">
+
+            <div id="gameStart" class="game-screen">
+
+                <div class="game-icon">
+                    🎮
+                </div>
 
                 <h3>
-                    Choose Your Mission
+                    Welcome to Career Quest
                 </h3>
 
                 <p>
-                    Select one mission to begin your challenge.
+                    Choose your mission and earn XP by answering
+                    professional challenges.
                 </p>
 
+                <button class="btn" id="startGameBtn">
+                    Start Mission →
+                </button>
+
+            </div>
+
+
+            <div id="missionSelection" class="game-screen hidden">
+
+                <h3>
+                    Select Your Mission
+                </h3>
 
                 <div class="mission-grid">
 
-                    <button
-                        class="mission-card"
-                        data-mission="website"
-                    >
+                    <button class="mission-card"
+                        data-mission="website">
 
-                        <span class="mission-icon">
-                            💻
-                        </span>
+                        <span>🌐</span>
 
-                        <strong>
-                            Build a Website
-                        </strong>
+                        <strong>Web Developer</strong>
 
                         <small>
-                            Web Development
+                            HTML · CSS · JS
                         </small>
 
                     </button>
 
 
-                    <button
-                        class="mission-card"
-                        data-mission="client"
-                    >
+                    <button class="mission-card"
+                        data-mission="client">
 
-                        <span class="mission-icon">
-                            📈
-                        </span>
+                        <span>🤝</span>
 
-                        <strong>
-                            Find a Client
-                        </strong>
+                        <strong>Client Hunter</strong>
 
                         <small>
-                            B2B Sales
+                            B2B · Sales
                         </small>
 
                     </button>
 
 
-                    <button
-                        class="mission-card"
-                        data-mission="leads"
-                    >
+                    <button class="mission-card"
+                        data-mission="leads">
 
-                        <span class="mission-icon">
-                            🔎
-                        </span>
+                        <span>🎯</span>
 
-                        <strong>
-                            Generate Leads
-                        </strong>
+                        <strong>Lead Master</strong>
 
                         <small>
-                            Lead Generation
+                            ICP · LinkedIn
                         </small>
 
                     </button>
@@ -765,22 +974,31 @@
             </div>
 
 
-            <!-- CHALLENGE -->
+            <div id="challengeArea" class="game-screen hidden">
 
-            <div
-                id="challengeArea"
-                class="game-screen"
-                style="display: none;"
-            >
+                <div class="game-topbar">
+
+                    <span>
+                        MISSION:
+                        <strong id="gameMissionName">
+                            —
+                        </strong>
+                    </span>
+
+                    <span>
+                        XP:
+                        <strong id="gameXP">
+                            0
+                        </strong>
+                    </span>
+
+                </div>
+
 
                 <div class="game-progress">
 
                     <span id="gameQuestionNumber">
                         Question 1 / 3
-                    </span>
-
-                    <span id="gameMissionName">
-                        Mission
                     </span>
 
                 </div>
@@ -791,73 +1009,47 @@
                 </h3>
 
 
-                <div id="gameOptions" class="game-options">
+                <div id="gameOptions"
+                    class="game-options">
                 </div>
 
 
-                <p
-                    id="gameFeedback"
-                    class="game-feedback"
-                ></p>
+                <div id="gameFeedback"
+                    class="game-feedback">
+                </div>
 
             </div>
 
 
-            <!-- GAME RESULT -->
+            <div id="gameResult"
+                class="game-screen hidden">
 
-            <div
-                id="gameResult"
-                class="game-screen"
-                style="display: none;"
-            >
-
-                <div class="result-emoji">
+                <div class="result-icon">
                     🏆
                 </div>
 
-                <span class="game-label">
-                    MISSION COMPLETE
-                </span>
-
                 <h3>
-                    Great Job!
+                    Mission Complete
                 </h3>
 
                 <p>
-                    You completed the Shoaib Career Quest.
+                    You earned
                 </p>
 
+                <strong id="finalXP">
+                    0 XP
+                </strong>
 
-                <div class="final-score">
-
-                    <strong id="finalXP">
-                        0 XP
-                    </strong>
-
-                    <span id="finalRank">
-                        Beginner 🌱
-                    </span>
-
+                <div id="finalRank"
+                    class="final-rank">
+                    Beginner 🌱
                 </div>
 
-
-                <div class="game-result-buttons">
-
-                    <button
-                        id="restartGameBtn"
-                        class="btn"
-                    >
-                        🔄 Play Again
-                    </button>
-
-                    <a
-                        href="#contact"
-                        class="btn btn-outline"
-                    >
-                        Work With Shoaib →
-                    </a>
-
-                </div>
+                <button
+                    id="restartGameBtn"
+                    class="btn">
+                    Play Again
+                </button>
 
             </div>
 
@@ -866,147 +1058,36 @@
     </section>
 
 
-    <!-- =========================
-         PROJECTS
-    ========================== -->
-
-    <section id="projects" class="projects section">
-
-        <div class="section-heading">
-
-            <span>MY WORK</span>
-
-            <h2>My Projects</h2>
-
-        </div>
-
-
-        <div class="project-container">
-
-            <div class="project-card">
-
-                <div class="project-number">
-                    01
-                </div>
-
-                <h3>
-                    Personal Portfolio Website
-                </h3>
-
-                <p>
-                    A responsive personal portfolio website built
-                    to showcase my skills, services, projects and
-                    professional experience.
-                </p>
-
-                <span class="project-tech">
-                    HTML | CSS | JavaScript
-                </span>
-
-                <a
-                    href="#home"
-                    class="project-btn"
-                >
-                    View Project →
-                </a>
-
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">
-                    02
-                </div>
-
-                <h3>
-                    Business Web Development
-                </h3>
-
-                <p>
-                    Professional website solutions designed to help
-                    businesses build a strong online presence and
-                    reach their customers.
-                </p>
-
-                <span class="project-tech">
-                    Web Development | UI Design
-                </span>
-
-                <a
-                    href="#contact"
-                    class="project-btn"
-                >
-                    Discuss Project →
-                </a>
-
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">
-                    03
-                </div>
-
-                <h3>
-                    B2B Sales & Outreach
-                </h3>
-
-                <p>
-                    B2B prospecting and LinkedIn outreach strategies
-                    focused on finding potential clients and creating
-                    business opportunities.
-                </p>
-
-                <span class="project-tech">
-                    B2B Sales | LinkedIn Outreach
-                </span>
-
-                <a
-                    href="#contact"
-                    class="project-btn"
-                >
-                    Contact Me →
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
+    <!-- ==========================
          CONTACT
-    ========================== -->
-
-    <section id="contact" class="contact section">
+    =========================== -->
+    <section id="contact" class="section contact">
 
         <div class="section-heading">
 
-            <span>GET IN TOUCH</span>
+            <span>07 — CONTACT</span>
 
             <h2>
-                Contact Me
+                Let's Work Together
             </h2>
 
         </div>
 
+
         <p class="contact-intro">
-            Feel free to contact me for Web Development
-            and B2B Sales projects.
+            Have an idea, project, business opportunity or simply want
+            to connect? Send me a message.
         </p>
 
 
         <div class="contact-wrapper">
 
-
             <div class="contact-form-box">
 
                 <h3>
-                    Send Me a Message
+                    Send A Message
                 </h3>
+
 
                 <form id="contactForm">
 
@@ -1014,17 +1095,20 @@
                         type="text"
                         id="name"
                         placeholder="Your Name"
+                        required
                     >
 
                     <input
                         type="email"
                         id="email"
                         placeholder="Your Email"
+                        required
                     >
 
                     <textarea
                         id="message"
                         placeholder="Your Message"
+                        required
                     ></textarea>
 
                     <button type="submit">
@@ -1032,6 +1116,7 @@
                     </button>
 
                 </form>
+
 
                 <p id="formMessage"></p>
 
@@ -1041,12 +1126,12 @@
             <div class="contact-information">
 
                 <h3>
-                    Let's Work Together
+                    Contact Information
                 </h3>
 
                 <p>
-                    Have a project or business opportunity?
-                    Feel free to get in touch with me.
+                    You can also reach me directly through the following
+                    channels.
                 </p>
 
 
@@ -1055,12 +1140,14 @@
                     <div class="contact-card">
 
                         <div class="contact-icon">
-                            📞
+                            📱
                         </div>
 
                         <div>
                             <h4>Phone</h4>
-                            <p>+92 315 6109300</p>
+                            <p>
+                                +92 315 6109300
+                            </p>
                         </div>
 
                     </div>
@@ -1074,7 +1161,9 @@
 
                         <div>
                             <h4>Email</h4>
-                            <p>r.shoaib0126@gmail.com</p>
+                            <p>
+                                r.shoaib0126@gmail.com
+                            </p>
                         </div>
 
                     </div>
@@ -1087,8 +1176,10 @@
                         </div>
 
                         <div>
-                            <h4>Country</h4>
-                            <p>Pakistan</p>
+                            <h4>Location</h4>
+                            <p>
+                                Pakistan
+                            </p>
                         </div>
 
                     </div>
@@ -1102,23 +1193,81 @@
     </section>
 
 
-    <!-- =========================
-         ASK SHOAIB ASSISTANT
-    ========================== -->
+    <!-- ==========================
+         PROJECT MODAL
+    =========================== -->
+    <div class="project-modal"
+        id="projectModal">
 
+        <div class="project-modal-box">
+
+            <button
+                class="modal-close"
+                id="modalClose">
+                ×
+            </button>
+
+            <div class="modal-icon">
+                🚀
+            </div>
+
+            <h2 id="modalTitle">
+                Project
+            </h2>
+
+            <p id="modalDescription">
+                Project description.
+            </p>
+
+
+            <div class="modal-info">
+
+                <div>
+                    <strong>TECHNOLOGY</strong>
+                    <span id="modalTech">
+                        HTML
+                    </span>
+                </div>
+
+                <div>
+                    <strong>TYPE</strong>
+                    <span id="modalType">
+                        Web Project
+                    </span>
+                </div>
+
+            </div>
+
+
+            <button class="modal-action"
+                id="modalAction">
+                Close Project
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================
+         AI ASSISTANT
+    =========================== -->
     <button
-        id="assistantBtn"
         class="assistant-btn"
-    >
+        id="assistantBtn">
+
         🤖
-        <span>Ask Shoaib</span>
+
+        <span>
+            Ask Shoaib
+        </span>
+
     </button>
 
 
     <div
-        id="assistantPanel"
         class="assistant-panel"
-    >
+        id="assistantPanel">
 
         <div class="assistant-header">
 
@@ -1129,21 +1278,23 @@
                 </div>
 
                 <div>
+
                     <h3>
-                        Shoaib Assistant
+                        Ask Shoaib
                     </h3>
 
                     <span>
-                        ● Online
+                        Portfolio Assistant
                     </span>
+
                 </div>
 
             </div>
 
+
             <button
-                id="assistantClose"
                 class="assistant-close"
-            >
+                id="assistantClose">
                 ×
             </button>
 
@@ -1151,20 +1302,19 @@
 
 
         <div
-            id="assistantMessages"
             class="assistant-messages"
-        >
+            id="assistantMessages">
 
-            <div class="assistant-message bot-message">
+            <div class="assistant-message">
 
                 <div class="message-icon">
                     🤖
                 </div>
 
                 <div class="message-content">
-                    Hi! I'm Shoaib's portfolio assistant. 👋
-                    <br><br>
-                    What would you like to know?
+                    Hi! I'm Shoaib's portfolio assistant.
+                    Ask me about his skills, services, projects
+                    or sales experience.
                 </div>
 
             </div>
@@ -1176,44 +1326,26 @@
 
             <button
                 class="assistant-question"
-                data-question="skills"
-            >
-                👨‍💻 Skills
+                data-question="What skills does Shoaib have?">
+                Skills
             </button>
 
             <button
                 class="assistant-question"
-                data-question="services"
-            >
-                💼 Services
+                data-question="What services does Shoaib offer?">
+                Services
             </button>
 
             <button
                 class="assistant-question"
-                data-question="sales"
-            >
-                📈 B2B Sales
+                data-question="Tell me about Shoaib">
+                About
             </button>
 
             <button
                 class="assistant-question"
-                data-question="technology"
-            >
-                🌐 Technologies
-            </button>
-
-            <button
-                class="assistant-question"
-                data-question="contact"
-            >
-                📞 Contact
-            </button>
-
-            <button
-                class="assistant-question"
-                data-question="about"
-            >
-                👤 About Shoaib
+                data-question="How can I contact Shoaib?">
+                Contact
             </button>
 
         </div>
@@ -1225,13 +1357,11 @@
                 type="text"
                 id="assistantInput"
                 placeholder="Ask something..."
-                autocomplete="off"
             >
 
             <button
-                id="assistantSend"
                 class="assistant-send"
-            >
+                id="assistantSend">
                 ➤
             </button>
 
@@ -1240,10 +1370,19 @@
     </div>
 
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
+    <!-- ==========================
+         BACK TO TOP
+    =========================== -->
+    <button
+        id="backToTop"
+        class="back-to-top">
+        ↑
+    </button>
 
+
+    <!-- ==========================
+         FOOTER
+    =========================== -->
     <footer class="footer">
 
         <h3>
@@ -1263,6 +1402,9 @@
     </footer>
 
 
+    <!-- ==========================
+         SCRIPT
+    =========================== -->
     <script src="script.js"></script>
 
 </body>
