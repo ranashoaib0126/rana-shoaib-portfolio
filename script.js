@@ -42,8 +42,6 @@ startCounter("passion", 100, 20, "%");
 
 const themeBtn = document.getElementById("themeBtn");
 
-
-// Load saved theme
 const savedTheme = localStorage.getItem("theme");
 
 if (savedTheme === "light") {
@@ -62,7 +60,6 @@ if (savedTheme === "light") {
 }
 
 
-// Change theme
 if (themeBtn) {
 
     themeBtn.addEventListener("click", function () {
@@ -130,7 +127,6 @@ function typeEffect() {
     let speed = isDeleting ? 50 : 90;
 
 
-    // Word completed
     if (!isDeleting && charIndex === currentWord.length) {
 
         speed = 1500;
@@ -139,7 +135,6 @@ function typeEffect() {
     }
 
 
-    // Word deleted
     if (isDeleting && charIndex === 0) {
 
         isDeleting = false;
@@ -248,7 +243,7 @@ if (menuBtn && navLinks) {
 // ==========================
 
 const animatedSections = document.querySelectorAll(
-    ".about, .skills, .services, .projects, .contact"
+    ".about, .skills, .services, .projects, .contact, .why-me"
 );
 
 
@@ -289,3 +284,237 @@ window.addEventListener("resize", function () {
     }
 
 });
+
+
+// ==================================================
+// INTERACTIVE PROJECT PREVIEW
+// ==================================================
+
+
+// Project information
+
+const projectData = {
+
+    1: {
+        title: "Personal Portfolio Website",
+        description:
+            "A modern responsive personal portfolio website created to showcase my skills, experience, services and projects.",
+        technologies:
+            "HTML • CSS • JavaScript",
+        status:
+            "Completed"
+    },
+
+    2: {
+        title: "Business Web Development",
+        description:
+            "Professional business website solutions focused on clean design, responsive layouts and better online presence.",
+        technologies:
+            "HTML • CSS • JavaScript • Responsive Design",
+        status:
+            "In Progress"
+    },
+
+    3: {
+        title: "B2B Sales & Outreach",
+        description:
+            "B2B lead generation and LinkedIn outreach workflow focused on finding prospects, connecting with decision makers and generating business opportunities.",
+        technologies:
+            "LinkedIn • Lead Generation • B2B Sales",
+        status:
+            "Active"
+    }
+
+};
+
+
+// Find project buttons
+
+const projectButtons =
+    document.querySelectorAll(".project-card .btn");
+
+
+// Create popup
+
+const modal = document.createElement("div");
+
+modal.className = "project-modal";
+
+modal.innerHTML = `
+
+    <div class="project-modal-box">
+
+        <button class="modal-close" id="modalClose">
+            ×
+        </button>
+
+        <div class="modal-icon">
+            💻
+        </div>
+
+        <h2 id="modalTitle">
+            Project Title
+        </h2>
+
+        <p id="modalDescription">
+            Project Description
+        </p>
+
+        <div class="modal-info">
+
+            <div>
+                <strong>Technologies</strong>
+                <span id="modalTech">
+                    HTML • CSS • JavaScript
+                </span>
+            </div>
+
+            <div>
+                <strong>Status</strong>
+                <span id="modalStatus">
+                    Completed
+                </span>
+            </div>
+
+        </div>
+
+        <button class="modal-action" id="modalAction">
+            Close Preview
+        </button>
+
+    </div>
+
+`;
+
+document.body.appendChild(modal);
+
+
+// Open project popup
+
+projectButtons.forEach(function (button, index) {
+
+    button.addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        const projectNumber = index + 1;
+
+        const project = projectData[projectNumber];
+
+        if (!project) return;
+
+
+        document.getElementById("modalTitle").textContent =
+            project.title;
+
+        document.getElementById("modalDescription").textContent =
+            project.description;
+
+        document.getElementById("modalTech").textContent =
+            project.technologies;
+
+        document.getElementById("modalStatus").textContent =
+            project.status;
+
+
+        modal.classList.add("active");
+
+        document.body.classList.add("modal-open");
+
+    });
+
+});
+
+
+// Close popup function
+
+function closeProjectModal() {
+
+    modal.classList.remove("active");
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+// Close button
+
+const modalClose =
+    document.getElementById("modalClose");
+
+
+if (modalClose) {
+
+    modalClose.addEventListener(
+        "click",
+        closeProjectModal
+    );
+
+}
+
+
+// Close action button
+
+const modalAction =
+    document.getElementById("modalAction");
+
+
+if (modalAction) {
+
+    modalAction.addEventListener(
+        "click",
+        closeProjectModal
+    );
+
+}
+
+
+// Close when clicking outside popup
+
+modal.addEventListener("click", function (event) {
+
+    if (event.target === modal) {
+
+        closeProjectModal();
+
+    }
+
+});
+
+
+// Close with ESC key
+
+document.addEventListener("keydown", function (event) {
+
+    if (event.key === "Escape") {
+
+        closeProjectModal();
+
+    }
+
+});
+
+
+// ==========================
+// PROJECT HOVER MESSAGE
+// ==========================
+
+projectButtons.forEach(function (button) {
+
+    button.addEventListener("mouseenter", function () {
+
+        button.style.transform = "translateY(-3px)";
+
+    });
+
+
+    button.addEventListener("mouseleave", function () {
+
+        button.style.transform = "translateY(0)";
+
+    });
+
+});
+
+
+console.log("Interactive Project Preview Loaded 🚀");
