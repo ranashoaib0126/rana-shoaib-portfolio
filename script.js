@@ -1,1794 +1,2044 @@
-// ==========================
-// WELCOME MESSAGE
-// ==========================
+/* =========================================================
+   RANA SHOAIB PORTFOLIO
+   NEXT-LEVEL JAVASCRIPT
+========================================================= */
 
-console.log("WELCOME TO RANA SHOAIB PORTFOLIO");
+
+/* =========================================================
+   DOM READY
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================================
+       NAVBAR / MOBILE MENU
+    ===================================================== */
+
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    if (menuBtn && navLinks) {
+
+        menuBtn.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+
+            menuBtn.textContent =
+                navLinks.classList.contains("active")
+                    ? "×"
+                    : "☰";
+        });
+
+        navLinks.querySelectorAll("a").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                navLinks.classList.remove("active");
+
+                menuBtn.textContent = "☰";
+
+            });
+
+        });
+
+    }
 
 
-// ==========================
-// PROJECT COUNTER
-// ==========================
+    /* =====================================================
+       DARK / LIGHT MODE
+    ===================================================== */
 
-function startCounter(id, target, speed, symbol) {
+    const themeBtn = document.getElementById("themeBtn");
 
-    const element = document.getElementById(id);
+    const savedTheme = localStorage.getItem("shoaib-theme");
 
-    if (!element) return;
+    if (savedTheme === "light") {
+        document.body.classList.add("light-mode");
 
-    let count = 0;
-
-    const interval = setInterval(() => {
-
-        count++;
-
-        element.textContent = count + symbol;
-
-        if (count >= target) {
-            clearInterval(interval);
+        if (themeBtn) {
+            themeBtn.textContent = "☾ Dark";
         }
-
-    }, speed);
-}
-
-startCounter("project", 15, 100, "+");
-startCounter("client", 30, 70, "+");
-startCounter("learning", 100, 20, "+");
-startCounter("passion", 100, 20, "%");
-
-
-// ==========================
-// DARK / LIGHT MODE
-// ==========================
-
-const themeBtn = document.getElementById("themeBtn");
-
-const savedTheme = localStorage.getItem("theme");
-
-if (savedTheme === "light") {
-
-    document.body.classList.add("light-mode");
-
-    if (themeBtn) {
-        themeBtn.textContent = "🌙 Dark Mode";
     }
 
-} else {
-
     if (themeBtn) {
-        themeBtn.textContent = "☀️ Light Mode";
+
+        themeBtn.addEventListener("click", () => {
+
+            document.body.classList.toggle("light-mode");
+
+            const isLight =
+                document.body.classList.contains("light-mode");
+
+            localStorage.setItem(
+                "shoaib-theme",
+                isLight ? "light" : "dark"
+            );
+
+            themeBtn.textContent =
+                isLight
+                    ? "☾ Dark"
+                    : "☀ Light";
+
+        });
+
     }
 
-}
 
+    /* =====================================================
+       TYPING ANIMATION
+    ===================================================== */
 
-if (themeBtn) {
+    const typingElement =
+        document.getElementById("typing");
 
-    themeBtn.addEventListener("click", function () {
+    const typingWords = [
+        "Sales Executive | TXEND",
+        "Front-End Developer",
+        "HTML | CSS | JavaScript",
+        "B2B Sales Expert",
+        "LinkedIn Outreach Specialist"
+    ];
 
-        document.body.classList.toggle("light-mode");
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
 
-        if (document.body.classList.contains("light-mode")) {
+    function typeEffect() {
 
-            themeBtn.textContent = "🌙 Dark Mode";
+        if (!typingElement) return;
 
-            localStorage.setItem("theme", "light");
+        const currentWord =
+            typingWords[wordIndex];
+
+        if (!deleting) {
+
+            typingElement.textContent =
+                currentWord.substring(0, charIndex + 1);
+
+            charIndex++;
+
+            if (charIndex === currentWord.length) {
+
+                deleting = true;
+
+                setTimeout(typeEffect, 1600);
+
+                return;
+            }
 
         } else {
 
-            themeBtn.textContent = "☀️ Light Mode";
+            typingElement.textContent =
+                currentWord.substring(0, charIndex - 1);
 
-            localStorage.setItem("theme", "dark");
+            charIndex--;
+
+            if (charIndex === 0) {
+
+                deleting = false;
+
+                wordIndex =
+                    (wordIndex + 1) %
+                    typingWords.length;
+
+            }
 
         }
+
+        setTimeout(
+            typeEffect,
+            deleting ? 45 : 80
+        );
+    }
+
+    typeEffect();
+
+
+    /* =====================================================
+       3D PORTFOLIO WORLD
+    ===================================================== */
+
+    const portfolioWorld =
+        document.querySelector(".portfolio-world");
+
+    if (portfolioWorld) {
+
+        const canTilt =
+            window.matchMedia(
+                "(pointer: fine)"
+            ).matches;
+
+        if (canTilt) {
+
+            portfolioWorld.addEventListener(
+                "mousemove",
+                (event) => {
+
+                    const rect =
+                        portfolioWorld.getBoundingClientRect();
+
+                    const x =
+                        event.clientX - rect.left;
+
+                    const y =
+                        event.clientY - rect.top;
+
+                    const rotateY =
+                        ((x / rect.width) - 0.5) * 18;
+
+                    const rotateX =
+                        ((y / rect.height) - 0.5) * -18;
+
+                    portfolioWorld.style.setProperty(
+                        "--mx",
+                        `${rotateY}deg`
+                    );
+
+                    portfolioWorld.style.setProperty(
+                        "--my",
+                        `${rotateX}deg`
+                    );
+
+                }
+            );
+
+            portfolioWorld.addEventListener(
+                "mouseleave",
+                () => {
+
+                    portfolioWorld.style.setProperty(
+                        "--mx",
+                        "0deg"
+                    );
+
+                    portfolioWorld.style.setProperty(
+                        "--my",
+                        "0deg"
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SCROLL PROGRESS
+    ===================================================== */
+
+    const scrollProgress =
+        document.getElementById("scrollProgress");
+
+    function updateScrollProgress() {
+
+        if (!scrollProgress) return;
+
+        const scrollTop =
+            window.scrollY;
+
+        const documentHeight =
+            document.documentElement.scrollHeight -
+            window.innerHeight;
+
+        const percentage =
+            documentHeight > 0
+                ? (scrollTop / documentHeight) * 100
+                : 0;
+
+        scrollProgress.style.width =
+            `${percentage}%`;
+
+    }
+
+    window.addEventListener(
+        "scroll",
+        updateScrollProgress,
+        { passive: true }
+    );
+
+    updateScrollProgress();
+
+
+    /* =====================================================
+       BACK TO TOP
+    ===================================================== */
+
+    const backToTop =
+        document.getElementById("backToTop");
+
+    if (backToTop) {
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                if (window.scrollY > 500) {
+
+                    backToTop.classList.add("show");
+
+                } else {
+
+                    backToTop.classList.remove("show");
+
+                }
+
+            },
+            { passive: true }
+        );
+
+        backToTop.addEventListener(
+            "click",
+            () => {
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SCROLL REVEAL
+    ===================================================== */
+
+    const revealElements =
+        document.querySelectorAll(
+            ".section-heading, .skill-card, .service-card, .project-card, .why-card, .info-card, .contact-card, .counter-card"
+        );
+
+    const revealObserver =
+        new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add(
+                            "revealed"
+                        );
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+    revealElements.forEach(element => {
+
+        element.style.opacity = "0";
+        element.style.transform =
+            "translateY(25px)";
+        element.style.transition =
+            "opacity 0.7s ease, transform 0.7s ease";
+
+        revealObserver.observe(element);
 
     });
 
-}
 
+    /* =====================================================
+       REVEAL CLASS
+    ===================================================== */
 
-// ==========================
-// TYPING ANIMATION
-// ==========================
+    const revealStyle =
+        document.createElement("style");
 
-const words = [
-    "Sales Executive | TXEND",
-    "Front-End Developer",
-    "HTML | CSS | JavaScript",
-    "B2B Sales Expert"
-];
-
-const typing = document.getElementById("typing");
-
-let wordIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-
-
-function typeEffect() {
-
-    if (!typing) return;
-
-    const currentWord = words[wordIndex];
-
-    if (isDeleting) {
-
-        typing.textContent =
-            currentWord.substring(0, charIndex - 1);
-
-        charIndex--;
-
-    } else {
-
-        typing.textContent =
-            currentWord.substring(0, charIndex + 1);
-
-        charIndex++;
-
-    }
-
-    let speed = isDeleting ? 50 : 90;
-
-
-    if (!isDeleting && charIndex === currentWord.length) {
-
-        speed = 1500;
-
-        isDeleting = true;
-
-    }
-
-
-    if (isDeleting && charIndex === 0) {
-
-        isDeleting = false;
-
-        wordIndex++;
-
-        if (wordIndex >= words.length) {
-            wordIndex = 0;
+    revealStyle.textContent = `
+        .revealed {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
         }
+    `;
 
-        speed = 400;
-
-    }
-
-
-    setTimeout(typeEffect, speed);
-
-}
+    document.head.appendChild(revealStyle);
 
 
-if (typing) {
-    typeEffect();
-}
+    /* =====================================================
+       COUNTERS
+    ===================================================== */
 
+    const counters =
+        document.querySelectorAll(
+            ".counter-card h3"
+        );
 
-// ==========================
-// CONTACT FORM
-// ==========================
+    let countersStarted = false;
 
-const contactForm =
-    document.getElementById("contactForm");
+    function startCounters() {
 
-const formMessage =
-    document.getElementById("formMessage");
+        if (countersStarted) return;
 
+        countersStarted = true;
 
-if (contactForm) {
+        counters.forEach(counter => {
 
-    contactForm.addEventListener("submit", function (event) {
+            const target =
+                Number(
+                    counter.dataset.target
+                );
 
-        event.preventDefault();
+            let current = 0;
 
-        const name =
-            document.getElementById("name").value.trim();
+            const duration = 1300;
 
-        const email =
-            document.getElementById("email").value.trim();
+            const startTime =
+                performance.now();
 
-        const message =
-            document.getElementById("message").value.trim();
+            function animateCounter(
+                currentTime
+            ) {
 
+                const progress =
+                    Math.min(
+                        (currentTime - startTime) /
+                        duration,
+                        1
+                    );
 
-        if (name === "" || email === "" || message === "") {
+                const eased =
+                    1 - Math.pow(
+                        1 - progress,
+                        3
+                    );
 
-            if (formMessage) {
+                current =
+                    Math.floor(
+                        eased * target
+                    );
 
-                formMessage.textContent =
-                    "Please fill in all fields.";
+                let suffix = "";
+
+                const originalText =
+                    counter.textContent;
+
+                if (
+                    originalText.includes("%") ||
+                    target === 100
+                ) {
+                    suffix = "%";
+                } else {
+                    suffix = "+";
+                }
+
+                counter.textContent =
+                    `${current}${suffix}`;
+
+                if (progress < 1) {
+
+                    requestAnimationFrame(
+                        animateCounter
+                    );
+
+                } else {
+
+                    counter.textContent =
+                        `${target}${suffix}`;
+
+                }
 
             }
+
+            requestAnimationFrame(
+                animateCounter
+            );
+
+        });
+
+    }
+
+
+    const counterSection =
+        document.querySelector(
+            ".counter-container"
+        );
+
+    if (counterSection) {
+
+        const counterObserver =
+            new IntersectionObserver(
+                entries => {
+
+                    if (
+                        entries[0].isIntersecting
+                    ) {
+
+                        startCounters();
+
+                        counterObserver.disconnect();
+
+                    }
+
+                },
+                {
+                    threshold: 0.25
+                }
+            );
+
+        counterObserver.observe(
+            counterSection
+        );
+
+    }
+
+
+    /* =====================================================
+       CONTACT FORM
+    ===================================================== */
+
+    const contactForm =
+        document.getElementById(
+            "contactForm"
+        );
+
+    const formMessage =
+        document.getElementById(
+            "formMessage"
+        );
+
+    if (contactForm) {
+
+        contactForm.addEventListener(
+            "submit",
+            (event) => {
+
+                event.preventDefault();
+
+                const name =
+                    document.getElementById(
+                        "name"
+                    ).value.trim();
+
+                const email =
+                    document.getElementById(
+                        "email"
+                    ).value.trim();
+
+                const message =
+                    document.getElementById(
+                        "message"
+                    ).value.trim();
+
+                if (
+                    !name ||
+                    !email ||
+                    !message
+                ) {
+
+                    if (formMessage) {
+
+                        formMessage.textContent =
+                            "Please fill in all fields.";
+
+                        formMessage.style.color =
+                            "#e53935";
+
+                    }
+
+                    return;
+                }
+
+                const emailPattern =
+                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!emailPattern.test(email)) {
+
+                    if (formMessage) {
+
+                        formMessage.textContent =
+                            "Please enter a valid email.";
+
+                        formMessage.style.color =
+                            "#e53935";
+
+                    }
+
+                    return;
+                }
+
+                if (formMessage) {
+
+                    formMessage.textContent =
+                        "Message ready! Email service can be connected next.";
+
+                    formMessage.style.color =
+                        "#35c759";
+
+                }
+
+                contactForm.reset();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       PROJECT MODAL
+    ===================================================== */
+
+    const projectModal =
+        document.getElementById(
+            "projectModal"
+        );
+
+    const modalClose =
+        document.getElementById(
+            "modalClose"
+        );
+
+    const modalAction =
+        document.getElementById(
+            "modalAction"
+        );
+
+    const modalTitle =
+        document.getElementById(
+            "modalTitle"
+        );
+
+    const modalDescription =
+        document.getElementById(
+            "modalDescription"
+        );
+
+    const modalTech =
+        document.getElementById(
+            "modalTech"
+        );
+
+    const modalType =
+        document.getElementById(
+            "modalType"
+        );
+
+    const projectButtons =
+        document.querySelectorAll(
+            ".project-btn"
+        );
+
+
+    const projectData = [
+
+        {
+            title: "Portfolio Website",
+            description:
+                "A modern responsive portfolio experience combining front-end development, animations, interactive components and professional presentation.",
+            tech:
+                "HTML · CSS · JavaScript",
+            type:
+                "Personal Portfolio"
+        },
+
+        {
+            title: "B2B Outreach System",
+            description:
+                "A structured business development workflow for finding companies, identifying decision makers, creating personalized messages and generating qualified opportunities.",
+            tech:
+                "ICP · LinkedIn · B2B Sales",
+            type:
+                "Sales System"
+        },
+
+        {
+            title: "Interactive Web Experience",
+            description:
+                "A creative front-end concept focused on modern UI, responsive design, animations and interactive user experiences.",
+            tech:
+                "HTML · CSS · JavaScript",
+            type:
+                "Front-End Project"
+        }
+
+    ];
+
+
+    function openProject(index) {
+
+        const project =
+            projectData[index];
+
+        if (!project || !projectModal) return;
+
+        if (modalTitle) {
+            modalTitle.textContent =
+                project.title;
+        }
+
+        if (modalDescription) {
+            modalDescription.textContent =
+                project.description;
+        }
+
+        if (modalTech) {
+            modalTech.textContent =
+                project.tech;
+        }
+
+        if (modalType) {
+            modalType.textContent =
+                project.type;
+        }
+
+        projectModal.classList.add(
+            "active"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    function closeProject() {
+
+        if (!projectModal) return;
+
+        projectModal.classList.remove(
+            "active"
+        );
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    projectButtons.forEach(
+        (button, index) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    openProject(index);
+
+                }
+            );
+
+        }
+    );
+
+
+    if (modalClose) {
+
+        modalClose.addEventListener(
+            "click",
+            closeProject
+        );
+
+    }
+
+    if (modalAction) {
+
+        modalAction.addEventListener(
+            "click",
+            closeProject
+        );
+
+    }
+
+    if (projectModal) {
+
+        projectModal.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target ===
+                    projectModal
+                ) {
+
+                    closeProject();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Escape") {
+
+                closeProject();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       ASK SHOAIB AI ASSISTANT
+    ===================================================== */
+
+    const assistantBtn =
+        document.getElementById(
+            "assistantBtn"
+        );
+
+    const assistantPanel =
+        document.getElementById(
+            "assistantPanel"
+        );
+
+    const assistantClose =
+        document.getElementById(
+            "assistantClose"
+        );
+
+    const assistantInput =
+        document.getElementById(
+            "assistantInput"
+        );
+
+    const assistantSend =
+        document.getElementById(
+            "assistantSend"
+        );
+
+    const assistantMessages =
+        document.getElementById(
+            "assistantMessages"
+        );
+
+    const assistantQuestions =
+        document.querySelectorAll(
+            ".assistant-question"
+        );
+
+
+    function toggleAssistant() {
+
+        if (!assistantPanel) return;
+
+        assistantPanel.classList.toggle(
+            "active"
+        );
+
+        if (
+            assistantPanel.classList.contains(
+                "active"
+            ) &&
+            assistantInput
+        ) {
+
+            setTimeout(
+                () => assistantInput.focus(),
+                200
+            );
+
+        }
+
+    }
+
+
+    if (assistantBtn) {
+
+        assistantBtn.addEventListener(
+            "click",
+            toggleAssistant
+        );
+
+    }
+
+
+    if (assistantClose) {
+
+        assistantClose.addEventListener(
+            "click",
+            () => {
+
+                assistantPanel.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+    }
+
+
+    function addAssistantMessage(
+        text,
+        isUser = false
+    ) {
+
+        if (!assistantMessages) return;
+
+        const wrapper =
+            document.createElement("div");
+
+        wrapper.className =
+            isUser
+                ? "assistant-message user-message"
+                : "assistant-message";
+
+        wrapper.innerHTML = `
+            ${
+                isUser
+                    ? ""
+                    : '<div class="message-icon">🤖</div>'
+            }
+
+            <div class="message-content">
+                ${escapeHTML(text)}
+            </div>
+        `;
+
+        assistantMessages.appendChild(
+            wrapper
+        );
+
+        assistantMessages.scrollTop =
+            assistantMessages.scrollHeight;
+
+    }
+
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+
+    }
+
+
+    function getAssistantAnswer(question) {
+
+        const q =
+            question.toLowerCase();
+
+
+        if (
+            q.includes("skill") ||
+            q.includes("technology") ||
+            q.includes("tech")
+        ) {
+
+            return (
+                "Shoaib's core skills include HTML5, CSS3, JavaScript, responsive UI development, B2B sales, LinkedIn outreach and ICP research."
+            );
+
+        }
+
+
+        if (
+            q.includes("service") ||
+            q.includes("offer") ||
+            q.includes("do")
+        ) {
+
+            return (
+                "Shoaib works with website development, landing pages, front-end UI, B2B sales, lead generation and LinkedIn outreach."
+            );
+
+        }
+
+
+        if (
+            q.includes("about") ||
+            q.includes("who")
+        ) {
+
+            return (
+                "Rana Shoaib is a Sales Executive and Front-End Developer who combines technology, business communication and B2B sales."
+            );
+
+        }
+
+
+        if (
+            q.includes("sales") ||
+            q.includes("client") ||
+            q.includes("lead")
+        ) {
+
+            return (
+                "Shoaib focuses on B2B sales, ICP research, finding decision makers, personalized outreach, qualification and lead generation."
+            );
+
+        }
+
+
+        if (
+            q.includes("contact") ||
+            q.includes("email") ||
+            q.includes("phone")
+        ) {
+
+            return (
+                "You can contact Shoaib at r.shoaib0126@gmail.com or +92 315 6109300."
+            );
+
+        }
+
+
+        if (
+            q.includes("project") ||
+            q.includes("portfolio")
+        ) {
+
+            return (
+                "The portfolio includes a personal portfolio website, a B2B outreach system and an interactive web experience."
+            );
+
+        }
+
+
+        if (
+            q.includes("html") ||
+            q.includes("css") ||
+            q.includes("javascript") ||
+            q.includes("js")
+        ) {
+
+            return (
+                "Shoaib uses HTML for structure, CSS for responsive design and JavaScript for interaction and dynamic website features."
+            );
+
+        }
+
+
+        return (
+            "I can tell you about Shoaib's skills, services, projects, B2B sales experience, front-end development or contact information."
+        );
+
+    }
+
+
+    function sendAssistantMessage() {
+
+        if (!assistantInput) return;
+
+        const question =
+            assistantInput.value.trim();
+
+        if (!question) return;
+
+        addAssistantMessage(
+            question,
+            true
+        );
+
+        assistantInput.value = "";
+
+
+        setTimeout(
+            () => {
+
+                const answer =
+                    getAssistantAnswer(
+                        question
+                    );
+
+                addAssistantMessage(
+                    answer
+                );
+
+            },
+            450
+        );
+
+    }
+
+
+    if (assistantSend) {
+
+        assistantSend.addEventListener(
+            "click",
+            sendAssistantMessage
+        );
+
+    }
+
+
+    if (assistantInput) {
+
+        assistantInput.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    sendAssistantMessage();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    assistantQuestions.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const question =
+                        button.dataset.question;
+
+                    if (!question) return;
+
+                    addAssistantMessage(
+                        question,
+                        true
+                    );
+
+                    setTimeout(
+                        () => {
+
+                            addAssistantMessage(
+                                getAssistantAnswer(
+                                    question
+                                )
+                            );
+
+                        },
+                        400
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       CAREER QUEST
+    ===================================================== */
+
+    const startGameBtn =
+        document.getElementById(
+            "startGameBtn"
+        );
+
+    const gameStart =
+        document.getElementById(
+            "gameStart"
+        );
+
+    const missionSelection =
+        document.getElementById(
+            "missionSelection"
+        );
+
+    const challengeArea =
+        document.getElementById(
+            "challengeArea"
+        );
+
+    const gameResult =
+        document.getElementById(
+            "gameResult"
+        );
+
+    const gameXP =
+        document.getElementById(
+            "gameXP"
+        );
+
+    const gameQuestionNumber =
+        document.getElementById(
+            "gameQuestionNumber"
+        );
+
+    const gameMissionName =
+        document.getElementById(
+            "gameMissionName"
+        );
+
+    const gameQuestion =
+        document.getElementById(
+            "gameQuestion"
+        );
+
+    const gameOptions =
+        document.getElementById(
+            "gameOptions"
+        );
+
+    const gameFeedback =
+        document.getElementById(
+            "gameFeedback"
+        );
+
+    const finalXP =
+        document.getElementById(
+            "finalXP"
+        );
+
+    const finalRank =
+        document.getElementById(
+            "finalRank"
+        );
+
+    const restartGameBtn =
+        document.getElementById(
+            "restartGameBtn"
+        );
+
+    const missionButtons =
+        document.querySelectorAll(
+            ".mission-card"
+        );
+
+
+    const missions = {
+
+        website: {
+
+            name: "Web Developer",
+
+            questions: [
+
+                {
+                    question:
+                        "Which language is mainly used to structure a web page?",
+
+                    options: [
+                        "HTML",
+                        "CSS",
+                        "JavaScript",
+                        "Python"
+                    ],
+
+                    answer: 0
+                },
+
+                {
+                    question:
+                        "Which CSS feature is commonly used to create responsive layouts?",
+
+                    options: [
+                        "Media Queries",
+                        "Variables",
+                        "Console",
+                        "Arrays"
+                    ],
+
+                    answer: 0
+                },
+
+                {
+                    question:
+                        "Which language adds interactivity to websites?",
+
+                    options: [
+                        "HTML",
+                        "CSS",
+                        "JavaScript",
+                        "SQL"
+                    ],
+
+                    answer: 2
+                }
+
+            ]
+
+        },
+
+
+        client: {
+
+            name: "Client Hunter",
+
+            questions: [
+
+                {
+                    question:
+                        "Who is usually an important person to contact when selling B2B services?",
+
+                    options: [
+                        "Random Employee",
+                        "Decision Maker",
+                        "Visitor",
+                        "Competitor"
+                    ],
+
+                    answer: 1
+                },
+
+                {
+                    question:
+                        "What makes a cold message stronger?",
+
+                    options: [
+                        "Sending the same message to everyone",
+                        "Writing a personalized relevant message",
+                        "Using only emojis",
+                        "Making it extremely long"
+                    ],
+
+                    answer: 1
+                },
+
+                {
+                    question:
+                        "What should you identify before trying to sell a service?",
+
+                    options: [
+                        "Fit and business need",
+                        "Favorite color",
+                        "Phone model",
+                        "Office size"
+                    ],
+
+                    answer: 0
+                }
+
+            ]
+
+        },
+
+
+        leads: {
+
+            name: "Lead Master",
+
+            questions: [
+
+                {
+                    question:
+                        "What does ICP stand for?",
+
+                    options: [
+                        "Ideal Customer Profile",
+                        "Internet Client Process",
+                        "Internal Company Plan",
+                        "Ideal Coding Project"
+                    ],
+
+                    answer: 0
+                },
+
+                {
+                    question:
+                        "Which platform can be useful for B2B prospecting?",
+
+                    options: [
+                        "LinkedIn",
+                        "Calculator",
+                        "Notepad",
+                        "Paint"
+                    ],
+
+                    answer: 0
+                },
+
+                {
+                    question:
+                        "What is a good approach for LinkedIn outreach?",
+
+                    options: [
+                        "Mass spam",
+                        "Relevant personalized outreach",
+                        "No research",
+                        "Random messages"
+                    ],
+
+                    answer: 1
+                }
+
+            ]
+
+        }
+
+    };
+
+
+    let selectedMission = null;
+    let currentQuestion = 0;
+    let currentXP = 0;
+
+
+    function showGameScreen(screen) {
+
+        [
+            gameStart,
+            missionSelection,
+            challengeArea,
+            gameResult
+        ].forEach(element => {
+
+            if (element) {
+                element.classList.add(
+                    "hidden"
+                );
+            }
+
+        });
+
+        if (screen) {
+
+            screen.classList.remove(
+                "hidden"
+            );
+
+        }
+
+    }
+
+
+    if (startGameBtn) {
+
+        startGameBtn.addEventListener(
+            "click",
+            () => {
+
+                currentXP = 0;
+
+                showGameScreen(
+                    missionSelection
+                );
+
+            }
+        );
+
+    }
+
+
+    missionButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const mission =
+                        button.dataset.mission;
+
+                    if (
+                        !missions[mission]
+                    ) return;
+
+                    selectedMission =
+                        missions[mission];
+
+                    currentQuestion = 0;
+
+                    currentXP = 0;
+
+                    if (gameMissionName) {
+                        gameMissionName.textContent =
+                            selectedMission.name;
+                    }
+
+                    if (gameXP) {
+                        gameXP.textContent =
+                            currentXP;
+                    }
+
+                    showGameScreen(
+                        challengeArea
+                    );
+
+                    loadQuestion();
+
+                }
+            );
+
+        }
+    );
+
+
+    function loadQuestion() {
+
+        if (
+            !selectedMission ||
+            currentQuestion >=
+                selectedMission.questions.length
+        ) {
+
+            finishGame();
 
             return;
 
         }
 
 
-        if (formMessage) {
-
-            formMessage.textContent =
-                "Message sent successfully!";
-
-        }
-
-        contactForm.reset();
-
-    });
-
-}
+        const question =
+            selectedMission.questions[
+                currentQuestion
+            ];
 
 
-// ==========================
-// MOBILE MENU
-// ==========================
+        if (gameQuestionNumber) {
 
-const menuBtn =
-    document.getElementById("menuBtn");
-
-const navLinks =
-    document.getElementById("navLinks");
-
-
-if (menuBtn && navLinks) {
-
-    menuBtn.addEventListener("click", function () {
-
-        navLinks.classList.toggle("active");
-
-    });
-
-
-    const links =
-        navLinks.querySelectorAll("a");
-
-
-    links.forEach(function (link) {
-
-        link.addEventListener("click", function () {
-
-            navLinks.classList.remove("active");
-
-        });
-
-    });
-
-}
-
-
-// ==========================
-// SCROLL REVEAL
-// ==========================
-
-const animatedSections =
-    document.querySelectorAll(
-        ".about, .skills, .services, .projects, .contact, .why-me, .career-quest"
-    );
-
-
-function showSections() {
-
-    animatedSections.forEach(function (section) {
-
-        const sectionTop =
-            section.getBoundingClientRect().top;
-
-
-        if (sectionTop < window.innerHeight - 80) {
-
-            section.classList.add("show");
+            gameQuestionNumber.textContent =
+                `Question ${
+                    currentQuestion + 1
+                } / ${
+                    selectedMission.questions.length
+                }`;
 
         }
 
-    });
 
-}
+        if (gameQuestion) {
 
+            gameQuestion.textContent =
+                question.question;
 
-window.addEventListener(
-    "scroll",
-    showSections
-);
+        }
 
-showSections();
 
+        if (gameFeedback) {
 
-// ==========================
-// NAVBAR AUTO CLOSE
-// ==========================
+            gameFeedback.textContent =
+                "";
 
-window.addEventListener("resize", function () {
+        }
 
-    if (window.innerWidth > 700 && navLinks) {
 
-        navLinks.classList.remove("active");
+        if (!gameOptions) return;
 
-    }
+        gameOptions.innerHTML = "";
 
-});
 
+        question.options.forEach(
+            (option, index) => {
 
-// ==================================================
-// INTERACTIVE PROJECT PREVIEW
-// ==================================================
+                const button =
+                    document.createElement(
+                        "button"
+                    );
 
-const projectData = {
+                button.className =
+                    "game-option";
 
-    1: {
+                button.textContent =
+                    option;
 
-        title: "Personal Portfolio Website",
+                button.addEventListener(
+                    "click",
+                    () => {
 
-        description:
-            "A modern responsive personal portfolio website created to showcase my skills, experience, services and projects.",
+                        answerQuestion(
+                            index,
+                            question.answer
+                        );
 
-        technologies:
-            "HTML • CSS • JavaScript",
+                    }
+                );
 
-        status:
-            "Completed"
+                gameOptions.appendChild(
+                    button
+                );
 
-    },
-
-
-    2: {
-
-        title: "Business Web Development",
-
-        description:
-            "Professional business website solutions focused on clean design, responsive layouts and better online presence.",
-
-        technologies:
-            "HTML • CSS • JavaScript • Responsive Design",
-
-        status:
-            "In Progress"
-
-    },
-
-
-    3: {
-
-        title: "B2B Sales & Outreach",
-
-        description:
-            "B2B lead generation and LinkedIn outreach workflow focused on finding prospects, connecting with decision makers and generating business opportunities.",
-
-        technologies:
-            "LinkedIn • Lead Generation • B2B Sales",
-
-        status:
-            "Active"
-
-    }
-
-};
-
-
-// ==========================
-// FIND PROJECT BUTTONS
-// ==========================
-
-const projectButtons =
-    document.querySelectorAll(
-        ".project-card .project-btn"
-    );
-
-
-// ==========================
-// CREATE PROJECT MODAL
-// ==========================
-
-const modal =
-    document.createElement("div");
-
-modal.className =
-    "project-modal";
-
-modal.innerHTML = `
-
-    <div class="project-modal-box">
-
-        <button
-            class="modal-close"
-            id="modalClose"
-        >
-            ×
-        </button>
-
-        <div class="modal-icon">
-            💻
-        </div>
-
-        <h2 id="modalTitle">
-            Project Title
-        </h2>
-
-        <p id="modalDescription">
-            Project Description
-        </p>
-
-        <div class="modal-info">
-
-            <div>
-
-                <strong>
-                    Technologies
-                </strong>
-
-                <span id="modalTech">
-                    HTML • CSS • JavaScript
-                </span>
-
-            </div>
-
-            <div>
-
-                <strong>
-                    Status
-                </strong>
-
-                <span id="modalStatus">
-                    Completed
-                </span>
-
-            </div>
-
-        </div>
-
-        <button
-            class="modal-action"
-            id="modalAction"
-        >
-            Close Preview
-        </button>
-
-    </div>
-
-`;
-
-document.body.appendChild(modal);
-
-
-// ==========================
-// OPEN PROJECT MODAL
-// ==========================
-
-projectButtons.forEach(function (button, index) {
-
-    button.addEventListener("click", function (event) {
-
-        event.preventDefault();
-
-        const projectNumber =
-            index + 1;
-
-        const project =
-            projectData[projectNumber];
-
-        if (!project) return;
-
-
-        document.getElementById(
-            "modalTitle"
-        ).textContent =
-            project.title;
-
-
-        document.getElementById(
-            "modalDescription"
-        ).textContent =
-            project.description;
-
-
-        document.getElementById(
-            "modalTech"
-        ).textContent =
-            project.technologies;
-
-
-        document.getElementById(
-            "modalStatus"
-        ).textContent =
-            project.status;
-
-
-        modal.classList.add("active");
-
-        document.body.classList.add(
-            "modal-open"
+            }
         );
 
-    });
-
-});
-
-
-// ==========================
-// CLOSE PROJECT MODAL
-// ==========================
-
-function closeProjectModal() {
-
-    modal.classList.remove("active");
-
-    document.body.classList.remove(
-        "modal-open"
-    );
-
-}
-
-
-const modalClose =
-    document.getElementById(
-        "modalClose"
-    );
-
-
-if (modalClose) {
-
-    modalClose.addEventListener(
-        "click",
-        closeProjectModal
-    );
-
-}
-
-
-const modalAction =
-    document.getElementById(
-        "modalAction"
-    );
-
-
-if (modalAction) {
-
-    modalAction.addEventListener(
-        "click",
-        closeProjectModal
-    );
-
-}
-
-
-modal.addEventListener(
-    "click",
-    function (event) {
-
-        if (event.target === modal) {
-
-            closeProjectModal();
-
-        }
-
     }
-);
 
 
-document.addEventListener(
-    "keydown",
-    function (event) {
+    function answerQuestion(
+        selectedAnswer,
+        correctAnswer
+    ) {
 
-        if (event.key === "Escape") {
+        if (!gameOptions) return;
 
-            closeProjectModal();
-
-        }
-
-    }
-);
-
-
-// ==========================
-// PROJECT BUTTON HOVER
-// ==========================
-
-projectButtons.forEach(function (button) {
-
-    button.addEventListener(
-        "mouseenter",
-        function () {
-
-            button.style.transform =
-                "translateY(-3px)";
-
-        }
-    );
-
-
-    button.addEventListener(
-        "mouseleave",
-        function () {
-
-            button.style.transform =
-                "translateY(0)";
-
-        }
-    );
-
-});
-
-
-// ==================================================
-// ASK SHOAIB ASSISTANT
-// ==================================================
-
-const assistantBtn =
-    document.getElementById(
-        "assistantBtn"
-    );
-
-const assistantPanel =
-    document.getElementById(
-        "assistantPanel"
-    );
-
-const assistantClose =
-    document.getElementById(
-        "assistantClose"
-    );
-
-const assistantInput =
-    document.getElementById(
-        "assistantInput"
-    );
-
-const assistantSend =
-    document.getElementById(
-        "assistantSend"
-    );
-
-const assistantMessages =
-    document.getElementById(
-        "assistantMessages"
-    );
-
-const assistantQuestions =
-    document.querySelectorAll(
-        ".assistant-question"
-    );
-
-
-// ==========================
-// OPEN ASSISTANT
-// ==========================
-
-if (assistantBtn && assistantPanel) {
-
-    assistantBtn.addEventListener(
-        "click",
-        function () {
-
-            assistantPanel.classList.toggle(
-                "active"
+        const optionButtons =
+            gameOptions.querySelectorAll(
+                ".game-option"
             );
 
+        optionButtons.forEach(
+            button => {
+
+                button.disabled = true;
+
+            }
+        );
+
+
+        if (
+            selectedAnswer ===
+            correctAnswer
+        ) {
+
+            currentXP += 10;
+
+            if (gameXP) {
+
+                gameXP.textContent =
+                    currentXP;
+
+            }
+
+            if (gameFeedback) {
+
+                gameFeedback.textContent =
+                    "✓ Correct! +10 XP";
+
+                gameFeedback.style.color =
+                    "#35c759";
+
+            }
+
+            optionButtons[
+                selectedAnswer
+            ].classList.add(
+                "correct"
+            );
+
+        } else {
+
+            if (gameFeedback) {
+
+                gameFeedback.textContent =
+                    "✕ Not quite. Keep going!";
+
+                gameFeedback.style.color =
+                    "#e53935";
+
+            }
+
+            optionButtons[
+                selectedAnswer
+            ].classList.add(
+                "wrong"
+            );
+
+            optionButtons[
+                correctAnswer
+            ].classList.add(
+                "correct"
+            );
+
+        }
+
+
+        setTimeout(
+            () => {
+
+                currentQuestion++;
+
+                loadQuestion();
+
+            },
+            1000
+        );
+
+    }
+
+
+    function finishGame() {
+
+        showGameScreen(
+            gameResult
+        );
+
+        if (finalXP) {
+
+            finalXP.textContent =
+                `${currentXP} XP`;
+
+        }
+
+
+        let rank =
+            "Beginner 🌱";
+
+
+        if (currentXP >= 30) {
+
+            rank =
+                "Career Master 🏆";
+
+        } else if (currentXP >= 20) {
+
+            rank =
+                "Pro Explorer 🚀";
+
+        } else if (currentXP >= 10) {
+
+            rank =
+                "Rising Star ⭐";
+
+        }
+
+
+        if (finalRank) {
+
+            finalRank.textContent =
+                rank;
+
+        }
+
+    }
+
+
+    if (restartGameBtn) {
+
+        restartGameBtn.addEventListener(
+            "click",
+            () => {
+
+                currentXP = 0;
+
+                currentQuestion = 0;
+
+                selectedMission = null;
+
+                showGameScreen(
+                    missionSelection
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CINEMATIC SCROLL EFFECT
+    ===================================================== */
+
+    const cinematicSection =
+        document.querySelector(
+            ".cinematic-section"
+        );
+
+    const cinematicContent =
+        document.querySelector(
+            ".cinematic-content"
+        );
+
+
+    if (
+        cinematicSection &&
+        cinematicContent
+    ) {
+
+        function cinematicScroll() {
+
+            const rect =
+                cinematicSection.getBoundingClientRect();
+
+            const windowHeight =
+                window.innerHeight;
+
+            const progress =
+                Math.max(
+                    0,
+                    Math.min(
+                        1,
+                        1 -
+                        (
+                            rect.top /
+                            windowHeight
+                        )
+                    )
+                );
+
+
+            const move =
+                progress * 35;
+
+            const scale =
+                0.92 +
+                progress * 0.08;
+
+
+            cinematicContent.style.transform =
+                `translateY(${move}px) scale(${scale})`;
+
+            cinematicContent.style.opacity =
+                Math.min(
+                    1,
+                    0.35 + progress * 0.9
+                );
+
+        }
+
+
+        window.addEventListener(
+            "scroll",
+            cinematicScroll,
+            { passive: true }
+        );
+
+        cinematicScroll();
+
+    }
+
+
+    /* =====================================================
+       PARALLAX HERO ORBITS
+    ===================================================== */
+
+    const hero =
+        document.querySelector(".hero");
+
+    if (hero) {
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                const scroll =
+                    window.scrollY;
+
+                const orbitOne =
+                    document.querySelector(
+                        ".orbit-one"
+                    );
+
+                const orbitTwo =
+                    document.querySelector(
+                        ".orbit-two"
+                    );
+
+                if (orbitOne) {
+
+                    orbitOne.style.transform =
+                        `translateY(${
+                            scroll * 0.12
+                        }px)`;
+
+                }
+
+                if (orbitTwo) {
+
+                    orbitTwo.style.transform =
+                        `translateY(${
+                            scroll * -0.08
+                        }px)`;
+
+                }
+
+            },
+            { passive: true }
+        );
+
+    }
+
+
+    /* =====================================================
+       ACTIVE NAV LINK
+    ===================================================== */
+
+    const sections =
+        document.querySelectorAll(
+            "header[id], section[id]"
+        );
+
+    const navAnchors =
+        document.querySelectorAll(
+            ".nav-links a"
+        );
+
+
+    const activeObserver =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        const id =
+                            entry.target.id;
+
+                        navAnchors.forEach(
+                            anchor => {
+
+                                anchor.classList.remove(
+                                    "active-nav"
+                                );
+
+                                if (
+                                    anchor.getAttribute(
+                                        "href"
+                                    ) ===
+                                    `#${id}`
+                                ) {
+
+                                    anchor.classList.add(
+                                        "active-nav"
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.35
+            }
+        );
+
+
+    sections.forEach(
+        section => {
+
+            activeObserver.observe(
+                section
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       ACTIVE NAV STYLE
+    ===================================================== */
+
+    const activeNavStyle =
+        document.createElement("style");
+
+    activeNavStyle.textContent = `
+        .nav-links a.active-nav {
+            color: var(--red);
+        }
+
+        .nav-links a.active-nav::after {
+            width: 100%;
+        }
+    `;
+
+    document.head.appendChild(
+        activeNavStyle
+    );
+
+
+    /* =====================================================
+       CLOSE MOBILE MENU OUTSIDE
+    ===================================================== */
+
+    document.addEventListener(
+        "click",
+        event => {
+
             if (
-                assistantPanel.classList.contains(
+                navLinks &&
+                menuBtn &&
+                navLinks.classList.contains(
                     "active"
                 )
             ) {
 
-                setTimeout(function () {
+                if (
+                    !navLinks.contains(
+                        event.target
+                    ) &&
+                    !menuBtn.contains(
+                        event.target
+                    )
+                ) {
 
-                    if (assistantInput) {
-                        assistantInput.focus();
-                    }
+                    navLinks.classList.remove(
+                        "active"
+                    );
 
-                }, 200);
+                    menuBtn.textContent =
+                        "☰";
+
+                }
 
             }
 
         }
     );
 
-}
 
+    /* =====================================================
+       KEYBOARD ACCESSIBILITY
+    ===================================================== */
 
-// ==========================
-// CLOSE ASSISTANT
-// ==========================
-
-if (assistantClose && assistantPanel) {
-
-    assistantClose.addEventListener(
-        "click",
-        function () {
-
-            assistantPanel.classList.remove(
-                "active"
-            );
-
-        }
-    );
-
-}
-
-
-// ==================================================
-// ASSISTANT ANSWERS
-// ==================================================
-
-const assistantAnswers = {
-
-    skills:
-        "Shoaib's main skills include HTML, CSS, JavaScript, Front-End Development, B2B Sales and LinkedIn Outreach. 💻",
-
-    services:
-        "Shoaib offers Web Development, Front-End Development, B2B Sales and LinkedIn Outreach services. 🚀",
-
-    sales:
-        "Shoaib focuses on B2B prospecting, lead generation, LinkedIn outreach and connecting with decision makers. 📈",
-
-    technology:
-        "Shoaib currently works with HTML, CSS and JavaScript for modern and responsive websites. 🌐",
-
-    contact:
-        "You can contact Shoaib through the contact section of this portfolio. You can also use the phone and email details shown there. 📞",
-
-    about:
-        "Shoaib is a Sales Executive and Front-End Developer who combines web development with B2B sales and professional outreach. 👋"
-
-};
-
-
-// ==================================================
-// ADD MESSAGE
-// ==================================================
-
-function addAssistantMessage(
-    text,
-    type
-) {
-
-    if (!assistantMessages) return;
-
-
-    const message =
-        document.createElement("div");
-
-
-    if (type === "user") {
-
-        message.className =
-            "assistant-message user-message";
-
-        message.innerHTML = `
-
-            <div class="message-content">
-                ${text}
-            </div>
-
-        `;
-
-    } else {
-
-        message.className =
-            "assistant-message bot-message";
-
-        message.innerHTML = `
-
-            <div class="message-icon">
-                🤖
-            </div>
-
-            <div class="message-content">
-                ${text}
-            </div>
-
-        `;
-
-    }
-
-
-    assistantMessages.appendChild(
-        message
-    );
-
-
-    assistantMessages.scrollTop =
-        assistantMessages.scrollHeight;
-
-}
-
-
-// ==================================================
-// GET ASSISTANT RESPONSE
-// ==================================================
-
-function getAssistantResponse(
-    question
-) {
-
-    const text =
-        question.toLowerCase();
-
-
-    if (
-        text.includes("skill") ||
-        text.includes("html") ||
-        text.includes("css") ||
-        text.includes("javascript")
-    ) {
-
-        return assistantAnswers.skills;
-
-    }
-
-
-    if (
-        text.includes("service") ||
-        text.includes("offer") ||
-        text.includes("website")
-    ) {
-
-        return assistantAnswers.services;
-
-    }
-
-
-    if (
-        text.includes("sales") ||
-        text.includes("b2b") ||
-        text.includes("lead") ||
-        text.includes("client")
-    ) {
-
-        return assistantAnswers.sales;
-
-    }
-
-
-    if (
-        text.includes("technology") ||
-        text.includes("tech") ||
-        text.includes("develop")
-    ) {
-
-        return assistantAnswers.technology;
-
-    }
-
-
-    if (
-        text.includes("contact") ||
-        text.includes("email") ||
-        text.includes("phone") ||
-        text.includes("number")
-    ) {
-
-        return assistantAnswers.contact;
-
-    }
-
-
-    if (
-        text.includes("about") ||
-        text.includes("shoaib") ||
-        text.includes("who are")
-    ) {
-
-        return assistantAnswers.about;
-
-    }
-
-
-    return "I can tell you about Shoaib's skills, services, B2B sales, technologies, contact information and background. Try asking about one of these. 😊";
-
-}
-
-
-// ==================================================
-// SEND ASSISTANT MESSAGE
-// ==================================================
-
-function sendAssistantMessage() {
-
-    if (!assistantInput) return;
-
-
-    const question =
-        assistantInput.value.trim();
-
-
-    if (question === "") return;
-
-
-    addAssistantMessage(
-        question,
-        "user"
-    );
-
-
-    assistantInput.value = "";
-
-
-    setTimeout(function () {
-
-        const answer =
-            getAssistantResponse(
-                question
-            );
-
-        addAssistantMessage(
-            answer,
-            "bot"
-        );
-
-    }, 400);
-
-}
-
-
-// ==========================
-// SEND BUTTON
-// ==========================
-
-if (assistantSend) {
-
-    assistantSend.addEventListener(
-        "click",
-        sendAssistantMessage
-    );
-
-}
-
-
-// ==========================
-// ENTER KEY
-// ==========================
-
-if (assistantInput) {
-
-    assistantInput.addEventListener(
+    document.addEventListener(
         "keydown",
-        function (event) {
-
-            if (event.key === "Enter") {
-
-                event.preventDefault();
-
-                sendAssistantMessage();
-
-            }
-
-        }
-    );
-
-}
-
-
-// ==================================================
-// QUICK QUESTIONS
-// ==================================================
-
-assistantQuestions.forEach(
-    function (button) {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                const question =
-                    button.dataset.question;
-
-
-                if (!question) return;
-
-
-                addAssistantMessage(
-                    button.textContent.trim(),
-                    "user"
-                );
-
-
-                setTimeout(
-                    function () {
-
-                        const answer =
-                            assistantAnswers[
-                                question
-                            ] ||
-                            "Sorry, I don't have an answer for that yet.";
-
-                        addAssistantMessage(
-                            answer,
-                            "bot"
-                        );
-
-                    },
-                    400
-                );
-
-            }
-        );
-
-    }
-);
-
-
-// ==================================================
-// SHOAIB CAREER QUEST 🎮
-// ==================================================
-
-const startGameBtn =
-    document.getElementById("startGameBtn");
-
-const gameStart =
-    document.getElementById("gameStart");
-
-const missionSelection =
-    document.getElementById("missionSelection");
-
-const challengeArea =
-    document.getElementById("challengeArea");
-
-const gameResult =
-    document.getElementById("gameResult");
-
-const gameXP =
-    document.getElementById("gameXP");
-
-const gameQuestionNumber =
-    document.getElementById("gameQuestionNumber");
-
-const gameMissionName =
-    document.getElementById("gameMissionName");
-
-const gameQuestion =
-    document.getElementById("gameQuestion");
-
-const gameOptions =
-    document.getElementById("gameOptions");
-
-const gameFeedback =
-    document.getElementById("gameFeedback");
-
-const finalXP =
-    document.getElementById("finalXP");
-
-const finalRank =
-    document.getElementById("finalRank");
-
-const restartGameBtn =
-    document.getElementById("restartGameBtn");
-
-const missionButtons =
-    document.querySelectorAll(".mission-card");
-
-
-// ==========================
-// GAME DATA
-// ==========================
-
-const careerMissions = {
-
-    website: {
-
-        name: "💻 Build a Website",
-
-        questions: [
-
-            {
-                question:
-                    "Which language is used to structure a web page?",
-
-                options: [
-                    "HTML",
-                    "CSS",
-                    "JavaScript",
-                    "Python"
-                ],
-
-                answer: "HTML"
-
-            },
-
-            {
-                question:
-                    "Which CSS feature is commonly used to make layouts responsive?",
-
-                options: [
-                    "Media Queries",
-                    "Variables",
-                    "Comments",
-                    "Selectors"
-                ],
-
-                answer: "Media Queries"
-
-            },
-
-            {
-                question:
-                    "Which language adds interactivity to a website?",
-
-                options: [
-                    "HTML",
-                    "CSS",
-                    "JavaScript",
-                    "SQL"
-                ],
-
-                answer: "JavaScript"
-
-            }
-
-        ]
-
-    },
-
-
-    client: {
-
-        name: "📈 Find a Client",
-
-        questions: [
-
-            {
-                question:
-                    "Before sending B2B outreach, what should you identify?",
-
-                options: [
-                    "Decision Maker",
-                    "Random Employee",
-                    "Competitor",
-                    "Designer"
-                ],
-
-                answer: "Decision Maker"
-
-            },
-
-            {
-                question:
-                    "What makes a B2B cold message stronger?",
-
-                options: [
-                    "A long paragraph",
-                    "A personalized relevant message",
-                    "Sending the same message to everyone",
-                    "Using many emojis"
-                ],
-
-                answer: "A personalized relevant message"
-
-            },
-
-            {
-                question:
-                    "What is the main goal of qualifying a prospect?",
-
-                options: [
-                    "Check fit and need",
-                    "Send more messages",
-                    "Increase followers",
-                    "Change their website"
-                ],
-
-                answer: "Check fit and need"
-
-            }
-
-        ]
-
-    },
-
-
-    leads: {
-
-        name: "🔎 Generate Leads",
-
-        questions: [
-
-            {
-                question:
-                    "What does ICP stand for?",
-
-                options: [
-                    "Ideal Customer Profile",
-                    "International Client Program",
-                    "Internet Customer Platform",
-                    "Ideal Company Process"
-                ],
-
-                answer: "Ideal Customer Profile"
-
-            },
-
-            {
-                question:
-                    "Which platform is commonly used for B2B professional outreach?",
-
-                options: [
-                    "LinkedIn",
-                    "Netflix",
-                    "Spotify",
-                    "TikTok"
-                ],
-
-                answer: "LinkedIn"
-
-            },
-
-            {
-                question:
-                    "After finding a relevant prospect, what should you do?",
-
-                options: [
-                    "Ignore them",
-                    "Send relevant outreach",
-                    "Send random messages",
-                    "Wait forever"
-                ],
-
-                answer: "Send relevant outreach"
-
-            }
-
-        ]
-
-    }
-
-};
-
-
-// ==========================
-// GAME VARIABLES
-// ==========================
-
-let currentMission = null;
-
-let currentQuestionIndex = 0;
-
-let currentXP = 0;
-
-let answerLocked = false;
-
-
-// ==========================
-// START GAME
-// ==========================
-
-if (startGameBtn) {
-
-    startGameBtn.addEventListener("click", function (event) {
-
-        event.preventDefault();
-
-        currentXP = 0;
-
-        currentQuestionIndex = 0;
-
-        currentMission = null;
-
-        answerLocked = false;
-
-
-        if (gameXP) {
-            gameXP.textContent = "0";
-        }
-
-
-        if (gameStart) {
-            gameStart.style.display = "none";
-        }
-
-
-        if (missionSelection) {
-            missionSelection.style.display = "block";
-        }
-
-
-        if (challengeArea) {
-            challengeArea.style.display = "none";
-        }
-
-
-        if (gameResult) {
-            gameResult.style.display = "none";
-        }
-
-    });
-
-}
-
-
-// ==========================
-// SELECT MISSION
-// ==========================
-
-missionButtons.forEach(function (button) {
-
-    button.addEventListener("click", function (event) {
-
-        event.preventDefault();
-
-        const missionName =
-            button.dataset.mission;
-
-
-        if (!careerMissions[missionName]) {
-            return;
-        }
-
-
-        currentMission =
-            careerMissions[missionName];
-
-        currentQuestionIndex = 0;
-
-        currentXP = 0;
-
-        answerLocked = false;
-
-
-        if (gameXP) {
-            gameXP.textContent = "0";
-        }
-
-
-        if (missionSelection) {
-            missionSelection.style.display = "none";
-        }
-
-
-        if (challengeArea) {
-            challengeArea.style.display = "block";
-        }
-
-
-        if (gameResult) {
-            gameResult.style.display = "none";
-        }
-
-
-        showGameQuestion();
-
-    });
-
-});
-
-
-// ==========================
-// SHOW QUESTION
-// ==========================
-
-function showGameQuestion() {
-
-    if (!currentMission) return;
-
-
-    const question =
-        currentMission.questions[
-            currentQuestionIndex
-        ];
-
-
-    if (!question) return;
-
-
-    answerLocked = false;
-
-
-    if (gameQuestionNumber) {
-
-        gameQuestionNumber.textContent =
-            "Question " +
-            (currentQuestionIndex + 1) +
-            " / " +
-            currentMission.questions.length;
-
-    }
-
-
-    if (gameMissionName) {
-
-        gameMissionName.textContent =
-            currentMission.name;
-
-    }
-
-
-    if (gameQuestion) {
-
-        gameQuestion.textContent =
-            question.question;
-
-    }
-
-
-    if (gameFeedback) {
-
-        gameFeedback.textContent = "";
-
-    }
-
-
-    if (!gameOptions) return;
-
-
-    gameOptions.innerHTML = "";
-
-
-    question.options.forEach(function (option) {
-
-        const optionButton =
-            document.createElement("button");
-
-
-        optionButton.className =
-            "game-option";
-
-        optionButton.textContent =
-            option;
-
-
-        optionButton.type =
-            "button";
-
-
-        optionButton.addEventListener(
-            "click",
-            function () {
-
-                checkGameAnswer(
-                    option,
-                    optionButton
-                );
-
-            }
-        );
-
-
-        gameOptions.appendChild(
-            optionButton
-        );
-
-    });
-
-}
-
-
-// ==========================
-// CHECK ANSWER
-// ==========================
-
-function checkGameAnswer(
-    selectedAnswer,
-    selectedButton
-) {
-
-    if (answerLocked) return;
-
-    answerLocked = true;
-
-
-    const question =
-        currentMission.questions[
-            currentQuestionIndex
-        ];
-
-
-    const allOptions =
-        gameOptions.querySelectorAll(
-            ".game-option"
-        );
-
-
-    allOptions.forEach(function (button) {
-
-        button.disabled = true;
-
-    });
-
-
-    if (
-        selectedAnswer ===
-        question.answer
-    ) {
-
-        currentXP += 10;
-
-
-        selectedButton.classList.add(
-            "correct"
-        );
-
-
-        if (gameFeedback) {
-
-            gameFeedback.textContent =
-                "✅ Correct! +10 XP";
-
-        }
-
-    } else {
-
-        selectedButton.classList.add(
-            "wrong"
-        );
-
-
-        allOptions.forEach(function (button) {
+        event => {
 
             if (
-                button.textContent ===
-                question.answer
+                event.key === "Escape"
             ) {
 
-                button.classList.add(
-                    "correct"
-                );
+                if (
+                    navLinks &&
+                    menuBtn
+                ) {
 
-            }
+                    navLinks.classList.remove(
+                        "active"
+                    );
 
-        });
+                    menuBtn.textContent =
+                        "☰";
 
+                }
 
-        if (gameFeedback) {
+                if (
+                    assistantPanel
+                ) {
 
-            gameFeedback.textContent =
-                "❌ Wrong! Correct answer: " +
-                question.answer;
+                    assistantPanel.classList.remove(
+                        "active"
+                    );
 
-        }
+                }
 
-    }
-
-
-    if (gameXP) {
-
-        gameXP.textContent =
-            currentXP;
-
-    }
-
-
-    setTimeout(function () {
-
-        currentQuestionIndex++;
-
-
-        if (
-            currentQuestionIndex <
-            currentMission.questions.length
-        ) {
-
-            showGameQuestion();
-
-        } else {
-
-            finishCareerQuest();
-
-        }
-
-    }, 1000);
-
-}
-
-
-// ==========================
-// FINISH GAME
-// ==========================
-
-function finishCareerQuest() {
-
-    if (challengeArea) {
-        challengeArea.style.display = "none";
-    }
-
-
-    if (gameResult) {
-        gameResult.style.display = "block";
-    }
-
-
-    if (finalXP) {
-
-        finalXP.textContent =
-            currentXP + " XP";
-
-    }
-
-
-    let rank = "Beginner 🌱";
-
-
-    if (currentXP === 30) {
-
-        rank =
-            "Career Master 🏆";
-
-    } else if (currentXP === 20) {
-
-        rank =
-            "Pro Explorer 🚀";
-
-    } else if (currentXP === 10) {
-
-        rank =
-            "Rising Star ⭐";
-
-    }
-
-
-    if (finalRank) {
-
-        finalRank.textContent =
-            rank;
-
-    }
-
-}
-
-
-// ==========================
-// RESTART GAME
-// ==========================
-
-if (restartGameBtn) {
-
-    restartGameBtn.addEventListener(
-        "click",
-        function (event) {
-
-            event.preventDefault();
-
-
-            currentMission = null;
-
-            currentQuestionIndex = 0;
-
-            currentXP = 0;
-
-            answerLocked = false;
-
-
-            if (gameXP) {
-                gameXP.textContent = "0";
-            }
-
-
-            if (gameResult) {
-                gameResult.style.display = "none";
-            }
-
-
-            if (challengeArea) {
-                challengeArea.style.display = "none";
-            }
-
-
-            if (missionSelection) {
-                missionSelection.style.display = "block";
             }
 
         }
     );
 
-}
 
+    /* =====================================================
+       WELCOME MESSAGE
+    ===================================================== */
 
-// ==================================================
-// SCROLL PROGRESS BAR
-// ==================================================
+    console.log(
+        "%c RANA SHOAIB | PORTFOLIO ",
+        "background:#e53935;color:#fff;font-size:16px;font-weight:bold;padding:8px;"
+    );
 
-const scrollProgress =
-    document.createElement("div");
+    console.log(
+        "🚀 Portfolio system initialized successfully."
+    );
 
-scrollProgress.id =
-    "scrollProgress";
+    console.log(
+        "💻 Front-End Developer | 💼 Sales Executive"
+    );
 
-document.body.appendChild(
-    scrollProgress
-);
-
-
-// ==================================================
-// BACK TO TOP
-// ==================================================
-
-const backToTop =
-    document.createElement("button");
-
-backToTop.id =
-    "backToTop";
-
-backToTop.innerHTML =
-    "↑";
-
-backToTop.setAttribute(
-    "aria-label",
-    "Back to top"
-);
-
-document.body.appendChild(
-    backToTop
-);
-
-
-// ==========================
-// UPDATE SCROLL UI
-// ==========================
-
-function updateScrollUI() {
-
-    const scrollTop =
-        window.scrollY;
-
-
-    const documentHeight =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
-
-
-    let progress = 0;
-
-
-    if (documentHeight > 0) {
-
-        progress =
-            (scrollTop / documentHeight) * 100;
-
-    }
-
-
-    scrollProgress.style.width =
-        progress + "%";
-
-
-    if (scrollTop > 500) {
-
-        backToTop.classList.add(
-            "show"
-        );
-
-    } else {
-
-        backToTop.classList.remove(
-            "show"
-        );
-
-    }
-
-}
-
-
-window.addEventListener(
-    "scroll",
-    updateScrollUI
-);
-
-updateScrollUI();
-
-
-// ==========================
-// BACK TO TOP CLICK
-// ==========================
-
-backToTop.addEventListener(
-    "click",
-    function () {
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    }
-);
-
-
-// ==========================
-// FINAL
-// ==========================
-
-console.log(
-    "RANA SHOAIB PORTFOLIO FULLY LOADED 🚀"
-);
-
-console.log(
-    "SHOAIB CAREER QUEST READY 🎮"
-);
+});
