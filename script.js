@@ -3,11 +3,6 @@
    NEXT-LEVEL JAVASCRIPT
 ========================================================= */
 
-
-/* =========================================================
-   DOM READY
-========================================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
@@ -17,29 +12,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuBtn = document.getElementById("menuBtn");
     const navLinks = document.getElementById("navLinks");
 
+    function closeMobileMenu() {
+        if (!navLinks || !menuBtn) return;
+
+        navLinks.classList.remove("active");
+        menuBtn.textContent = "☰";
+        menuBtn.setAttribute("aria-expanded", "false");
+    }
+
     if (menuBtn && navLinks) {
 
-        menuBtn.addEventListener("click", () => {
-            navLinks.classList.toggle("active");
+        menuBtn.setAttribute("aria-expanded", "false");
 
-            menuBtn.textContent =
-                navLinks.classList.contains("active")
-                    ? "×"
-                    : "☰";
+        menuBtn.addEventListener("click", (event) => {
+            event.stopPropagation();
+
+            const isOpen = navLinks.classList.toggle("active");
+
+            menuBtn.textContent = isOpen ? "×" : "☰";
+            menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
         });
 
-        navLinks.querySelectorAll("a").forEach(link => {
-
+        navLinks.querySelectorAll("a").forEach((link) => {
             link.addEventListener("click", () => {
-
-                navLinks.classList.remove("active");
-
-                menuBtn.textContent = "☰";
-
+                closeMobileMenu();
             });
-
         });
-
     }
 
 
@@ -49,37 +47,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const themeBtn = document.getElementById("themeBtn");
 
-    const savedTheme = localStorage.getItem("shoaib-theme");
+    function applyTheme(theme) {
+        const isLight = theme === "light";
 
-    if (savedTheme === "light") {
-        document.body.classList.add("light-mode");
+        document.body.classList.toggle("light-mode", isLight);
 
         if (themeBtn) {
-            themeBtn.textContent = "☾ Dark";
+            themeBtn.textContent = isLight ? "☾ Dark" : "☀ Light";
+            themeBtn.setAttribute(
+                "aria-label",
+                isLight ? "Switch to dark mode" : "Switch to light mode"
+            );
         }
     }
 
+    const savedTheme = localStorage.getItem("shoaib-theme");
+
+    if (savedTheme === "light") {
+        applyTheme("light");
+    } else {
+        applyTheme("dark");
+    }
+
     if (themeBtn) {
+        themeBtn.addEventListener("click", (event) => {
+            event.preventDefault();
 
-        themeBtn.addEventListener("click", () => {
-
-            document.body.classList.toggle("light-mode");
-
-            const isLight =
+            const isCurrentlyLight =
                 document.body.classList.contains("light-mode");
 
-            localStorage.setItem(
-                "shoaib-theme",
-                isLight ? "light" : "dark"
-            );
+            const newTheme = isCurrentlyLight ? "dark" : "light";
 
-            themeBtn.textContent =
-                isLight
-                    ? "☾ Dark"
-                    : "☀ Light";
+            applyTheme(newTheme);
 
+            localStorage.setItem("shoaib-theme", newTheme);
         });
-
     }
 
 
@@ -87,8 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
        TYPING ANIMATION
     ===================================================== */
 
-    const typingElement =
-        document.getElementById("typing");
+    const typingElement = document.getElementById("typing");
 
     const typingWords = [
         "Sales Executive | TXEND",
@@ -106,8 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!typingElement) return;
 
-        const currentWord =
-            typingWords[wordIndex];
+        const currentWord = typingWords[wordIndex];
 
         if (!deleting) {
 
@@ -137,11 +137,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 deleting = false;
 
                 wordIndex =
-                    (wordIndex + 1) %
-                    typingWords.length;
-
+                    (wordIndex + 1) % typingWords.length;
             }
-
         }
 
         setTimeout(
@@ -163,9 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (portfolioWorld) {
 
         const canTilt =
-            window.matchMedia(
-                "(pointer: fine)"
-            ).matches;
+            window.matchMedia("(pointer: fine)").matches;
 
         if (canTilt) {
 
@@ -175,6 +170,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     const rect =
                         portfolioWorld.getBoundingClientRect();
+
+                    if (!rect.width || !rect.height) return;
 
                     const x =
                         event.clientX - rect.left;
@@ -197,7 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         "--my",
                         `${rotateX}deg`
                     );
-
                 }
             );
 
@@ -214,12 +210,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         "--my",
                         "0deg"
                     );
-
                 }
             );
-
         }
-
     }
 
 
@@ -247,8 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 : 0;
 
         scrollProgress.style.width =
-            `${percentage}%`;
-
+            `${Math.min(100, Math.max(0, percentage))}%`;
     }
 
     window.addEventListener(
@@ -269,23 +261,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (backToTop) {
 
+        function updateBackToTop() {
+
+            if (window.scrollY > 500) {
+                backToTop.classList.add("show");
+            } else {
+                backToTop.classList.remove("show");
+            }
+        }
+
         window.addEventListener(
             "scroll",
-            () => {
-
-                if (window.scrollY > 500) {
-
-                    backToTop.classList.add("show");
-
-                } else {
-
-                    backToTop.classList.remove("show");
-
-                }
-
-            },
+            updateBackToTop,
             { passive: true }
         );
+
+        updateBackToTop();
 
         backToTop.addEventListener(
             "click",
@@ -295,10 +286,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     top: 0,
                     behavior: "smooth"
                 });
-
             }
         );
-
     }
 
 
@@ -310,49 +299,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(
             ".section-heading, .skill-card, .service-card, .project-card, .why-card, .info-card, .contact-card, .counter-card"
         );
-
-    const revealObserver =
-        new IntersectionObserver(
-            (entries) => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add(
-                            "revealed"
-                        );
-
-                        revealObserver.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.12
-            }
-        );
-
-    revealElements.forEach(element => {
-
-        element.style.opacity = "0";
-        element.style.transform =
-            "translateY(25px)";
-        element.style.transition =
-            "opacity 0.7s ease, transform 0.7s ease";
-
-        revealObserver.observe(element);
-
-    });
-
-
-    /* =====================================================
-       REVEAL CLASS
-    ===================================================== */
 
     const revealStyle =
         document.createElement("style");
@@ -366,6 +312,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.head.appendChild(revealStyle);
 
+    if ("IntersectionObserver" in window) {
+
+        const revealObserver =
+            new IntersectionObserver(
+                (entries) => {
+
+                    entries.forEach((entry) => {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add(
+                                "revealed"
+                            );
+
+                            revealObserver.unobserve(
+                                entry.target
+                            );
+                        }
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+        revealElements.forEach((element) => {
+
+            element.style.opacity = "0";
+
+            element.style.transform =
+                "translateY(25px)";
+
+            element.style.transition =
+                "opacity 0.7s ease, transform 0.7s ease";
+
+            revealObserver.observe(element);
+        });
+
+    } else {
+
+        revealElements.forEach((element) => {
+            element.classList.add("revealed");
+        });
+    }
+
 
     /* =====================================================
        COUNTERS
@@ -373,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const counters =
         document.querySelectorAll(
-            ".counter-card h3"
+            ".counter-card h3, .counter-card h1"
         );
 
     let countersStarted = false;
@@ -384,12 +376,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         countersStarted = true;
 
-        counters.forEach(counter => {
+        counters.forEach((counter) => {
 
             const target =
-                Number(
-                    counter.dataset.target
-                );
+                Number(counter.dataset.target);
+
+            if (!Number.isFinite(target)) return;
 
             let current = 0;
 
@@ -398,9 +390,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const startTime =
                 performance.now();
 
-            function animateCounter(
-                currentTime
-            ) {
+            const originalText =
+                counter.textContent;
+
+            const suffix =
+                originalText.includes("%") ||
+                target === 100
+                    ? "%"
+                    : "+";
+
+            function animateCounter(currentTime) {
 
                 const progress =
                     Math.min(
@@ -410,7 +409,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
                 const eased =
-                    1 - Math.pow(
+                    1 -
+                    Math.pow(
                         1 - progress,
                         3
                     );
@@ -419,20 +419,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     Math.floor(
                         eased * target
                     );
-
-                let suffix = "";
-
-                const originalText =
-                    counter.textContent;
-
-                if (
-                    originalText.includes("%") ||
-                    target === 100
-                ) {
-                    suffix = "%";
-                } else {
-                    suffix = "+";
-                }
 
                 counter.textContent =
                     `${current}${suffix}`;
@@ -447,41 +433,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     counter.textContent =
                         `${target}${suffix}`;
-
                 }
-
             }
 
             requestAnimationFrame(
                 animateCounter
             );
-
         });
-
     }
-
 
     const counterSection =
         document.querySelector(
             ".counter-container"
         );
 
-    if (counterSection) {
+    if (counterSection && "IntersectionObserver" in window) {
 
         const counterObserver =
             new IntersectionObserver(
-                entries => {
+                (entries) => {
 
-                    if (
-                        entries[0].isIntersecting
-                    ) {
+                    if (entries[0].isIntersecting) {
 
                         startCounters();
 
                         counterObserver.disconnect();
-
                     }
-
                 },
                 {
                     threshold: 0.25
@@ -492,6 +469,9 @@ document.addEventListener("DOMContentLoaded", () => {
             counterSection
         );
 
+    } else if (counters.length) {
+
+        startCounters();
     }
 
 
@@ -500,14 +480,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const contactForm =
-        document.getElementById(
-            "contactForm"
-        );
+        document.getElementById("contactForm");
 
     const formMessage =
-        document.getElementById(
-            "formMessage"
-        );
+        document.getElementById("formMessage");
 
     if (contactForm) {
 
@@ -517,26 +493,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.preventDefault();
 
+                const nameInput =
+                    document.getElementById("name");
+
+                const emailInput =
+                    document.getElementById("email");
+
+                const messageInput =
+                    document.getElementById("message");
+
                 const name =
-                    document.getElementById(
-                        "name"
-                    ).value.trim();
+                    nameInput
+                        ? nameInput.value.trim()
+                        : "";
 
                 const email =
-                    document.getElementById(
-                        "email"
-                    ).value.trim();
+                    emailInput
+                        ? emailInput.value.trim()
+                        : "";
 
                 const message =
-                    document.getElementById(
-                        "message"
-                    ).value.trim();
+                    messageInput
+                        ? messageInput.value.trim()
+                        : "";
 
-                if (
-                    !name ||
-                    !email ||
-                    !message
-                ) {
+                if (!name || !email || !message) {
 
                     if (formMessage) {
 
@@ -545,7 +526,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         formMessage.style.color =
                             "#e53935";
-
                     }
 
                     return;
@@ -563,7 +543,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         formMessage.style.color =
                             "#e53935";
-
                     }
 
                     return;
@@ -576,14 +555,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     formMessage.style.color =
                         "#35c759";
-
                 }
 
                 contactForm.reset();
-
             }
         );
-
     }
 
 
@@ -592,78 +568,70 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const projectModal =
-        document.getElementById(
-            "projectModal"
-        );
+        document.getElementById("projectModal");
 
     const modalClose =
-        document.getElementById(
-            "modalClose"
-        );
+        document.getElementById("modalClose");
 
     const modalAction =
-        document.getElementById(
-            "modalAction"
-        );
+        document.getElementById("modalAction");
 
     const modalTitle =
-        document.getElementById(
-            "modalTitle"
-        );
+        document.getElementById("modalTitle");
 
     const modalDescription =
-        document.getElementById(
-            "modalDescription"
-        );
+        document.getElementById("modalDescription");
 
     const modalTech =
-        document.getElementById(
-            "modalTech"
-        );
+        document.getElementById("modalTech");
 
     const modalType =
-        document.getElementById(
-            "modalType"
-        );
+        document.getElementById("modalType");
 
     const projectButtons =
-        document.querySelectorAll(
-            ".project-btn"
-        );
+        document.querySelectorAll(".project-btn");
 
 
     const projectData = [
 
         {
             title: "Portfolio Website",
+
             description:
                 "A modern responsive portfolio experience combining front-end development, animations, interactive components and professional presentation.",
+
             tech:
                 "HTML · CSS · JavaScript",
+
             type:
                 "Personal Portfolio"
         },
 
         {
             title: "B2B Outreach System",
+
             description:
                 "A structured business development workflow for finding companies, identifying decision makers, creating personalized messages and generating qualified opportunities.",
+
             tech:
                 "ICP · LinkedIn · B2B Sales",
+
             type:
                 "Sales System"
         },
 
         {
             title: "Interactive Web Experience",
+
             description:
                 "A creative front-end concept focused on modern UI, responsive design, animations and interactive user experiences.",
+
             tech:
                 "HTML · CSS · JavaScript",
+
             type:
                 "Front-End Project"
         }
-
     ];
 
 
@@ -694,13 +662,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 project.type;
         }
 
-        projectModal.classList.add(
-            "active"
-        );
+        projectModal.classList.add("active");
 
-        document.body.style.overflow =
-            "hidden";
-
+        document.body.style.overflow = "hidden";
     }
 
 
@@ -708,13 +672,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!projectModal) return;
 
-        projectModal.classList.remove(
-            "active"
-        );
+        projectModal.classList.remove("active");
 
-        document.body.style.overflow =
-            "";
-
+        document.body.style.overflow = "";
     }
 
 
@@ -724,12 +684,9 @@ document.addEventListener("DOMContentLoaded", () => {
             button.addEventListener(
                 "click",
                 () => {
-
                     openProject(index);
-
                 }
             );
-
         }
     );
 
@@ -740,8 +697,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             closeProject
         );
-
     }
+
 
     if (modalAction) {
 
@@ -749,42 +706,24 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             closeProject
         );
-
     }
+
 
     if (projectModal) {
 
         projectModal.addEventListener(
             "click",
-            event => {
+            (event) => {
 
                 if (
                     event.target ===
                     projectModal
                 ) {
-
                     closeProject();
-
                 }
-
             }
         );
-
     }
-
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (event.key === "Escape") {
-
-                closeProject();
-
-            }
-
-        }
-    );
 
 
     /* =====================================================
@@ -792,34 +731,22 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const assistantBtn =
-        document.getElementById(
-            "assistantBtn"
-        );
+        document.getElementById("assistantBtn");
 
     const assistantPanel =
-        document.getElementById(
-            "assistantPanel"
-        );
+        document.getElementById("assistantPanel");
 
     const assistantClose =
-        document.getElementById(
-            "assistantClose"
-        );
+        document.getElementById("assistantClose");
 
     const assistantInput =
-        document.getElementById(
-            "assistantInput"
-        );
+        document.getElementById("assistantInput");
 
     const assistantSend =
-        document.getElementById(
-            "assistantSend"
-        );
+        document.getElementById("assistantSend");
 
     const assistantMessages =
-        document.getElementById(
-            "assistantMessages"
-        );
+        document.getElementById("assistantMessages");
 
     const assistantQuestions =
         document.querySelectorAll(
@@ -831,24 +758,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!assistantPanel) return;
 
-        assistantPanel.classList.toggle(
-            "active"
-        );
+        const isOpen =
+            assistantPanel.classList.toggle("active");
 
         if (
-            assistantPanel.classList.contains(
-                "active"
-            ) &&
+            isOpen &&
             assistantInput
         ) {
 
             setTimeout(
-                () => assistantInput.focus(),
+                () => {
+                    assistantInput.focus();
+                },
                 200
             );
-
         }
-
     }
 
 
@@ -858,7 +782,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             toggleAssistant
         );
-
     }
 
 
@@ -868,13 +791,25 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
-                assistantPanel.classList.remove(
-                    "active"
-                );
+                if (assistantPanel) {
 
+                    assistantPanel.classList.remove(
+                        "active"
+                    );
+                }
             }
         );
+    }
 
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
     }
 
 
@@ -893,37 +828,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? "assistant-message user-message"
                 : "assistant-message";
 
+        const icon =
+            isUser
+                ? ""
+                : '<div class="message-icon">🤖</div>';
+
         wrapper.innerHTML = `
-            ${
-                isUser
-                    ? ""
-                    : '<div class="message-icon">🤖</div>'
-            }
+            ${icon}
 
             <div class="message-content">
                 ${escapeHTML(text)}
             </div>
         `;
 
-        assistantMessages.appendChild(
-            wrapper
-        );
+        assistantMessages.appendChild(wrapper);
 
         assistantMessages.scrollTop =
             assistantMessages.scrollHeight;
-
-    }
-
-
-    function escapeHTML(text) {
-
-        const div =
-            document.createElement("div");
-
-        div.textContent = text;
-
-        return div.innerHTML;
-
     }
 
 
@@ -942,7 +863,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return (
                 "Shoaib's core skills include HTML5, CSS3, JavaScript, responsive UI development, B2B sales, LinkedIn outreach and ICP research."
             );
-
         }
 
 
@@ -955,7 +875,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return (
                 "Shoaib works with website development, landing pages, front-end UI, B2B sales, lead generation and LinkedIn outreach."
             );
-
         }
 
 
@@ -967,7 +886,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return (
                 "Rana Shoaib is a Sales Executive and Front-End Developer who combines technology, business communication and B2B sales."
             );
-
         }
 
 
@@ -980,7 +898,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return (
                 "Shoaib focuses on B2B sales, ICP research, finding decision makers, personalized outreach, qualification and lead generation."
             );
-
         }
 
 
@@ -993,7 +910,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return (
                 "You can contact Shoaib at r.shoaib0126@gmail.com or +92 315 6109300."
             );
-
         }
 
 
@@ -1005,7 +921,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return (
                 "The portfolio includes a personal portfolio website, a B2B outreach system and an interactive web experience."
             );
-
         }
 
 
@@ -1013,20 +928,18 @@ document.addEventListener("DOMContentLoaded", () => {
             q.includes("html") ||
             q.includes("css") ||
             q.includes("javascript") ||
-            q.includes("js")
+            q.includes(" js")
         ) {
 
             return (
                 "Shoaib uses HTML for structure, CSS for responsive design and JavaScript for interaction and dynamic website features."
             );
-
         }
 
 
         return (
             "I can tell you about Shoaib's skills, services, projects, B2B sales experience, front-end development or contact information."
         );
-
     }
 
 
@@ -1046,7 +959,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         assistantInput.value = "";
 
-
         setTimeout(
             () => {
 
@@ -1062,7 +974,6 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             450
         );
-
     }
 
 
@@ -1072,7 +983,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             sendAssistantMessage
         );
-
     }
 
 
@@ -1080,26 +990,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         assistantInput.addEventListener(
             "keydown",
-            event => {
+            (event) => {
 
-                if (
-                    event.key === "Enter"
-                ) {
+                if (event.key === "Enter") {
 
                     event.preventDefault();
 
                     sendAssistantMessage();
-
                 }
-
             }
         );
-
     }
 
 
     assistantQuestions.forEach(
-        button => {
+        (button) => {
 
             button.addEventListener(
                 "click",
@@ -1127,10 +1032,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         },
                         400
                     );
-
                 }
             );
-
         }
     );
 
@@ -1140,79 +1043,49 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const startGameBtn =
-        document.getElementById(
-            "startGameBtn"
-        );
+        document.getElementById("startGameBtn");
 
     const gameStart =
-        document.getElementById(
-            "gameStart"
-        );
+        document.getElementById("gameStart");
 
     const missionSelection =
-        document.getElementById(
-            "missionSelection"
-        );
+        document.getElementById("missionSelection");
 
     const challengeArea =
-        document.getElementById(
-            "challengeArea"
-        );
+        document.getElementById("challengeArea");
 
     const gameResult =
-        document.getElementById(
-            "gameResult"
-        );
+        document.getElementById("gameResult");
 
     const gameXP =
-        document.getElementById(
-            "gameXP"
-        );
+        document.getElementById("gameXP");
 
     const gameQuestionNumber =
-        document.getElementById(
-            "gameQuestionNumber"
-        );
+        document.getElementById("gameQuestionNumber");
 
     const gameMissionName =
-        document.getElementById(
-            "gameMissionName"
-        );
+        document.getElementById("gameMissionName");
 
     const gameQuestion =
-        document.getElementById(
-            "gameQuestion"
-        );
+        document.getElementById("gameQuestion");
 
     const gameOptions =
-        document.getElementById(
-            "gameOptions"
-        );
+        document.getElementById("gameOptions");
 
     const gameFeedback =
-        document.getElementById(
-            "gameFeedback"
-        );
+        document.getElementById("gameFeedback");
 
     const finalXP =
-        document.getElementById(
-            "finalXP"
-        );
+        document.getElementById("finalXP");
 
     const finalRank =
-        document.getElementById(
-            "finalRank"
-        );
+        document.getElementById("finalRank");
 
     const restartGameBtn =
-        document.getElementById(
-            "restartGameBtn"
-        );
+        document.getElementById("restartGameBtn");
 
     const missionButtons =
-        document.querySelectorAll(
-            ".mission-card"
-        );
+        document.querySelectorAll(".mission-card");
 
 
     const missions = {
@@ -1264,9 +1137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     answer: 2
                 }
-
             ]
-
         },
 
 
@@ -1317,9 +1188,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     answer: 0
                 }
-
             ]
-
         },
 
 
@@ -1370,11 +1239,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     answer: 1
                 }
-
             ]
-
         }
-
     };
 
 
@@ -1390,24 +1256,16 @@ document.addEventListener("DOMContentLoaded", () => {
             missionSelection,
             challengeArea,
             gameResult
-        ].forEach(element => {
+        ].forEach((element) => {
 
             if (element) {
-                element.classList.add(
-                    "hidden"
-                );
+                element.classList.add("hidden");
             }
-
         });
 
         if (screen) {
-
-            screen.classList.remove(
-                "hidden"
-            );
-
+            screen.classList.remove("hidden");
         }
-
     }
 
 
@@ -1418,19 +1276,19 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
 
                 currentXP = 0;
+                currentQuestion = 0;
+                selectedMission = null;
 
                 showGameScreen(
                     missionSelection
                 );
-
             }
         );
-
     }
 
 
     missionButtons.forEach(
-        button => {
+        (button) => {
 
             button.addEventListener(
                 "click",
@@ -1439,15 +1297,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     const mission =
                         button.dataset.mission;
 
-                    if (
-                        !missions[mission]
-                    ) return;
+                    if (!missions[mission]) return;
 
                     selectedMission =
                         missions[mission];
 
                     currentQuestion = 0;
-
                     currentXP = 0;
 
                     if (gameMissionName) {
@@ -1465,10 +1320,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
                     loadQuestion();
-
                 }
             );
-
         }
     );
 
@@ -1478,15 +1331,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (
             !selectedMission ||
             currentQuestion >=
-                selectedMission.questions.length
+            selectedMission.questions.length
         ) {
 
             finishGame();
 
             return;
-
         }
-
 
         const question =
             selectedMission.questions[
@@ -1497,12 +1348,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (gameQuestionNumber) {
 
             gameQuestionNumber.textContent =
-                `Question ${
-                    currentQuestion + 1
-                } / ${
-                    selectedMission.questions.length
-                }`;
-
+                `Question ${currentQuestion + 1} / ${selectedMission.questions.length}`;
         }
 
 
@@ -1510,15 +1356,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             gameQuestion.textContent =
                 question.question;
-
         }
 
 
         if (gameFeedback) {
 
-            gameFeedback.textContent =
-                "";
-
+            gameFeedback.textContent = "";
+            gameFeedback.style.color = "";
         }
 
 
@@ -1531,12 +1375,12 @@ document.addEventListener("DOMContentLoaded", () => {
             (option, index) => {
 
                 const button =
-                    document.createElement(
-                        "button"
-                    );
+                    document.createElement("button");
 
                 button.className =
                     "game-option";
+
+                button.type = "button";
 
                 button.textContent =
                     option;
@@ -1549,17 +1393,14 @@ document.addEventListener("DOMContentLoaded", () => {
                             index,
                             question.answer
                         );
-
                     }
                 );
 
                 gameOptions.appendChild(
                     button
                 );
-
             }
         );
-
     }
 
 
@@ -1576,10 +1417,8 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         optionButtons.forEach(
-            button => {
-
+            (button) => {
                 button.disabled = true;
-
             }
         );
 
@@ -1592,10 +1431,8 @@ document.addEventListener("DOMContentLoaded", () => {
             currentXP += 10;
 
             if (gameXP) {
-
                 gameXP.textContent =
                     currentXP;
-
             }
 
             if (gameFeedback) {
@@ -1605,14 +1442,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 gameFeedback.style.color =
                     "#35c759";
-
             }
 
-            optionButtons[
-                selectedAnswer
-            ].classList.add(
-                "correct"
-            );
+            if (optionButtons[selectedAnswer]) {
+
+                optionButtons[selectedAnswer]
+                    .classList.add("correct");
+            }
 
         } else {
 
@@ -1623,21 +1459,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 gameFeedback.style.color =
                     "#e53935";
-
             }
 
-            optionButtons[
-                selectedAnswer
-            ].classList.add(
-                "wrong"
-            );
+            if (optionButtons[selectedAnswer]) {
 
-            optionButtons[
-                correctAnswer
-            ].classList.add(
-                "correct"
-            );
+                optionButtons[selectedAnswer]
+                    .classList.add("wrong");
+            }
 
+            if (optionButtons[correctAnswer]) {
+
+                optionButtons[correctAnswer]
+                    .classList.add("correct");
+            }
         }
 
 
@@ -1651,7 +1485,6 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             1000
         );
-
     }
 
 
@@ -1661,11 +1494,11 @@ document.addEventListener("DOMContentLoaded", () => {
             gameResult
         );
 
+
         if (finalXP) {
 
             finalXP.textContent =
                 `${currentXP} XP`;
-
         }
 
 
@@ -1687,7 +1520,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             rank =
                 "Rising Star ⭐";
-
         }
 
 
@@ -1695,9 +1527,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             finalRank.textContent =
                 rank;
-
         }
-
     }
 
 
@@ -1708,18 +1538,14 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
 
                 currentXP = 0;
-
                 currentQuestion = 0;
-
                 selectedMission = null;
 
                 showGameScreen(
                     missionSelection
                 );
-
             }
         );
-
     }
 
 
@@ -1757,10 +1583,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     Math.min(
                         1,
                         1 -
-                        (
-                            rect.top /
-                            windowHeight
-                        )
+                        (rect.top / windowHeight)
                     )
                 );
 
@@ -1781,7 +1604,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     1,
                     0.35 + progress * 0.9
                 );
-
         }
 
 
@@ -1792,7 +1614,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         cinematicScroll();
-
     }
 
 
@@ -1805,45 +1626,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (hero) {
 
+        const orbitOne =
+            document.querySelector(".orbit-one");
+
+        const orbitTwo =
+            document.querySelector(".orbit-two");
+
+
+        function updateParallax() {
+
+            const scroll =
+                window.scrollY;
+
+            if (orbitOne) {
+
+                orbitOne.style.transform =
+                    `translateY(${scroll * 0.12}px)`;
+            }
+
+            if (orbitTwo) {
+
+                orbitTwo.style.transform =
+                    `translateY(${scroll * -0.08}px)`;
+            }
+        }
+
+
         window.addEventListener(
             "scroll",
-            () => {
-
-                const scroll =
-                    window.scrollY;
-
-                const orbitOne =
-                    document.querySelector(
-                        ".orbit-one"
-                    );
-
-                const orbitTwo =
-                    document.querySelector(
-                        ".orbit-two"
-                    );
-
-                if (orbitOne) {
-
-                    orbitOne.style.transform =
-                        `translateY(${
-                            scroll * 0.12
-                        }px)`;
-
-                }
-
-                if (orbitTwo) {
-
-                    orbitTwo.style.transform =
-                        `translateY(${
-                            scroll * -0.08
-                        }px)`;
-
-                }
-
-            },
+            updateParallax,
             { passive: true }
         );
 
+        updateParallax();
     }
 
 
@@ -1861,68 +1676,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ".nav-links a"
         );
 
-
-    const activeObserver =
-        new IntersectionObserver(
-            entries => {
-
-                entries.forEach(entry => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        const id =
-                            entry.target.id;
-
-                        navAnchors.forEach(
-                            anchor => {
-
-                                anchor.classList.remove(
-                                    "active-nav"
-                                );
-
-                                if (
-                                    anchor.getAttribute(
-                                        "href"
-                                    ) ===
-                                    `#${id}`
-                                ) {
-
-                                    anchor.classList.add(
-                                        "active-nav"
-                                    );
-
-                                }
-
-                            }
-                        );
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.35
-            }
-        );
-
-
-    sections.forEach(
-        section => {
-
-            activeObserver.observe(
-                section
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       ACTIVE NAV STYLE
-    ===================================================== */
 
     const activeNavStyle =
         document.createElement("style");
@@ -1942,42 +1695,87 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
+    if (
+        sections.length &&
+        navAnchors.length &&
+        "IntersectionObserver" in window
+    ) {
+
+        const activeObserver =
+            new IntersectionObserver(
+                (entries) => {
+
+                    entries.forEach(
+                        (entry) => {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                const id =
+                                    entry.target.id;
+
+                                navAnchors.forEach(
+                                    (anchor) => {
+
+                                        anchor.classList.remove(
+                                            "active-nav"
+                                        );
+
+                                        if (
+                                            anchor.getAttribute("href") ===
+                                            `#${id}`
+                                        ) {
+
+                                            anchor.classList.add(
+                                                "active-nav"
+                                            );
+                                        }
+                                    }
+                                );
+                            }
+                        }
+                    );
+                },
+                {
+                    threshold: 0.35
+                }
+            );
+
+
+        sections.forEach(
+            (section) => {
+
+                activeObserver.observe(
+                    section
+                );
+            }
+        );
+    }
+
+
     /* =====================================================
        CLOSE MOBILE MENU OUTSIDE
     ===================================================== */
 
     document.addEventListener(
         "click",
-        event => {
+        (event) => {
 
             if (
                 navLinks &&
                 menuBtn &&
-                navLinks.classList.contains(
-                    "active"
-                )
+                navLinks.classList.contains("active")
             ) {
 
                 if (
-                    !navLinks.contains(
-                        event.target
-                    ) &&
-                    !menuBtn.contains(
-                        event.target
-                    )
+                    !navLinks.contains(event.target) &&
+                    !menuBtn.contains(event.target)
                 ) {
 
-                    navLinks.classList.remove(
-                        "active"
-                    );
-
-                    menuBtn.textContent =
-                        "☰";
-
+                    closeMobileMenu();
                 }
-
             }
-
         }
     );
 
@@ -1988,38 +1786,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener(
         "keydown",
-        event => {
+        (event) => {
 
-            if (
-                event.key === "Escape"
-            ) {
+            if (event.key === "Escape") {
 
-                if (
-                    navLinks &&
-                    menuBtn
-                ) {
+                closeMobileMenu();
 
-                    navLinks.classList.remove(
-                        "active"
-                    );
-
-                    menuBtn.textContent =
-                        "☰";
-
-                }
-
-                if (
-                    assistantPanel
-                ) {
+                if (assistantPanel) {
 
                     assistantPanel.classList.remove(
                         "active"
                     );
-
                 }
 
+                closeProject();
             }
-
         }
     );
 
