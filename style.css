@@ -49,24 +49,36 @@ body {
     transition: background 0.3s ease, color 0.3s ease;
 }
 
+
+/* =========================================================
+   LIGHT MODE
+========================================================= */
+
 body.light-mode {
     --bg: #eeeeee;
-    --bg-soft: #e4e4e4;
-    --bg-card: #dcdcdc;
-    --bg-card-2: #e7e7e7;
+    --bg-soft: #f4dede;
+
+    /* LIGHT RED BOX COLOR */
+    --bg-card: #f6d6d6;
+    --bg-card-2: #f9e1e1;
 
     --text: #151515;
     --text-soft: #555;
-    --text-muted: #777;
-
-    --border: rgba(0, 0, 0, 0.12);
-    --border-red: rgba(198, 40, 40, 0.45);
+    --text-muted: #666;
 
     --red: #c62828;
     --red-dark: #a61d1d;
-    --red-soft: rgba(198, 40, 40, 0.12);
 
-    --shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    --red-soft: rgba(198, 40, 40, 0.13);
+
+    /* FULL RED BORDERS */
+    --border: rgba(198, 40, 40, 0.75);
+    --border-red: #c62828;
+
+    /* RED GLOW */
+    --shadow:
+        0 10px 35px rgba(198, 40, 40, 0.18),
+        0 0 25px rgba(198, 40, 40, 0.10);
 }
 
 a {
@@ -128,12 +140,12 @@ img {
     border-bottom: 1px solid var(--border);
 
     z-index: 5000;
-
     transition: 0.3s ease;
 }
 
 body.light-mode .navbar {
-    background: rgba(238, 238, 238, 0.85);
+    background: rgba(246, 214, 214, 0.90);
+    box-shadow: 0 5px 25px rgba(198, 40, 40, 0.12);
 }
 
 .logo {
@@ -165,12 +177,9 @@ body.light-mode .navbar {
     position: absolute;
     left: 0;
     bottom: -7px;
-
     width: 0;
     height: 2px;
-
     background: var(--red);
-
     transition: 0.3s ease;
 }
 
@@ -194,15 +203,14 @@ body.light-mode .navbar {
 #themeBtn:hover {
     border-color: var(--red);
     transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(198, 40, 40, 0.20);
 }
 
 .menu-btn {
     display: none;
-
     border: none;
     background: transparent;
     color: var(--text);
-
     font-size: 1.7rem;
 }
 
@@ -245,8 +253,8 @@ body.light-mode .navbar {
 
 body.light-mode .hero-grid {
     background-image:
-        linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px);
+        linear-gradient(rgba(198,40,40,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(198,40,40,0.06) 1px, transparent 1px);
 }
 
 .hero-orbit {
@@ -254,6 +262,10 @@ body.light-mode .hero-grid {
     border: 1px solid rgba(229, 57, 53, 0.12);
     border-radius: 50%;
     pointer-events: none;
+}
+
+body.light-mode .hero-orbit {
+    border-color: rgba(198, 40, 40, 0.20);
 }
 
 .orbit-one {
@@ -273,10 +285,8 @@ body.light-mode .hero-grid {
 .hero-content {
     position: relative;
     z-index: 2;
-
     width: 100%;
     max-width: 1250px;
-
     text-align: center;
 }
 
@@ -299,19 +309,20 @@ body.light-mode .hero-grid {
     background: rgba(255,255,255,0.025);
 
     font-size: 0.8rem;
-
     margin-bottom: 25px;
+}
+
+body.light-mode .status-badge {
+    background: var(--bg-card);
+    box-shadow: 0 0 18px rgba(198, 40, 40, 0.10);
 }
 
 .status-dot {
     width: 8px;
     height: 8px;
-
     background: #35c759;
     border-radius: 50%;
-
     box-shadow: 0 0 12px rgba(53, 199, 89, 0.7);
-
     animation: statusPulse 1.6s infinite;
 }
 
@@ -341,7 +352,6 @@ body.light-mode .hero-grid {
     margin: 0 auto 25px;
 
     perspective: 1000px;
-
     transform-style: preserve-3d;
 
     --mx: 0deg;
@@ -359,11 +369,9 @@ body.light-mode .hero-grid {
     top: 50%;
 
     border-radius: 50%;
-
     border: 1px solid var(--border-red);
 
     transform-style: preserve-3d;
-
     pointer-events: none;
 }
 
@@ -447,7 +455,6 @@ body.light-mode .hero-grid {
         translateZ(45px);
 
     border-radius: 50%;
-
     border: 2px solid var(--red);
 
     background:
@@ -470,15 +477,26 @@ body.light-mode .hero-grid {
     transform-style: preserve-3d;
 }
 
+body.light-mode .world-core {
+    background:
+        radial-gradient(
+            circle,
+            rgba(198,40,40,0.18),
+            var(--bg-card) 60%
+        );
+
+    box-shadow:
+        0 0 55px rgba(198,40,40,0.28),
+        inset 0 0 40px rgba(198,40,40,0.12);
+}
+
 .world-core::before {
     content: "";
 
     position: absolute;
-
     inset: -10px;
 
     border-radius: 50%;
-
     border: 1px dashed rgba(229,57,53,0.4);
 }
 
@@ -487,7 +505,6 @@ body.light-mode .hero-grid {
     height: 110px;
 
     object-fit: cover;
-
     border-radius: 50%;
 
     border: 3px solid var(--red);
@@ -500,13 +517,11 @@ body.light-mode .hero-grid {
     position: absolute;
 
     bottom: -28px;
-
     left: 50%;
 
     transform: translateX(-50%);
 
     font-size: 0.65rem;
-
     letter-spacing: 3px;
 
     color: var(--red);
@@ -561,7 +576,10 @@ body.light-mode .hero-grid {
 }
 
 body.light-mode .floating-node {
-    background: rgba(220,220,220,0.9);
+    background: rgba(246,214,214,0.94);
+    box-shadow:
+        0 10px 30px rgba(198,40,40,0.16),
+        0 0 20px rgba(198,40,40,0.08);
 }
 
 .floating-node strong {
@@ -575,35 +593,30 @@ body.light-mode .floating-node {
 
 .floating-node small {
     color: var(--text-muted);
-
     font-size: 0.6rem;
 }
 
 .node-one {
     left: 15px;
     top: 60px;
-
     animation-delay: 0.3s;
 }
 
 .node-two {
     right: 15px;
     top: 45px;
-
     animation-delay: 0.9s;
 }
 
 .node-three {
     left: 35px;
     bottom: 45px;
-
     animation-delay: 1.4s;
 }
 
 .node-four {
     right: 30px;
     bottom: 30px;
-
     animation-delay: 2s;
 }
 
@@ -658,15 +671,12 @@ body.light-mode .floating-node {
 
 .hero-role {
     font-size: 1.35rem;
-
     color: var(--text-soft);
-
     margin-bottom: 20px;
 }
 
 .hero-role span {
     color: var(--red);
-
     font-weight: 700;
 }
 
@@ -687,18 +697,15 @@ body.light-mode .floating-node {
 
 .hero-buttons {
     display: flex;
-
     justify-content: center;
     align-items: center;
 
     gap: 15px;
-
     flex-wrap: wrap;
 }
 
 .btn {
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
 
@@ -707,35 +714,32 @@ body.light-mode .floating-node {
     border-radius: 8px;
 
     background: var(--red);
-
     color: white;
 
     border: 1px solid var(--red);
 
     font-weight: 700;
-
     font-size: 0.9rem;
 
     transition: var(--transition);
 
-    box-shadow: 0 10px 30px rgba(229,57,53,0.15);
+    box-shadow:
+        0 10px 30px rgba(229,57,53,0.15);
 }
 
 .btn:hover {
     transform: translateY(-4px);
 
     background: transparent;
-
     color: var(--red);
 
-    box-shadow: 0 15px 35px rgba(229,57,53,0.2);
+    box-shadow:
+        0 15px 35px rgba(229,57,53,0.2);
 }
 
 .btn-outline {
     background: transparent;
-
     color: var(--text);
-
     border-color: var(--border);
 }
 
@@ -755,17 +759,14 @@ body.light-mode .floating-node {
     margin: 55px auto 0;
 
     display: grid;
-
     grid-template-columns: repeat(4, 1fr);
 
     border-top: 1px solid var(--border);
-
     border-bottom: 1px solid var(--border);
 }
 
 .hero-mini-stats div {
     padding: 17px 10px;
-
     border-right: 1px solid var(--border);
 }
 
@@ -802,7 +803,6 @@ body.light-mode .floating-node {
     margin: 0 auto;
 
     display: grid;
-
     grid-template-columns: repeat(4, 1fr);
 
     border: 1px solid var(--border);
@@ -816,7 +816,6 @@ body.light-mode .floating-node {
 
 .hud-item {
     display: flex;
-
     align-items: center;
 
     gap: 12px;
@@ -834,7 +833,6 @@ body.light-mode .floating-node {
     color: var(--red);
 
     font-weight: 900;
-
     font-size: 0.8rem;
 }
 
@@ -864,7 +862,8 @@ body.light-mode .floating-node {
 
     border-radius: 50%;
 
-    box-shadow: 0 0 12px rgba(229,57,53,0.7);
+    box-shadow:
+        0 0 12px rgba(229,57,53,0.7);
 }
 
 
@@ -876,7 +875,6 @@ body.light-mode .floating-node {
     position: relative;
 
     width: 100%;
-
     max-width: 1250px;
 
     margin: auto;
@@ -894,7 +892,6 @@ body.light-mode .floating-node {
     color: var(--red);
 
     font-size: 0.72rem;
-
     font-weight: 800;
 
     letter-spacing: 3px;
@@ -914,7 +911,6 @@ body.light-mode .floating-node {
 
 .section-heading p {
     color: var(--text-soft);
-
     margin-top: 12px;
 }
 
@@ -935,7 +931,6 @@ body.light-mode .floating-node {
 
 .about-text h3 {
     font-size: 1.8rem;
-
     margin-bottom: 20px;
 }
 
@@ -969,11 +964,12 @@ body.light-mode .floating-node {
     color: var(--text-soft);
 
     font-size: 0.7rem;
+
+    box-shadow: 0 5px 15px rgba(198,40,40,0.08);
 }
 
 .about-info {
     display: grid;
-
     gap: 12px;
 }
 
@@ -993,12 +989,17 @@ body.light-mode .floating-node {
     border-radius: 10px;
 
     transition: var(--transition);
+
+    box-shadow: var(--shadow);
 }
 
 .info-card:hover {
     transform: translateX(7px);
 
     border-color: var(--red);
+
+    box-shadow:
+        0 10px 30px rgba(198,40,40,0.20);
 }
 
 .info-icon {
@@ -1021,7 +1022,6 @@ body.light-mode .floating-node {
 
 .info-card p {
     color: var(--text-muted);
-
     font-size: 0.72rem;
 }
 
@@ -1052,6 +1052,8 @@ body.light-mode .floating-node {
     overflow: hidden;
 
     transition: var(--transition);
+
+    box-shadow: var(--shadow);
 }
 
 .skill-card::before {
@@ -1073,9 +1075,11 @@ body.light-mode .floating-node {
 .skill-card:hover {
     transform: translateY(-8px);
 
-    border-color: var(--border-red);
+    border-color: var(--red);
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        0 15px 35px rgba(198,40,40,0.20),
+        0 0 20px rgba(198,40,40,0.08);
 }
 
 .skill-card:hover::before {
@@ -1106,7 +1110,6 @@ body.light-mode .floating-node {
 
 .skill-card h3 {
     font-size: 1.05rem;
-
     margin-bottom: 8px;
 }
 
@@ -1120,6 +1123,7 @@ body.light-mode .floating-node {
 
 .skill-bar {
     width: 100%;
+
     height: 4px;
 
     background: rgba(255,255,255,0.08);
@@ -1132,7 +1136,7 @@ body.light-mode .floating-node {
 }
 
 body.light-mode .skill-bar {
-    background: rgba(0,0,0,0.1);
+    background: rgba(198,40,40,0.15);
 }
 
 .skill-bar span {
@@ -1174,6 +1178,8 @@ body.light-mode .skill-bar {
     transition: var(--transition);
 
     overflow: hidden;
+
+    box-shadow: var(--shadow);
 }
 
 .service-card::after {
@@ -1197,24 +1203,23 @@ body.light-mode .skill-bar {
 
     border-color: var(--red);
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        0 15px 35px rgba(198,40,40,0.20),
+        0 0 25px rgba(198,40,40,0.10);
 }
 
 .service-icon {
     font-size: 2rem;
-
     margin-bottom: 25px;
 }
 
 .service-card h3 {
     font-size: 1rem;
-
     margin-bottom: 12px;
 }
 
 .service-card p {
     color: var(--text-muted);
-
     font-size: 0.78rem;
 }
 
@@ -1253,6 +1258,8 @@ body.light-mode .skill-bar {
     border: 1px solid var(--border);
 
     background: var(--bg-card);
+
+    box-shadow: var(--shadow);
 }
 
 .counter-card {
@@ -1308,11 +1315,15 @@ body.light-mode .skill-bar {
     background: #080808;
 
     border-top: 1px solid var(--border);
+
     border-bottom: 1px solid var(--border);
 }
 
 body.light-mode .cinematic-section {
-    background: #d7d7d7;
+    background: #e5caca;
+
+    box-shadow:
+        inset 0 0 80px rgba(198,40,40,0.10);
 }
 
 .cinematic-grid {
@@ -1412,12 +1423,17 @@ body.light-mode .cinematic-section {
     overflow: hidden;
 
     transition: var(--transition);
+
+    box-shadow: var(--shadow);
 }
 
 .why-card:hover {
     transform: translateY(-8px);
 
     border-color: var(--red);
+
+    box-shadow:
+        0 15px 35px rgba(198,40,40,0.20);
 }
 
 .why-number {
@@ -1547,6 +1563,8 @@ body.light-mode .cinematic-section {
     overflow: hidden;
 
     transition: var(--transition);
+
+    box-shadow: var(--shadow);
 }
 
 .project-card:hover {
@@ -1554,7 +1572,9 @@ body.light-mode .cinematic-section {
 
     border-color: var(--red);
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        0 15px 40px rgba(198,40,40,0.22),
+        0 0 25px rgba(198,40,40,0.10);
 }
 
 .project-number {
@@ -1577,6 +1597,7 @@ body.light-mode .cinematic-section {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     margin-bottom: 20px;
@@ -1785,6 +1806,9 @@ body.light-mode .cinematic-section {
     border-color: var(--red);
 
     background: var(--red-soft);
+
+    box-shadow:
+        0 10px 25px rgba(198,40,40,0.15);
 }
 
 .game-topbar {
@@ -1939,6 +1963,8 @@ body.light-mode .cinematic-section {
     border-radius: 12px;
 
     padding: 30px;
+
+    box-shadow: var(--shadow);
 }
 
 .contact-form-box h3,
@@ -1988,6 +2014,9 @@ body.light-mode .cinematic-section {
 #contactForm input:focus,
 #contactForm textarea:focus {
     border-color: var(--red);
+
+    box-shadow:
+        0 0 15px rgba(198,40,40,0.12);
 }
 
 #contactForm textarea {
@@ -2044,12 +2073,19 @@ body.light-mode .cinematic-section {
     border-radius: 8px;
 
     transition: var(--transition);
+
+    background: var(--bg-card);
+
+    box-shadow: 0 7px 20px rgba(198,40,40,0.08);
 }
 
 .contact-card:hover {
     border-color: var(--red);
 
     transform: translateX(5px);
+
+    box-shadow:
+        0 10px 25px rgba(198,40,40,0.18);
 }
 
 .contact-icon {
@@ -2089,6 +2125,7 @@ body.light-mode .cinematic-section {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     padding: 20px;
@@ -2283,6 +2320,7 @@ body.light-mode .cinematic-section {
     bottom: 85px;
 
     width: 370px;
+
     max-width: calc(100% - 30px);
 
     height: 530px;
@@ -2324,6 +2362,7 @@ body.light-mode .cinematic-section {
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
     padding: 15px;
@@ -2586,6 +2625,7 @@ body.light-mode .cinematic-section {
 
 .footer-line {
     width: 80px;
+
     height: 2px;
 
     background: var(--red);
@@ -2617,11 +2657,13 @@ body.light-mode .cinematic-section {
 @keyframes sectionReveal {
     from {
         opacity: 0;
+
         transform: translateY(20px);
     }
 
     to {
         opacity: 1;
+
         transform: translateY(0);
     }
 }
@@ -2678,7 +2720,6 @@ body.light-mode .cinematic-section {
     .project-container {
         grid-template-columns: repeat(2, 1fr);
     }
-
 }
 
 
@@ -2748,7 +2789,6 @@ body.light-mode .cinematic-section {
 
         align-items: flex-start;
     }
-
 }
 
 
@@ -2760,6 +2800,7 @@ body.light-mode .cinematic-section {
 
     .hero {
         padding-left: 5%;
+
         padding-right: 5%;
     }
 
@@ -2769,32 +2810,39 @@ body.light-mode .cinematic-section {
 
     .portfolio-world {
         width: 350px;
+
         height: 290px;
+
         transform: none !important;
     }
 
     .world-core {
         width: 125px;
+
         height: 125px;
     }
 
     .world-core .profile {
         width: 90px;
+
         height: 90px;
     }
 
     .ring-one {
         width: 190px;
+
         height: 190px;
     }
 
     .ring-two {
         width: 250px;
+
         height: 125px;
     }
 
     .ring-three {
         width: 300px;
+
         height: 150px;
     }
 
@@ -2868,7 +2916,6 @@ body.light-mode .cinematic-section {
     .cinematic-content h2 {
         letter-spacing: -4px;
     }
-
 }
 
 
@@ -2892,31 +2939,37 @@ body.light-mode .cinematic-section {
 
     .portfolio-world {
         width: 300px;
+
         height: 255px;
     }
 
     .world-core {
         width: 105px;
+
         height: 105px;
     }
 
     .world-core .profile {
         width: 75px;
+
         height: 75px;
     }
 
     .ring-one {
         width: 155px;
+
         height: 155px;
     }
 
     .ring-two {
         width: 220px;
+
         height: 110px;
     }
 
     .ring-three {
         width: 250px;
+
         height: 125px;
     }
 
@@ -2926,21 +2979,25 @@ body.light-mode .cinematic-section {
 
     .node-one {
         left: -5px;
+
         top: 45px;
     }
 
     .node-two {
         right: -5px;
+
         top: 35px;
     }
 
     .node-three {
         left: -5px;
+
         bottom: 35px;
     }
 
     .node-four {
         right: -5px;
+
         bottom: 25px;
     }
 
@@ -2962,6 +3019,7 @@ body.light-mode .cinematic-section {
 
     .hero-buttons .btn {
         width: 100%;
+
         max-width: 280px;
     }
 
@@ -3001,6 +3059,7 @@ body.light-mode .cinematic-section {
 
     .assistant-panel {
         right: 15px;
+
         bottom: 80px;
 
         width: calc(100% - 30px);
@@ -3008,18 +3067,19 @@ body.light-mode .cinematic-section {
 
     .assistant-btn {
         right: 15px;
+
         bottom: 20px;
     }
 
     .back-to-top {
         right: 15px;
+
         bottom: 75px;
     }
 
     .modal-info {
         grid-template-columns: 1fr;
     }
-
 }
 
 
@@ -3031,6 +3091,7 @@ body.light-mode .cinematic-section {
 
     .portfolio-world {
         width: 270px;
+
         height: 230px;
     }
 
@@ -3049,7 +3110,6 @@ body.light-mode .cinematic-section {
     .section-heading h2 {
         font-size: 2rem;
     }
-
 }
 
 
@@ -3067,8 +3127,9 @@ body.light-mode .cinematic-section {
     *::before,
     *::after {
         animation-duration: 0.01ms !important;
+
         animation-iteration-count: 1 !important;
+
         transition-duration: 0.01ms !important;
     }
-
 }
