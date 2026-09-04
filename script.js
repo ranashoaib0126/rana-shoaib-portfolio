@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (menuBtn && navLinks) {
-
         menuBtn.setAttribute("aria-expanded", "false");
 
         menuBtn.addEventListener("click", (event) => {
@@ -30,13 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const isOpen = navLinks.classList.toggle("active");
 
             menuBtn.textContent = isOpen ? "×" : "☰";
-            menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            menuBtn.setAttribute(
+                "aria-expanded",
+                isOpen ? "true" : "false"
+            );
         });
 
         navLinks.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", () => {
-                closeMobileMenu();
-            });
+            link.addEventListener("click", closeMobileMenu);
         });
     }
 
@@ -54,32 +54,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (themeBtn) {
             themeBtn.textContent = isLight ? "☾ Dark" : "☀ Light";
+
             themeBtn.setAttribute(
                 "aria-label",
-                isLight ? "Switch to dark mode" : "Switch to light mode"
+                isLight
+                    ? "Switch to dark mode"
+                    : "Switch to light mode"
             );
         }
     }
 
     const savedTheme = localStorage.getItem("shoaib-theme");
 
-    if (savedTheme === "light") {
-        applyTheme("light");
-    } else {
-        applyTheme("dark");
-    }
+    applyTheme(savedTheme === "light" ? "light" : "dark");
 
     if (themeBtn) {
         themeBtn.addEventListener("click", (event) => {
             event.preventDefault();
 
-            const isCurrentlyLight =
+            const light =
                 document.body.classList.contains("light-mode");
 
-            const newTheme = isCurrentlyLight ? "dark" : "light";
+            const newTheme = light ? "dark" : "light";
 
             applyTheme(newTheme);
-
             localStorage.setItem("shoaib-theme", newTheme);
         });
     }
@@ -104,36 +102,30 @@ document.addEventListener("DOMContentLoaded", () => {
     let deleting = false;
 
     function typeEffect() {
-
         if (!typingElement) return;
 
-        const currentWord = typingWords[wordIndex];
+        const word = typingWords[wordIndex];
 
         if (!deleting) {
-
             typingElement.textContent =
-                currentWord.substring(0, charIndex + 1);
+                word.substring(0, charIndex + 1);
 
             charIndex++;
 
-            if (charIndex === currentWord.length) {
-
+            if (charIndex >= word.length) {
                 deleting = true;
 
                 setTimeout(typeEffect, 1600);
-
                 return;
             }
-
         } else {
-
             typingElement.textContent =
-                currentWord.substring(0, charIndex - 1);
+                word.substring(0, charIndex - 1);
 
             charIndex--;
 
-            if (charIndex === 0) {
-
+            if (charIndex <= 0) {
+                charIndex = 0;
                 deleting = false;
 
                 wordIndex =
@@ -151,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       3D PORTFOLIO WORLD
+       NEXT-LEVEL 3D PORTFOLIO WORLD
     ===================================================== */
 
     const portfolioWorld =
@@ -159,60 +151,242 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (portfolioWorld) {
 
-        const canTilt =
+        const finePointer =
             window.matchMedia("(pointer: fine)").matches;
 
-        if (canTilt) {
+        const reducedMotion =
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+
+        let targetX = 0;
+        let targetY = 0;
+        let currentX = 0;
+        let currentY = 0;
+        let worldAnimation = null;
+
+        const particles =
+            portfolioWorld.querySelectorAll(
+                ".world-particles span"
+            );
+
+        function animate3DWorld(time) {
+
+            currentX +=
+                (targetX - currentX) * 0.075;
+
+            currentY +=
+                (targetY - currentY) * 0.075;
+
+            portfolioWorld.style.setProperty(
+                "--mx",
+                `${currentX.toFixed(2)}deg`
+            );
+
+            portfolioWorld.style.setProperty(
+                "--my",
+                `${currentY.toFixed(2)}deg`
+            );
+
+            particles.forEach((particle, index) => {
+
+                const driftX =
+                    Math.sin(
+                        time / 1100 + index
+                    ) * 3;
+
+                const driftY =
+                    Math.cos(
+                        time / 1300 + index
+                    ) * 3;
+
+                particle.style.setProperty(
+                    "--drift-x",
+                    `${driftX.toFixed(2)}px`
+                );
+
+                particle.style.setProperty(
+                    "--drift-y",
+                    `${driftY.toFixed(2)}px`
+                );
+            });
+
+            worldAnimation =
+                requestAnimationFrame(animate3DWorld);
+        }
+
+        if (finePointer && !reducedMotion) {
 
             portfolioWorld.addEventListener(
-                "mousemove",
+                "pointermove",
                 (event) => {
 
                     const rect =
                         portfolioWorld.getBoundingClientRect();
 
-                    if (!rect.width || !rect.height) return;
+                    if (!rect.width || !rect.height) {
+                        return;
+                    }
 
                     const x =
-                        event.clientX - rect.left;
+                        (event.clientX - rect.left) /
+                        rect.width - 0.5;
 
                     const y =
-                        event.clientY - rect.top;
+                        (event.clientY - rect.top) /
+                        rect.height - 0.5;
 
-                    const rotateY =
-                        ((x / rect.width) - 0.5) * 18;
+                    targetX =
+                        Math.max(
+                            -8,
+                            Math.min(8, x * 16)
+                        );
 
-                    const rotateX =
-                        ((y / rect.height) - 0.5) * -18;
-
-                    portfolioWorld.style.setProperty(
-                        "--mx",
-                        `${rotateY}deg`
-                    );
-
-                    portfolioWorld.style.setProperty(
-                        "--my",
-                        `${rotateX}deg`
-                    );
+                    targetY =
+                        Math.max(
+                            -8,
+                            Math.min(8, y * -16)
+                        );
                 }
             );
 
             portfolioWorld.addEventListener(
-                "mouseleave",
+                "pointerleave",
                 () => {
-
-                    portfolioWorld.style.setProperty(
-                        "--mx",
-                        "0deg"
-                    );
-
-                    portfolioWorld.style.setProperty(
-                        "--my",
-                        "0deg"
-                    );
+                    targetX = 0;
+                    targetY = 0;
                 }
             );
+
+            worldAnimation =
+                requestAnimationFrame(
+                    animate3DWorld
+                );
         }
+    }
+
+
+    /* =====================================================
+       PROJECT CARD 3D TILT
+    ===================================================== */
+
+    const projectCards =
+        document.querySelectorAll(".project-card");
+
+    if (
+        projectCards.length &&
+        window.matchMedia("(pointer: fine)").matches &&
+        !window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches
+    ) {
+
+        projectCards.forEach((card) => {
+
+            card.addEventListener("pointermove", (event) => {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    (event.clientX - rect.left) /
+                    rect.width - 0.5;
+
+                const y =
+                    (event.clientY - rect.top) /
+                    rect.height - 0.5;
+
+                card.style.setProperty(
+                    "--rx",
+                    `${y * -8}deg`
+                );
+
+                card.style.setProperty(
+                    "--ry",
+                    `${x * 8}deg`
+                );
+
+                card.style.setProperty(
+                    "--px",
+                    `${(x + 0.5) * 100}%`
+                );
+
+                card.style.setProperty(
+                    "--py",
+                    `${(y + 0.5) * 100}%`
+                );
+            });
+
+            card.addEventListener("pointerleave", () => {
+
+                card.style.setProperty(
+                    "--rx",
+                    "0deg"
+                );
+
+                card.style.setProperty(
+                    "--ry",
+                    "0deg"
+                );
+            });
+        });
+    }
+
+
+    /* =====================================================
+       SKILL CARD 3D TILT
+    ===================================================== */
+
+    const skillCards =
+        document.querySelectorAll(".skill-card");
+
+    if (
+        skillCards.length &&
+        window.matchMedia("(pointer: fine)").matches &&
+        !window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches
+    ) {
+
+        skillCards.forEach((card) => {
+
+            card.addEventListener("pointermove", (event) => {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    (event.clientX - rect.left) /
+                    rect.width - 0.5;
+
+                const y =
+                    (event.clientY - rect.top) /
+                    rect.height - 0.5;
+
+                card.style.setProperty(
+                    "--rx",
+                    `${y * -7}deg`
+                );
+
+                card.style.setProperty(
+                    "--ry",
+                    `${x * 7}deg`
+                );
+            });
+
+            card.addEventListener("pointerleave", () => {
+
+                card.style.setProperty(
+                    "--rx",
+                    "0deg"
+                );
+
+                card.style.setProperty(
+                    "--ry",
+                    "0deg"
+                );
+            });
+        });
     }
 
 
@@ -230,17 +404,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const scrollTop =
             window.scrollY;
 
-        const documentHeight =
+        const maxScroll =
             document.documentElement.scrollHeight -
             window.innerHeight;
 
         const percentage =
-            documentHeight > 0
-                ? (scrollTop / documentHeight) * 100
+            maxScroll > 0
+                ? (scrollTop / maxScroll) * 100
                 : 0;
 
         scrollProgress.style.width =
-            `${Math.min(100, Math.max(0, percentage))}%`;
+            `${Math.min(
+                100,
+                Math.max(0, percentage)
+            )}%`;
     }
 
     window.addEventListener(
@@ -263,11 +440,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function updateBackToTop() {
 
-            if (window.scrollY > 500) {
-                backToTop.classList.add("show");
-            } else {
-                backToTop.classList.remove("show");
-            }
+            backToTop.classList.toggle(
+                "show",
+                window.scrollY > 500
+            );
         }
 
         window.addEventListener(
@@ -281,7 +457,6 @@ document.addEventListener("DOMContentLoaded", () => {
         backToTop.addEventListener(
             "click",
             () => {
-
                 window.scrollTo({
                     top: 0,
                     behavior: "smooth"
@@ -331,7 +506,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             );
                         }
                     });
-
                 },
                 {
                     threshold: 0.12
@@ -360,118 +534,117 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       COUNTERS
+       ROBUST COUNTERS
     ===================================================== */
 
     const counters =
         document.querySelectorAll(
-            ".counter-card h3, .counter-card h1"
+            "[data-target]"
         );
 
-    let countersStarted = false;
+    const counterRunning =
+        new WeakSet();
 
-    function startCounters() {
+    function runCounter(counter) {
 
-        if (countersStarted) return;
+        if (counterRunning.has(counter)) {
+            return;
+        }
 
-        countersStarted = true;
+        const target =
+            Number(counter.dataset.target);
 
-        counters.forEach((counter) => {
+        if (!Number.isFinite(target)) {
+            return;
+        }
 
-            const target =
-                Number(counter.dataset.target);
+        counterRunning.add(counter);
 
-            if (!Number.isFinite(target)) return;
+        const original =
+            counter.textContent.trim();
 
-            let current = 0;
+        const suffix =
+            counter.dataset.suffix !== undefined
+                ? counter.dataset.suffix
+                : (
+                    original.includes("%") ||
+                    target === 100
+                        ? "%"
+                        : "+"
+                );
 
-            const duration = 1300;
+        const duration = 1400;
+        const startTime = performance.now();
 
-            const startTime =
-                performance.now();
+        function animateCounter(now) {
 
-            const originalText =
-                counter.textContent;
+            const progress =
+                Math.min(
+                    (now - startTime) / duration,
+                    1
+                );
 
-            const suffix =
-                originalText.includes("%") ||
-                target === 100
-                    ? "%"
-                    : "+";
+            const eased =
+                1 - Math.pow(1 - progress, 3);
 
-            function animateCounter(currentTime) {
+            const value =
+                Math.round(target * eased);
 
-                const progress =
-                    Math.min(
-                        (currentTime - startTime) /
-                        duration,
-                        1
-                    );
+            counter.textContent =
+                `${value}${suffix}`;
 
-                const eased =
-                    1 -
-                    Math.pow(
-                        1 - progress,
-                        3
-                    );
-
-                current =
-                    Math.floor(
-                        eased * target
-                    );
-
+            if (progress < 1) {
+                requestAnimationFrame(
+                    animateCounter
+                );
+            } else {
                 counter.textContent =
-                    `${current}${suffix}`;
-
-                if (progress < 1) {
-
-                    requestAnimationFrame(
-                        animateCounter
-                    );
-
-                } else {
-
-                    counter.textContent =
-                        `${target}${suffix}`;
-                }
+                    `${target}${suffix}`;
             }
+        }
 
-            requestAnimationFrame(
-                animateCounter
-            );
-        });
+        requestAnimationFrame(
+            animateCounter
+        );
     }
 
-    const counterSection =
-        document.querySelector(
-            ".counter-container"
-        );
+    if (counters.length) {
 
-    if (counterSection && "IntersectionObserver" in window) {
+        if ("IntersectionObserver" in window) {
 
-        const counterObserver =
-            new IntersectionObserver(
-                (entries) => {
+            const counterObserver =
+                new IntersectionObserver(
+                    (entries) => {
 
-                    if (entries[0].isIntersecting) {
+                        entries.forEach((entry) => {
 
-                        startCounters();
+                            if (
+                                entry.isIntersecting
+                            ) {
 
-                        counterObserver.disconnect();
+                                runCounter(
+                                    entry.target
+                                );
+
+                                counterObserver.unobserve(
+                                    entry.target
+                                );
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.2
                     }
-                },
-                {
-                    threshold: 0.25
-                }
-            );
+                );
 
-        counterObserver.observe(
-            counterSection
-        );
+            counters.forEach((counter) => {
+                counterObserver.observe(counter);
+            });
 
-    } else if (counters.length) {
+        } else {
 
-        startCounters();
+            counters.forEach(runCounter);
+        }
     }
 
 
@@ -493,39 +666,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.preventDefault();
 
-                const nameInput =
+                const name =
                     document.getElementById("name");
 
-                const emailInput =
+                const email =
                     document.getElementById("email");
 
-                const messageInput =
+                const message =
                     document.getElementById("message");
 
-                const name =
-                    nameInput
-                        ? nameInput.value.trim()
-                        : "";
+                if (
+                    !name ||
+                    !email ||
+                    !message
+                ) {
+                    return;
+                }
 
-                const email =
-                    emailInput
-                        ? emailInput.value.trim()
-                        : "";
+                const nameValue =
+                    name.value.trim();
 
-                const message =
-                    messageInput
-                        ? messageInput.value.trim()
-                        : "";
+                const emailValue =
+                    email.value.trim();
 
-                if (!name || !email || !message) {
+                const messageValue =
+                    message.value.trim();
+
+                if (
+                    !nameValue ||
+                    !emailValue ||
+                    !messageValue
+                ) {
 
                     if (formMessage) {
-
                         formMessage.textContent =
                             "Please fill in all fields.";
-
-                        formMessage.style.color =
-                            "#e53935";
                     }
 
                     return;
@@ -534,27 +709,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 const emailPattern =
                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                if (!emailPattern.test(email)) {
+                if (!emailPattern.test(emailValue)) {
 
                     if (formMessage) {
-
                         formMessage.textContent =
                             "Please enter a valid email.";
-
-                        formMessage.style.color =
-                            "#e53935";
                     }
 
                     return;
                 }
 
                 if (formMessage) {
-
                     formMessage.textContent =
-                        "Message ready! Email service can be connected next.";
-
-                    formMessage.style.color =
-                        "#35c759";
+                        "Message ready to send.";
                 }
 
                 contactForm.reset();
@@ -591,133 +758,90 @@ document.addEventListener("DOMContentLoaded", () => {
     const projectButtons =
         document.querySelectorAll(".project-btn");
 
-
-    const projectData = [
-
-        {
-            title: "Portfolio Website",
-
-            description:
-                "A modern responsive portfolio experience combining front-end development, animations, interactive components and professional presentation.",
-
-            tech:
-                "HTML · CSS · JavaScript",
-
-            type:
-                "Personal Portfolio"
-        },
-
-        {
-            title: "B2B Outreach System",
-
-            description:
-                "A structured business development workflow for finding companies, identifying decision makers, creating personalized messages and generating qualified opportunities.",
-
-            tech:
-                "ICP · LinkedIn · B2B Sales",
-
-            type:
-                "Sales System"
-        },
-
-        {
-            title: "Interactive Web Experience",
-
-            description:
-                "A creative front-end concept focused on modern UI, responsive design, animations and interactive user experiences.",
-
-            tech:
-                "HTML · CSS · JavaScript",
-
-            type:
-                "Front-End Project"
-        }
-    ];
-
-
-    function openProject(index) {
-
-        const project =
-            projectData[index];
-
-        if (!project || !projectModal) return;
-
-        if (modalTitle) {
-            modalTitle.textContent =
-                project.title;
-        }
-
-        if (modalDescription) {
-            modalDescription.textContent =
-                project.description;
-        }
-
-        if (modalTech) {
-            modalTech.textContent =
-                project.tech;
-        }
-
-        if (modalType) {
-            modalType.textContent =
-                project.type;
-        }
-
-        projectModal.classList.add("active");
-
-        document.body.style.overflow = "hidden";
-    }
-
-
     function closeProject() {
 
         if (!projectModal) return;
 
         projectModal.classList.remove("active");
-
-        document.body.style.overflow = "";
+        document.body.classList.remove(
+            "modal-open"
+        );
     }
 
+    projectButtons.forEach((button) => {
 
-    projectButtons.forEach(
-        (button, index) => {
+        button.addEventListener(
+            "click",
+            () => {
 
-            button.addEventListener(
-                "click",
-                () => {
-                    openProject(index);
+                const card =
+                    button.closest(".project-card");
+
+                if (!card || !projectModal) {
+                    return;
                 }
-            );
-        }
-    );
 
+                const title =
+                    card.dataset.title ||
+                    card.querySelector("h3")?.textContent ||
+                    "Project";
+
+                const description =
+                    card.dataset.description ||
+                    card.querySelector("p")?.textContent ||
+                    "Portfolio project.";
+
+                const tech =
+                    card.dataset.tech ||
+                    card.querySelector(".project-tech")?.textContent ||
+                    "";
+
+                const type =
+                    card.dataset.type ||
+                    "Web Project";
+
+                if (modalTitle) {
+                    modalTitle.textContent = title;
+                }
+
+                if (modalDescription) {
+                    modalDescription.textContent =
+                        description;
+                }
+
+                if (modalTech) {
+                    modalTech.textContent = tech;
+                }
+
+                if (modalType) {
+                    modalType.textContent = type;
+                }
+
+                projectModal.classList.add(
+                    "active"
+                );
+
+                document.body.classList.add(
+                    "modal-open"
+                );
+            }
+        );
+    });
 
     if (modalClose) {
-
         modalClose.addEventListener(
             "click",
             closeProject
         );
     }
 
-
-    if (modalAction) {
-
-        modalAction.addEventListener(
-            "click",
-            closeProject
-        );
-    }
-
-
     if (projectModal) {
-
         projectModal.addEventListener(
             "click",
             (event) => {
 
                 if (
-                    event.target ===
-                    projectModal
+                    event.target === projectModal
                 ) {
                     closeProject();
                 }
@@ -725,9 +849,30 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
+    if (modalAction) {
+        modalAction.addEventListener(
+            "click",
+            () => {
+
+                const projects =
+                    document.getElementById(
+                        "projects"
+                    );
+
+                closeProject();
+
+                if (projects) {
+                    projects.scrollIntoView({
+                        behavior: "smooth"
+                    });
+                }
+            }
+        );
+    }
+
 
     /* =====================================================
-       ASK SHOAIB AI ASSISTANT
+       AI ASSISTANT
     ===================================================== */
 
     const assistantBtn =
@@ -739,252 +884,186 @@ document.addEventListener("DOMContentLoaded", () => {
     const assistantClose =
         document.getElementById("assistantClose");
 
+    const assistantMessages =
+        document.getElementById(
+            "assistantMessages"
+        );
+
     const assistantInput =
-        document.getElementById("assistantInput");
+        document.getElementById(
+            "assistantInput"
+        );
 
     const assistantSend =
-        document.getElementById("assistantSend");
-
-    const assistantMessages =
-        document.getElementById("assistantMessages");
+        document.getElementById(
+            "assistantSend"
+        );
 
     const assistantQuestions =
         document.querySelectorAll(
             ".assistant-question"
         );
 
-
-    function toggleAssistant() {
+    function openAssistant() {
 
         if (!assistantPanel) return;
 
-        const isOpen =
-            assistantPanel.classList.toggle("active");
+        assistantPanel.classList.add(
+            "active"
+        );
 
-        if (
-            isOpen &&
-            assistantInput
-        ) {
-
+        if (assistantInput) {
             setTimeout(
-                () => {
-                    assistantInput.focus();
-                },
+                () => assistantInput.focus(),
                 200
             );
         }
     }
 
+    function closeAssistant() {
+
+        if (!assistantPanel) return;
+
+        assistantPanel.classList.remove(
+            "active"
+        );
+    }
 
     if (assistantBtn) {
-
         assistantBtn.addEventListener(
             "click",
-            toggleAssistant
+            openAssistant
         );
     }
-
 
     if (assistantClose) {
-
         assistantClose.addEventListener(
             "click",
-            () => {
-
-                if (assistantPanel) {
-
-                    assistantPanel.classList.remove(
-                        "active"
-                    );
-                }
-            }
+            closeAssistant
         );
     }
-
-
-    function escapeHTML(text) {
-
-        const div =
-            document.createElement("div");
-
-        div.textContent = text;
-
-        return div.innerHTML;
-    }
-
 
     function addAssistantMessage(
         text,
-        isUser = false
+        type = "bot"
     ) {
 
         if (!assistantMessages) return;
 
-        const wrapper =
+        const message =
             document.createElement("div");
 
-        wrapper.className =
-            isUser
-                ? "assistant-message user-message"
-                : "assistant-message";
+        message.className =
+            `assistant-message ${type}`;
 
-        const icon =
-            isUser
-                ? ""
-                : '<div class="message-icon">🤖</div>';
+        message.textContent = text;
 
-        wrapper.innerHTML = `
-            ${icon}
-
-            <div class="message-content">
-                ${escapeHTML(text)}
-            </div>
-        `;
-
-        assistantMessages.appendChild(wrapper);
+        assistantMessages.appendChild(
+            message
+        );
 
         assistantMessages.scrollTop =
             assistantMessages.scrollHeight;
     }
 
-
-    function getAssistantAnswer(question) {
+    function getAssistantReply(question) {
 
         const q =
             question.toLowerCase();
 
-
         if (
             q.includes("skill") ||
-            q.includes("technology") ||
-            q.includes("tech")
+            q.includes("skills")
         ) {
-
-            return (
-                "Shoaib's core skills include HTML5, CSS3, JavaScript, responsive UI development, B2B sales, LinkedIn outreach and ICP research."
-            );
+            return "My core skills include HTML5, CSS3, JavaScript, UI Design, B2B Sales and LinkedIn Outreach.";
         }
-
 
         if (
             q.includes("service") ||
-            q.includes("offer") ||
-            q.includes("do")
+            q.includes("services")
         ) {
-
-            return (
-                "Shoaib works with website development, landing pages, front-end UI, B2B sales, lead generation and LinkedIn outreach."
-            );
+            return "I provide front-end development, UI-focused web solutions, B2B sales support and LinkedIn outreach.";
         }
-
-
-        if (
-            q.includes("about") ||
-            q.includes("who")
-        ) {
-
-            return (
-                "Rana Shoaib is a Sales Executive and Front-End Developer who combines technology, business communication and B2B sales."
-            );
-        }
-
-
-        if (
-            q.includes("sales") ||
-            q.includes("client") ||
-            q.includes("lead")
-        ) {
-
-            return (
-                "Shoaib focuses on B2B sales, ICP research, finding decision makers, personalized outreach, qualification and lead generation."
-            );
-        }
-
-
-        if (
-            q.includes("contact") ||
-            q.includes("email") ||
-            q.includes("phone")
-        ) {
-
-            return (
-                "You can contact Shoaib at r.shoaib0126@gmail.com or +92 315 6109300."
-            );
-        }
-
 
         if (
             q.includes("project") ||
-            q.includes("portfolio")
+            q.includes("projects")
         ) {
-
-            return (
-                "The portfolio includes a personal portfolio website, a B2B outreach system and an interactive web experience."
-            );
+            return "You can explore my projects in the Projects section. Each project highlights the technologies and work involved.";
         }
-
 
         if (
-            q.includes("html") ||
-            q.includes("css") ||
-            q.includes("javascript") ||
-            q.includes(" js")
+            q.includes("contact") ||
+            q.includes("hire") ||
+            q.includes("work")
         ) {
-
-            return (
-                "Shoaib uses HTML for structure, CSS for responsive design and JavaScript for interaction and dynamic website features."
-            );
+            return "You can contact me through the Contact section for collaboration, web development or B2B sales opportunities.";
         }
 
+        if (
+            q.includes("who") ||
+            q.includes("about")
+        ) {
+            return "I'm Rana Shoaib, a Front-End Developer and Sales Executive at TXEND, focused on web development and B2B sales.";
+        }
 
-        return (
-            "I can tell you about Shoaib's skills, services, projects, B2B sales experience, front-end development or contact information."
-        );
+        return "I can help you learn more about my skills, services, projects, experience or how to contact me.";
     }
 
+    function askAssistant(question) {
 
-    function sendAssistantMessage() {
+        const text =
+            question.trim();
 
-        if (!assistantInput) return;
-
-        const question =
-            assistantInput.value.trim();
-
-        if (!question) return;
+        if (!text) return;
 
         addAssistantMessage(
-            question,
-            true
+            text,
+            "user"
         );
 
-        assistantInput.value = "";
+        if (assistantInput) {
+            assistantInput.value = "";
+        }
 
-        setTimeout(
-            () => {
+        setTimeout(() => {
 
-                const answer =
-                    getAssistantAnswer(
-                        question
-                    );
+            addAssistantMessage(
+                getAssistantReply(text),
+                "bot"
+            );
 
-                addAssistantMessage(
-                    answer
-                );
-
-            },
-            450
-        );
+        }, 450);
     }
 
+    assistantQuestions.forEach(
+        (question) => {
+
+            question.addEventListener(
+                "click",
+                () => {
+                    askAssistant(
+                        question.textContent
+                    );
+                }
+            );
+        }
+    );
 
     if (assistantSend) {
 
         assistantSend.addEventListener(
             "click",
-            sendAssistantMessage
+            () => {
+
+                if (assistantInput) {
+                    askAssistant(
+                        assistantInput.value
+                    );
+                }
+            }
         );
     }
-
 
     if (assistantInput) {
 
@@ -992,609 +1071,287 @@ document.addEventListener("DOMContentLoaded", () => {
             "keydown",
             (event) => {
 
-                if (event.key === "Enter") {
+                if (
+                    event.key === "Enter" &&
+                    !event.shiftKey
+                ) {
 
                     event.preventDefault();
 
-                    sendAssistantMessage();
+                    askAssistant(
+                        assistantInput.value
+                    );
                 }
             }
         );
     }
-
-
-    assistantQuestions.forEach(
-        (button) => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const question =
-                        button.dataset.question;
-
-                    if (!question) return;
-
-                    addAssistantMessage(
-                        question,
-                        true
-                    );
-
-                    setTimeout(
-                        () => {
-
-                            addAssistantMessage(
-                                getAssistantAnswer(
-                                    question
-                                )
-                            );
-
-                        },
-                        400
-                    );
-                }
-            );
-        }
-    );
 
 
     /* =====================================================
        CAREER QUEST
     ===================================================== */
 
-    const startGameBtn =
-        document.getElementById("startGameBtn");
-
     const gameStart =
         document.getElementById("gameStart");
 
     const missionSelection =
-        document.getElementById("missionSelection");
+        document.getElementById(
+            "missionSelection"
+        );
 
     const challengeArea =
-        document.getElementById("challengeArea");
+        document.getElementById(
+            "challengeArea"
+        );
 
     const gameResult =
-        document.getElementById("gameResult");
+        document.getElementById(
+            "gameResult"
+        );
 
-    const gameXP =
-        document.getElementById("gameXP");
+    const missionCards =
+        document.querySelectorAll(
+            ".mission-card"
+        );
 
-    const gameQuestionNumber =
-        document.getElementById("gameQuestionNumber");
-
-    const gameMissionName =
-        document.getElementById("gameMissionName");
-
-    const gameQuestion =
-        document.getElementById("gameQuestion");
-
-    const gameOptions =
-        document.getElementById("gameOptions");
-
-    const gameFeedback =
-        document.getElementById("gameFeedback");
-
-    const finalXP =
-        document.getElementById("finalXP");
-
-    const finalRank =
-        document.getElementById("finalRank");
-
-    const restartGameBtn =
-        document.getElementById("restartGameBtn");
-
-    const missionButtons =
-        document.querySelectorAll(".mission-card");
-
+    let currentMission = null;
+    let currentQuestion = 0;
+    let score = 0;
 
     const missions = {
+        sales: [
+            {
+                question:
+                    "What is the first step in B2B outreach?",
+                options: [
+                    "Send random messages",
+                    "Find the right company and decision maker",
+                    "Send a proposal immediately",
+                    "Ask for payment"
+                ],
+                answer: 1
+            },
+            {
+                question:
+                    "What does ICP stand for?",
+                options: [
+                    "Ideal Customer Profile",
+                    "Internal Company Process",
+                    "Internet Contact Program",
+                    "Ideal Campaign Plan"
+                ],
+                answer: 0
+            }
+        ],
 
-        website: {
-
-            name: "Web Developer",
-
-            questions: [
-
-                {
-                    question:
-                        "Which language is mainly used to structure a web page?",
-
-                    options: [
-                        "HTML",
-                        "CSS",
-                        "JavaScript",
-                        "Python"
-                    ],
-
-                    answer: 0
-                },
-
-                {
-                    question:
-                        "Which CSS feature is commonly used to create responsive layouts?",
-
-                    options: [
-                        "Media Queries",
-                        "Variables",
-                        "Console",
-                        "Arrays"
-                    ],
-
-                    answer: 0
-                },
-
-                {
-                    question:
-                        "Which language adds interactivity to websites?",
-
-                    options: [
-                        "HTML",
-                        "CSS",
-                        "JavaScript",
-                        "SQL"
-                    ],
-
-                    answer: 2
-                }
-            ]
-        },
-
-
-        client: {
-
-            name: "Client Hunter",
-
-            questions: [
-
-                {
-                    question:
-                        "Who is usually an important person to contact when selling B2B services?",
-
-                    options: [
-                        "Random Employee",
-                        "Decision Maker",
-                        "Visitor",
-                        "Competitor"
-                    ],
-
-                    answer: 1
-                },
-
-                {
-                    question:
-                        "What makes a cold message stronger?",
-
-                    options: [
-                        "Sending the same message to everyone",
-                        "Writing a personalized relevant message",
-                        "Using only emojis",
-                        "Making it extremely long"
-                    ],
-
-                    answer: 1
-                },
-
-                {
-                    question:
-                        "What should you identify before trying to sell a service?",
-
-                    options: [
-                        "Fit and business need",
-                        "Favorite color",
-                        "Phone model",
-                        "Office size"
-                    ],
-
-                    answer: 0
-                }
-            ]
-        },
-
-
-        leads: {
-
-            name: "Lead Master",
-
-            questions: [
-
-                {
-                    question:
-                        "What does ICP stand for?",
-
-                    options: [
-                        "Ideal Customer Profile",
-                        "Internet Client Process",
-                        "Internal Company Plan",
-                        "Ideal Coding Project"
-                    ],
-
-                    answer: 0
-                },
-
-                {
-                    question:
-                        "Which platform can be useful for B2B prospecting?",
-
-                    options: [
-                        "LinkedIn",
-                        "Calculator",
-                        "Notepad",
-                        "Paint"
-                    ],
-
-                    answer: 0
-                },
-
-                {
-                    question:
-                        "What is a good approach for LinkedIn outreach?",
-
-                    options: [
-                        "Mass spam",
-                        "Relevant personalized outreach",
-                        "No research",
-                        "Random messages"
-                    ],
-
-                    answer: 1
-                }
-            ]
-        }
+        frontend: [
+            {
+                question:
+                    "Which language is used to structure a webpage?",
+                options: [
+                    "CSS",
+                    "HTML",
+                    "SQL",
+                    "Python"
+                ],
+                answer: 1
+            },
+            {
+                question:
+                    "Which language adds interactivity to webpages?",
+                options: [
+                    "HTML",
+                    "CSS",
+                    "JavaScript",
+                    "SQL"
+                ],
+                answer: 2
+            }
+        ]
     };
 
+    function showElement(element) {
 
-    let selectedMission = null;
-    let currentQuestion = 0;
-    let currentXP = 0;
+        if (!element) return;
 
-
-    function showGameScreen(screen) {
-
-        [
-            gameStart,
-            missionSelection,
-            challengeArea,
-            gameResult
-        ].forEach((element) => {
-
-            if (element) {
-                element.classList.add("hidden");
-            }
-        });
-
-        if (screen) {
-            screen.classList.remove("hidden");
-        }
+        element.style.display = "";
+        element.classList.add("active");
     }
 
+    function hideElement(element) {
 
-    if (startGameBtn) {
+        if (!element) return;
 
-        startGameBtn.addEventListener(
-            "click",
-            () => {
-
-                currentXP = 0;
-                currentQuestion = 0;
-                selectedMission = null;
-
-                showGameScreen(
-                    missionSelection
-                );
-            }
-        );
+        element.classList.remove("active");
     }
-
-
-    missionButtons.forEach(
-        (button) => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const mission =
-                        button.dataset.mission;
-
-                    if (!missions[mission]) return;
-
-                    selectedMission =
-                        missions[mission];
-
-                    currentQuestion = 0;
-                    currentXP = 0;
-
-                    if (gameMissionName) {
-                        gameMissionName.textContent =
-                            selectedMission.name;
-                    }
-
-                    if (gameXP) {
-                        gameXP.textContent =
-                            currentXP;
-                    }
-
-                    showGameScreen(
-                        challengeArea
-                    );
-
-                    loadQuestion();
-                }
-            );
-        }
-    );
-
 
     function loadQuestion() {
 
-        if (
-            !selectedMission ||
-            currentQuestion >=
-            selectedMission.questions.length
-        ) {
-
-            finishGame();
-
-            return;
-        }
+        if (!challengeArea) return;
 
         const question =
-            selectedMission.questions[
+            missions[currentMission][
                 currentQuestion
             ];
 
+        const questionElement =
+            document.getElementById(
+                "questionText"
+            );
 
-        if (gameQuestionNumber) {
+        const optionsContainer =
+            document.getElementById(
+                "options"
+            );
 
-            gameQuestionNumber.textContent =
-                `Question ${currentQuestion + 1} / ${selectedMission.questions.length}`;
-        }
-
-
-        if (gameQuestion) {
-
-            gameQuestion.textContent =
+        if (questionElement) {
+            questionElement.textContent =
                 question.question;
         }
 
+        if (optionsContainer) {
 
-        if (gameFeedback) {
+            optionsContainer.innerHTML = "";
 
-            gameFeedback.textContent = "";
-            gameFeedback.style.color = "";
-        }
+            question.options.forEach(
+                (option, index) => {
 
-
-        if (!gameOptions) return;
-
-        gameOptions.innerHTML = "";
-
-
-        question.options.forEach(
-            (option, index) => {
-
-                const button =
-                    document.createElement("button");
-
-                button.className =
-                    "game-option";
-
-                button.type = "button";
-
-                button.textContent =
-                    option;
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        answerQuestion(
-                            index,
-                            question.answer
+                    const button =
+                        document.createElement(
+                            "button"
                         );
-                    }
-                );
 
-                gameOptions.appendChild(
-                    button
-                );
-            }
-        );
+                    button.className =
+                        "option-btn";
+
+                    button.textContent =
+                        option;
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            if (
+                                index ===
+                                question.answer
+                            ) {
+                                score++;
+                            }
+
+                            currentQuestion++;
+
+                            if (
+                                currentQuestion <
+                                missions[
+                                    currentMission
+                                ].length
+                            ) {
+                                loadQuestion();
+                            } else {
+                                finishMission();
+                            }
+                        }
+                    );
+
+                    optionsContainer.appendChild(
+                        button
+                    );
+                }
+            );
+        }
     }
 
+    function finishMission() {
 
-    function answerQuestion(
-        selectedAnswer,
-        correctAnswer
-    ) {
+        hideElement(challengeArea);
+        showElement(gameResult);
 
-        if (!gameOptions) return;
-
-        const optionButtons =
-            gameOptions.querySelectorAll(
-                ".game-option"
+        const scoreElement =
+            document.getElementById(
+                "finalScore"
             );
 
-        optionButtons.forEach(
-            (button) => {
-                button.disabled = true;
-            }
-        );
-
-
-        if (
-            selectedAnswer ===
-            correctAnswer
-        ) {
-
-            currentXP += 10;
-
-            if (gameXP) {
-                gameXP.textContent =
-                    currentXP;
-            }
-
-            if (gameFeedback) {
-
-                gameFeedback.textContent =
-                    "✓ Correct! +10 XP";
-
-                gameFeedback.style.color =
-                    "#35c759";
-            }
-
-            if (optionButtons[selectedAnswer]) {
-
-                optionButtons[selectedAnswer]
-                    .classList.add("correct");
-            }
-
-        } else {
-
-            if (gameFeedback) {
-
-                gameFeedback.textContent =
-                    "✕ Not quite. Keep going!";
-
-                gameFeedback.style.color =
-                    "#e53935";
-            }
-
-            if (optionButtons[selectedAnswer]) {
-
-                optionButtons[selectedAnswer]
-                    .classList.add("wrong");
-            }
-
-            if (optionButtons[correctAnswer]) {
-
-                optionButtons[correctAnswer]
-                    .classList.add("correct");
-            }
-        }
-
-
-        setTimeout(
-            () => {
-
-                currentQuestion++;
-
-                loadQuestion();
-
-            },
-            1000
-        );
-    }
-
-
-    function finishGame() {
-
-        showGameScreen(
-            gameResult
-        );
-
-
-        if (finalXP) {
-
-            finalXP.textContent =
-                `${currentXP} XP`;
-        }
-
-
-        let rank =
-            "Beginner 🌱";
-
-
-        if (currentXP >= 30) {
-
-            rank =
-                "Career Master 🏆";
-
-        } else if (currentXP >= 20) {
-
-            rank =
-                "Pro Explorer 🚀";
-
-        } else if (currentXP >= 10) {
-
-            rank =
-                "Rising Star ⭐";
-        }
-
-
-        if (finalRank) {
-
-            finalRank.textContent =
-                rank;
+        if (scoreElement) {
+            scoreElement.textContent =
+                `${score}/${missions[currentMission].length}`;
         }
     }
 
+    missionCards.forEach((card) => {
 
-    if (restartGameBtn) {
-
-        restartGameBtn.addEventListener(
+        card.addEventListener(
             "click",
             () => {
 
-                currentXP = 0;
-                currentQuestion = 0;
-                selectedMission = null;
+                currentMission =
+                    card.dataset.mission ||
+                    card.dataset.type ||
+                    "frontend";
 
-                showGameScreen(
-                    missionSelection
-                );
+                if (
+                    !missions[currentMission]
+                ) {
+                    currentMission = "frontend";
+                }
+
+                currentQuestion = 0;
+                score = 0;
+
+                hideElement(gameStart);
+                hideElement(missionSelection);
+                hideElement(gameResult);
+
+                showElement(challengeArea);
+
+                loadQuestion();
             }
         );
-    }
+    });
 
 
     /* =====================================================
-       CINEMATIC SCROLL EFFECT
+       CINEMATIC SCROLL
     ===================================================== */
 
-    const cinematicSection =
+    const cinematic =
         document.querySelector(
             ".cinematic-section"
         );
 
     const cinematicContent =
-        document.querySelector(
+        cinematic?.querySelector(
             ".cinematic-content"
         );
 
-
-    if (
-        cinematicSection &&
-        cinematicContent
-    ) {
+    if (cinematic && cinematicContent) {
 
         function cinematicScroll() {
 
             const rect =
-                cinematicSection.getBoundingClientRect();
+                cinematic.getBoundingClientRect();
 
-            const windowHeight =
+            const height =
+                cinematic.offsetHeight;
+
+            const viewport =
                 window.innerHeight;
 
             const progress =
-                Math.max(
-                    0,
-                    Math.min(
-                        1,
-                        1 -
-                        (rect.top / windowHeight)
+                Math.min(
+                    1,
+                    Math.max(
+                        0,
+                        (viewport - rect.top) /
+                        (height + viewport)
                     )
                 );
 
-
             const move =
-                progress * 35;
+                (progress - 0.5) * 35;
 
             const scale =
                 0.92 +
                 progress * 0.08;
-
 
             cinematicContent.style.transform =
                 `translateY(${move}px) scale(${scale})`;
@@ -1605,7 +1362,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     0.35 + progress * 0.9
                 );
         }
-
 
         window.addEventListener(
             "scroll",
@@ -1618,7 +1374,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PARALLAX HERO ORBITS
+       HERO ORBIT PARALLAX
     ===================================================== */
 
     const hero =
@@ -1632,25 +1388,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const orbitTwo =
             document.querySelector(".orbit-two");
 
-
         function updateParallax() {
 
             const scroll =
                 window.scrollY;
 
             if (orbitOne) {
-
                 orbitOne.style.transform =
                     `translateY(${scroll * 0.12}px)`;
             }
 
             if (orbitTwo) {
-
                 orbitTwo.style.transform =
                     `translateY(${scroll * -0.08}px)`;
             }
         }
-
 
         window.addEventListener(
             "scroll",
@@ -1676,7 +1428,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ".nav-links a"
         );
 
-
     const activeNavStyle =
         document.createElement("style");
 
@@ -1693,7 +1444,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(
         activeNavStyle
     );
-
 
     if (
         sections.length &&
@@ -1723,10 +1473,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                         );
 
                                         if (
-                                            anchor.getAttribute("href") ===
-                                            `#${id}`
+                                            anchor.getAttribute(
+                                                "href"
+                                            ) === `#${id}`
                                         ) {
-
                                             anchor.classList.add(
                                                 "active-nav"
                                             );
@@ -1742,15 +1492,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
-
-        sections.forEach(
-            (section) => {
-
-                activeObserver.observe(
-                    section
-                );
-            }
-        );
+        sections.forEach((section) => {
+            activeObserver.observe(section);
+        });
     }
 
 
@@ -1765,14 +1509,19 @@ document.addEventListener("DOMContentLoaded", () => {
             if (
                 navLinks &&
                 menuBtn &&
-                navLinks.classList.contains("active")
+                navLinks.classList.contains(
+                    "active"
+                )
             ) {
 
                 if (
-                    !navLinks.contains(event.target) &&
-                    !menuBtn.contains(event.target)
+                    !navLinks.contains(
+                        event.target
+                    ) &&
+                    !menuBtn.contains(
+                        event.target
+                    )
                 ) {
-
                     closeMobileMenu();
                 }
             }
@@ -1791,14 +1540,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (event.key === "Escape") {
 
                 closeMobileMenu();
-
-                if (assistantPanel) {
-
-                    assistantPanel.classList.remove(
-                        "active"
-                    );
-                }
-
+                closeAssistant();
                 closeProject();
             }
         }
@@ -1806,7 +1548,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       WELCOME MESSAGE
+       CONSOLE
     ===================================================== */
 
     console.log(
